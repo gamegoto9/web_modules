@@ -166,6 +166,7 @@ $i++;
                 "<td class='text-right'>"+tsum+"</td>"+
                 "<td class='text-center'><button type='button' class='btn btn-small btn-danger' id='remo'><i class='fa fa-trash'></i></button></td>"+
                 "<td class='hid_p'>"+jdata.record[0]['id_goods']+"</td>"+
+                "<td class='hid_p'>"+jdata.record[0]['standard']+"</td>"+
                 "</tr>"); 
 
              $(".hid_p").hide();

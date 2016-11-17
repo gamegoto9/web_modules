@@ -54,13 +54,18 @@ class Dashboard_model extends CI_Model {
 
 
         $query = $this->db->query("SELECT * 
-        FROM durable_goods_2016
-        WHERE standard = '1' and
-        status = '1' and
-        id_goods NOT IN($query2)");
+            FROM durable_goods_2016
+            WHERE status = '1' and
+            id_goods NOT IN($query2)");
         // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
 
         return $query->result_array();
+    }
+    public function getData_duruble_goods_maxid(){
+        $query = $this->db->query("SELECT max(lend_id) as maxID from lend_goods_seq");
+        // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
+
+        return $query->row();
     }
     
     public function data_goods_new($id) {
@@ -89,9 +94,90 @@ class Dashboard_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function getData_Lend_goods($standard) {
+
+        $query = $this->db->query("SELECT
+            e.lend_id as lend_id,
+            e.Ddate as Ddate,
+            cnt.colCount as count,
+            personal.`name` as name,
+            SUM(dg.price) as sum
+            FROM
+            lend_goods_detial AS e
+            INNER JOIN (
+            select lend_id,count(lend_id) as colCount
+            from lend_goods_detial e2 
+            group by lend_id
+            ) AS cnt ON cnt.lend_id= e.lend_id
+            INNER JOIN personal ON e.Pid = personal.Pid
+            INNER JOIN (
+            select price,id_goods
+            from durable_goods_2016 e3 
+            ) AS dg ON dg.id_goods= e.id_goods
+            WHERE e.standard = '$standard'
+            GROUP BY e.lend_id");
+
+        return $query->result_array();
+    }
+
     public function getTypeDurableGoods() {
         $query = $this->db->get('type_durable_goods');
         return $query->result_array();
+    }
+
+    public function getdetiallend($id,$standard){
+        $sql = "
+        SELECT
+        lend_goods_detial.lend_id,
+        lend_goods_detial.id_goods,
+        if(lend_goods_detial.standard = '1','ครุภัณฑ์','ครุภัณฑ์ต่ำกว่าเกณฑ์') as standard,
+            lend_goods_detial.Ddate,
+        personal.`name`,
+        durable_goods_2016.price,
+        durable_goods_2016.name_goods,
+        durable_goods_2016.brand_goods,
+        durable_goods_2016.id_buy,
+        personal.Position,
+        durable_goods_2016.id_goods_crru
+        FROM
+        lend_goods_detial
+        INNER JOIN personal ON lend_goods_detial.Pid = personal.Pid
+        INNER JOIN durable_goods_2016 ON lend_goods_detial.id_goods = durable_goods_2016.id_goods
+        WHERE lend_id = '$id' and durable_goods_2016.standard = '$standard'";
+
+        $query = $this->db->query($sql);
+        return $query;
+
+
+
+
+    }
+     public function getdetiallend_all($id,$standard){
+        $sql = "
+        SELECT
+        lend_goods_detial.lend_id,
+        lend_goods_detial.id_goods,
+        if(lend_goods_detial.standard = '1','ครุภัณฑ์','ครุภัณฑ์ต่ำกว่าเกณฑ์') as standard,
+            lend_goods_detial.Ddate,
+        personal.`name`,
+        durable_goods_2016.price,
+        durable_goods_2016.name_goods,
+        durable_goods_2016.brand_goods,
+        durable_goods_2016.id_buy,
+        personal.Position,
+        durable_goods_2016.id_goods_crru
+        FROM
+        lend_goods_detial
+        INNER JOIN personal ON lend_goods_detial.Pid = personal.Pid
+        INNER JOIN durable_goods_2016 ON lend_goods_detial.id_goods = durable_goods_2016.id_goods
+        WHERE lend_id = '$id'";
+
+        $query = $this->db->query($sql);
+        return $query;
+
+
+
+
     }
 
 }

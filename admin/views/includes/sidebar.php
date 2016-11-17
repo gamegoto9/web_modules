@@ -46,7 +46,7 @@
 
                 <li class="treeview">
                     <a href="#">
-                        <small class="badge pull-right bg-green">2</small>
+                        <small class="badge pull-right bg-orange">new</small>
                         <i class="fa fa-bar-chart-o"></i>
                         <span>เบิก ครุภัณฑ์</span>
                         <i class="fa fa-angle-left pull-right"></i>
@@ -54,9 +54,6 @@
                     <ul class="treeview-menu">
                         <li>
                         <a href="#" onclick="loadpage_lendView('1');"><i class="fa fa-th"></i> <span>เบิก ครุภัณฑ์</span></a>
-                        </li>
-                        <li>
-                            <a href="#" onclick="loadpage_lendView('2');"><i class="fa fa-th"></i> <span>เบิก ครุภัณฑ์ต่ำกว่าเกณฑ์</span></a>
                         </li>
                     </ul>
                 </li>
@@ -69,10 +66,35 @@
                 </li>
                 
 
-                <li>
-                    <a href="#" onclick="loadDetialReturn();">
-                        <i class="fa fa-newspaper-o"></i> <span>รายงานครุภัณฑ์ที่ส่งคืน</span> 
+               
+                
+
+                <li class="treeview">
+                    <a href="#">
+                        <small class="badge pull-right bg-orange">new</small>
+                        <i class="fa fa-bar-chart-o"></i>
+                        <span>รายงาน</span>
+                        <i class="fa fa-angle-left pull-right"></i>
                     </a>
+
+                    <ul class="treeview-menu">
+                         <li>
+                            <a href="#" onclick="loadDetialReturn();">
+                                <i class="fa fa-newspaper-o"></i> <span>รายงานครุภัณฑ์ที่ส่งคืน</span> 
+                        
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="loadDetialLend('1');">
+                                <i class="fa fa-newspaper-o"></i> <span>ใบเบิกครุภัณฑ์</span> <small class="badge pull-right bg-orange">new</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="loadDetialLend('2');">
+                                <i class="fa fa-newspaper-o"></i> <span>ใบเบิกครุภัณฑ์ต่ำกว่าเกณฑ์</span> <small class="badge pull-right bg-orange">new</small>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 <!--                <li class="treeview">
                     <a href="#">
@@ -158,6 +180,10 @@
         function durable_goods_news2() {
             $('#main_view').load('dashboard/show_drurbleGoods_news/2');
 
+        }
+        function loadDetialLend(standard) {
+            var xstandard = standard;
+            $('#main_view').load('dashboard/DetialLendGoods/'+xstandard);
         }
 
 

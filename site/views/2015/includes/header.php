@@ -1,40 +1,41 @@
 <style type="text/css">
-    html{
--moz-filter: grayscale(99%);
--webkit-filter: grayscale(99%);
-filter: gray;
-filter: grayscale(99%);
-}
+ .black-ribbon {   position: fixed;   z-index: 9999;   width: 70px; }
+ @media only all and (min-width: 768px) { .black-ribbon { width: auto; } }
+
+ .stick-left { left: 0; }
+ .stick-right { right: 0; }
+ .stick-top { top: 0; }
+ .stick-bottom { bottom: 0; }
 </style>
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
+<head>
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="กองวิเทศสัมพันธ์ มหาวิทยาลัยราชภัฏเชียงราย,วิเทศสัมพันธ์,ราชภัฏเชียงราย,เชียงราย,International Affairs Division">
-        <meta name="author" content="กองวิเทศสัมพันธ์ มหาวิทยาลัยราชภัฏเชียงราย,วิเทศสัมพันธ์,ราชภัฏเชียงราย,เชียงราย,International Affairs Division">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="กองวิเทศสัมพันธ์ มหาวิทยาลัยราชภัฏเชียงราย,วิเทศสัมพันธ์,ราชภัฏเชียงราย,เชียงราย,International Affairs Division">
+    <meta name="author" content="กองวิเทศสัมพันธ์ มหาวิทยาลัยราชภัฏเชียงราย,วิเทศสัมพันธ์,ราชภัฏเชียงราย,เชียงราย,International Affairs Division">
 
-        <title>::CRRU International Affairs Division</title>
-        <link rel="shortcut icon" type="image/x-icon" href="http://crruinter.crru.ac.th/css/images/crru_logo.gif" />
+    <title>::CRRU International Affairs Division</title>
+    <link rel="shortcut icon" type="image/x-icon" href="http://crruinter.crru.ac.th/css/images/crru_logo.gif" />
 
-        <!-- Bootstrap Core CSS -->
-        <link href="<?php echo base_url('assets/themes/templatemo_403_karma/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="<?php echo base_url('assets/themes/templatemo_403_karma/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
 
-        <!-- Custom CSS -->
-        <!-- Styles -->
-        
-        <link href="<?php echo base_url('assets/themes/templatemo_403_karma/slider/flexslider.css');?>" rel="stylesheet" type="text/css" media="screen" />
-        <link href="<?php echo base_url('assets/themes/templatemo_403_karma/css/templatemo_style.css');?>" rel="stylesheet" type="text/css">
+    <!-- Custom CSS -->
+    <!-- Styles -->
+
+    <link href="<?php echo base_url('assets/themes/templatemo_403_karma/slider/flexslider.css');?>" rel="stylesheet" type="text/css" media="screen" />
+    <link href="<?php echo base_url('assets/themes/templatemo_403_karma/css/templatemo_style.css');?>" rel="stylesheet" type="text/css">
 
 
-        <link href="<?php echo base_url('assets/themes/agency/css/login.css');?>" rel="stylesheet">
-      
-        <link href="<?php echo base_url('assets/themes/templatemo_403_karma/css/font-awesome.min.css');?>" rel="stylesheet" type="text/css">  
-        <!--<link href="<?php echo base_url('assets/themes/templatemo_403_karma/css/custom.css');?>" rel="stylesheet" type="text/css">-->
-        
+    <link href="<?php echo base_url('assets/themes/agency/css/login.css');?>" rel="stylesheet">
+
+    <link href="<?php echo base_url('assets/themes/templatemo_403_karma/css/font-awesome.min.css');?>" rel="stylesheet" type="text/css">  
+    <!--<link href="<?php echo base_url('assets/themes/templatemo_403_karma/css/custom.css');?>" rel="stylesheet" type="text/css">-->
+
     <link href='http://fonts.googleapis.com/css?family=Comfortaa:400,700' rel='stylesheet' type='text/css'>
 
 
@@ -54,32 +55,33 @@ filter: grayscale(99%);
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+            <![endif]-->
 
 
 
 
- <!-- jQuery Version 1.11.0 -->
-    <script src="<?php echo base_url('assets/themes/agency/js/jquery-1.11.0.js');?>"></script>
+            <!-- jQuery Version 1.11.0 -->
+            <script src="<?php echo base_url('assets/themes/agency/js/jquery-1.11.0.js');?>"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo base_url('assets/themes/agency/js/bootstrap.min.js');?>"></script>
-    
-    <script src="<?php echo base_url('assets/themes/templatemo_403_karma/js/bootstrap-tabcollapse.js');?>"></script>
-    <script src="<?php echo base_url('assets/themes/templatemo_403_karma/js/handlebars.runtime-v4.0.5.js');?>"></script>
+            <!-- Bootstrap Core JavaScript -->
+            <script src="<?php echo base_url('assets/themes/agency/js/bootstrap.min.js');?>"></script>
 
-    
-      
-
-      
-
-      
+            <script src="<?php echo base_url('assets/themes/templatemo_403_karma/js/bootstrap-tabcollapse.js');?>"></script>
+            <script src="<?php echo base_url('assets/themes/templatemo_403_karma/js/handlebars.runtime-v4.0.5.js');?>"></script>
 
 
 
 
-    </head>
 
-    <body>
+
+
+
+
+
+
+        </head>
+
+        <body>
+        <img src="https://goo.gl/YxzDaS" class="black-ribbon stick-bottom stick-left"/>
 
 

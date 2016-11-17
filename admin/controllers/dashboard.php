@@ -78,6 +78,24 @@ class Dashboard extends CI_Controller {
         $this->load->view('admin/dashboard/show_duruble_goods_ruturn', $data);
     }
 
+    public function DetialLendGoods($standard) {
+        $this->load->model('dashboard_model');
+        $data['reTurnGoods'] = $this->dashboard_model->getData_Lend_goods($standard);
+
+        $data['standard'] = $standard;
+
+        $this->load->view('admin/dashboard/show_duruble_goods_lend', $data);
+    }
+
+    public function detialLend(){
+        $this->load->model('dashboard_model');
+        $id = $this->input->post('id');
+        $standard = $this->input->post('standard');
+        $data['reTurnGoods'] = $this->dashboard_model->getdetiallend_all($id,$standard);
+
+        $this->load->view('admin/dashboard/detial_lend', $data);
+    }
+
     public function detial_goods($type) {
 
         if ($type == 'new1') {
@@ -169,6 +187,8 @@ class Dashboard extends CI_Controller {
         }
     }
 
+
+
     public function view_insert_goods() {
 
         $this->load->model('dashboard_model');
@@ -187,6 +207,40 @@ class Dashboard extends CI_Controller {
         $data['maxid'] = $this->db->query($sql)->row_array();
 
         $this->load->view('admin/dashboard/insert_view', $data);
+    }
+
+
+
+    public function lend_goode_detial(){
+
+            
+            $Pid = $this->session->userdata('Pid');
+            $id_goods = $this->input->post('id');
+            $lendId = $this->input->post('lendId');
+            $standard = $this->input->post('standard');
+            $Ddate = date('Y-m-d');
+
+            
+            $sql = "insert into lend_goods_detial
+                    (lend_id,Pid,id_goods,Ddate,standard)
+                    values ('$lendId','$Pid','$id_goods','$Ddate','$standard')";
+
+            
+            $this->db->query($sql);
+
+            $sql = "update durable_goods_2016
+                    set status = '2'
+                    where id_goods = '$id_goods'";
+
+            $this->db->query($sql);
+            
+            echo json_encode(array(
+                'is_successful' => TRUE,
+                'msg' => 'บันทึกเรียบร้อย'
+            ));
+
+
+
     }
 
     public function insert_goods() {
@@ -250,11 +304,19 @@ class Dashboard extends CI_Controller {
         $this->load->view('admin/dashboard/show_duruble_goods', $data);
     }
 
+    public function lend_goode_seq(){
+        
+        $sql = "insert into lend_goods_seq values ('')";
+        $this->db->query($sql);
+
+    }
+
     public function show_lend_news($type) {
 
 
         $this->load->model('dashboard_model');
         $data['data'] = $this->dashboard_model->getData_duruble_goods_new_type($type);
+        $data['maxid'] = $this->dashboard_model->getData_duruble_goods_maxid();
         if($type == 1){
             $data['type'] = 'เบิกครุภัณฑ์';
             $data['standard'] = '1';
@@ -303,6 +365,40 @@ class Dashboard extends CI_Controller {
         echo json_encode($data);
 
        // $this->load->view('admin/dashboard/data_goods', $data);
+    }
+
+    public function detial_lend_paple($lend_id,$standard){
+
+        $this->load->model('dashboard_model');
+        $data['reTurnGoods'] = $this->dashboard_model->getdetiallend($lend_id,$standard);
+
+        if($standard == 1){
+            $this->load->view('admin/dashboard/detial_lend_paple',$data);
+        }else{
+            $this->load->view('admin/dashboard/detial_lend_paple_low',$data);
+        }
+        
+    }
+
+    public function detial_lend_paple_now($lend_id){
+
+        $this->load->model('dashboard_model');
+        $standard = '1';
+        $data['reTurnGoods'] = $this->dashboard_model->getdetiallend($lend_id,$standard);
+
+        //if($standard == 1){
+            $this->load->view('admin/dashboard/detial_lend_paple',$data);
+       // }else{
+        //    $this->load->view('admin/dashboard/detial_lend_paple_low',$data);
+        //}
+
+
+        
+    }
+    public function sample2(){
+      
+            $this->load->view('admin/dashboard/test');
+      
     }
 
 }

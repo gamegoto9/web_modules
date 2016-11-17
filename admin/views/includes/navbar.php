@@ -4,9 +4,12 @@ session_start();
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
+$Pid = $_SESSION['Pid'];
+
 $dataUser = array(
         'username'  => $user,
-        'name'     => $name
+        'name'     => $name,
+        'Pid'     => $Pid
 );
 
 $this->session->set_userdata($dataUser);
@@ -17,7 +20,7 @@ $this->session->set_userdata($dataUser);
 <header class="header">
     <a href="index.html" class="logo">
         <!-- Add the class icon to your logo image or logo icon to add the margining -->
-        ทะเบียนครุภัณฑ์
+        ทะเบียนครุภัณฑ์ 
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">

@@ -1,106 +1,89 @@
+<?php
+/**
+ * PHPExcel
+ *
+ * Copyright (C) 2006 - 2014 PHPExcel
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * @category   PHPExcel
+ * @package    PHPExcel
+ * @copyright  Copyright (c) 2006 - 2014 PHPExcel (http://www.codeplex.com/PHPExcel)
+ * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
+ * @version    1.8.0, 2014-03-02
+ */
 
-<!--datatable-->
-<link href="<?php echo base_url('assets/css/jquery.dataTables.css') ?>" rel="stylesheet">
-<script src="<?php echo base_url('assets/js/jquery.dataTables.min.js') ?>"></script>
-<!--pnotify-->
-<link href="<?php echo base_url('assets/bootstrap_extras/pnotify/jquery.pnotify.default.icons.css') ?>" rel="stylesheet">
-<link href="<?php echo base_url('assets/bootstrap_extras/pnotify/jquery.pnotify.default.css') ?>" rel="stylesheet">
-<script src="<?php echo base_url('assets/bootstrap_extras/pnotify/jquery.pnotify.js') ?>"></script>
+/** Error reporting */
+error_reporting(E_ALL);
+ini_set('display_errors', TRUE);
+ini_set('display_startup_errors', TRUE);
+date_default_timezone_set('Europe/London');
 
-<script src="<?php echo base_url('assets/bootstrap_extras/bootbox/bootbox.min.js'); ?>"></script>
-<script>
-    $(document).ready(function() {
-        $('table.display').dataTable();
-    } );
-</script>
-<style>
-    div.dataTables_wrapper {
-        margin-bottom: 3em;
-    }
-</style>
+if (PHP_SAPI == 'cli')
+    die('This example should only be run from a Web Browser');
 
-
-<table class="display" cellspacing="0" width="100%">
-    <thead>
-     <?php
-        echo $type;
-     ?>
-  
-        <tr bgcolor='#fff045'>
-            <th>#</th>
-            <th>รหัสนักศึกษา</th>
-            <th>ชื่อ</th>
-            <th>สกุล</th>
-            <th>สาขาวิชา</th>
-            <th>คณะ</th>
-            <th>ปีที่เข้า</th>
-            <th>หลักสูตร</th>
-            <th>ประเภท</th>
-            <th>ดูข้อมูล</th>
-            <th>ลบ</th>
-        </tr>
-    </thead>
+/** Include PHPExcel */
+$this->load->library('excel');
 
 
+// Create new PHPExcel object
+$objPHPExcel = new PHPExcel();
 
-    <tbody>
-        <?php
-        $i = 1;
-        foreach ($record as $row) {
-            ?>
-
-            <tr>
-                <td><?php echo $i ?></td>
-                <td><?php echo $row['student_id']; ?></td>
-                <td><?php echo $row['name']; ?></td>
-                <td><?php echo $row['lname']; ?></td>
-                <td><?php echo $row['sub_name']; ?></td>
-                <td><?php echo $row['major_name']; ?></td>
-                <td><?php echo $row['year']; ?></td>
-                <td><?php echo $row['level']; ?></td>
-                <td><?php echo $row['type']; ?></td>
-              
-                <td><a href ="<?php echo site_url('admin/dashboard/show_data_student'); ?>" class="btn btn-info">View</a></td>
-                <td> <i class="btn btn-danger" onclick="btn_delete(<?php echo $row['student_id']; ?>);" >Delete</i></td>
-            </tr>
-            <?php
-            $i++;
-        }
-        ?>
-    </tbody>
-</table>
+// Set document properties
+$objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
+                             ->setLastModifiedBy("Maarten Balliauw")
+                             ->setTitle("Office 2007 XLSX Test Document")
+                             ->setSubject("Office 2007 XLSX Test Document")
+                             ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+                             ->setKeywords("office 2007 openxml php")
+                             ->setCategory("Test result file");
 
 
+// Add some data
+$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'Hello')
+            ->setCellValue('B2', 'world!')
+            ->setCellValue('C1', 'Hello')
+            ->setCellValue('D2', 'world!');
 
-<script>
-    function btn_delete(id){
-     
-     
-        bootbox.confirm("ยืนยันการลบข้อมูล ? ", function(ans) {
-            if (ans) {
-                var sdata = {id: id};
-                var faction = '<?php echo site_url('admin/dashboard/delete_data_student'); ?>';
-                $.post(faction, sdata, function(jdata) {
-                
-                    if (jdata.is_successful) {
-                        $.pnotify({
-                            title: 'แจ้งให้ทราบ',
-                            text: jdata.msg,
-                            type: 'success',
-                            history: false,
-                            delay: 3000
-                        });
-                        //                                       
-                        //                        //$(window.location).attr('href', '<?php echo site_url('website/list_data') ?>');  //โหลด function liste_data อีกครั้ง
-                        //                        //                                       $('#myTab a[href="#list"]').tab('show');
-                        //                        //                                       LoadList();
-                    }
-                }, 'json');
+// Miscellaneous glyphs, UTF-8
+$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A4', 'Miscellaneous glyphs')
+            ->setCellValue('A5', 'éàèùâêîôûëïüÿäöüç');
 
-   
-            
-            }
-        });   
-    }
-    
-</script>
+// Rename worksheet
+$objPHPExcel->getActiveSheet()->setTitle('Simple');
+
+
+// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+$objPHPExcel->setActiveSheetIndex(0);
+
+
+// Redirect output to a client’s web browser (Excel2007)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="01simple.xlsx"');
+header('Cache-Control: max-age=0');
+// If you're serving to IE 9, then the following may be needed
+header('Cache-Control: max-age=1');
+
+// If you're serving to IE over SSL, then the following may be needed
+header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header ('Pragma: public'); // HTTP/1.0
+
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+$objWriter->save('php://output');
+exit;

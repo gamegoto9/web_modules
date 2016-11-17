@@ -74,8 +74,8 @@
             ?>
 
             
-            <tr bgcolor='#87FA6A'>
-                <td bgcolor='#87FA6A'><?php echo $i ?></td>
+            <tr>
+                <td><?php echo $i ?></td>
                 <td><?php echo $row['id_goods_crru']; ?></td>
                 <td><?php echo $row['name_goods']; ?></td>
                 <td><?php echo $row['brand_goods']; ?></td>
