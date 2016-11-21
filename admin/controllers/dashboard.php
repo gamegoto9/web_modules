@@ -304,6 +304,21 @@ class Dashboard extends CI_Controller {
         $this->load->view('admin/dashboard/show_duruble_goods', $data);
     }
 
+    public function show_material() {
+
+
+        $this->load->model('dashboard_model');
+        $data['record'] = $this->dashboard_model->getData_material();
+        
+        $this->load->view('admin/dashboard/show_material', $data);
+    }
+    public function buy_material() {
+       $this->load->model('dashboard_model');
+        $data['record'] = $this->dashboard_model->getData_material();
+        
+        $this->load->view('admin/dashboard/buy_material_view',$data);
+    }
+
     public function lend_goode_seq(){
         
         $sql = "insert into lend_goods_seq values ('')";

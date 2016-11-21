@@ -37,11 +37,29 @@
                                     <span>ครุภัณฑ์ (ใหม่) </span> <small class="badge pull-right bg-orange">new</small>
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </a>
+                               
 <!--                    <ul class="treeview-menu">
                         <li><a href="#" onclick="durable_goods_news();"><i class="fa fa-angle-double-right"></i> ครุภัณฑ์</a> </li>
                         <li><a href="#" onclick="durable_goods_news2();"><i class="fa fa-angle-double-right"></i> ครุภัณฑ์ต่ำกว่าเกณฑ์</a></li>
                         
                     </ul>-->
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <small class="badge pull-right bg-orange">new</small>
+                        <i class="fa fa-bar-chart-o"></i>
+                        <span>วัสดุ (ใหม่)</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="#" onclick="material_news();"><i class="fa fa-th"></i> <span>ข้อมูลวัสดุ</span></a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="material_buy();"><i class="fa fa-th"></i> <span>ซื้อวัสดุระหว่างปี</span></a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="treeview">
@@ -96,6 +114,8 @@
                         </li>
                     </ul>
                 </li>
+
+                    
 <!--                <li class="treeview">
                     <a href="#">
                         <i class="fa fa-bar-chart-o"></i>
@@ -175,6 +195,14 @@
         }
         function durable_goods_news() {
             $('#main_view').load('dashboard/show_drurbleGoods_news/1');
+
+        }
+        function material_news() {
+            $('#main_view').load('dashboard/show_material/');
+
+        }
+        function material_buy() {
+            $('#main_view').load('dashboard/buy_material/');
 
         }
         function durable_goods_news2() {

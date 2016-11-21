@@ -41,6 +41,15 @@ class Dashboard_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function getData_material() {
+
+
+//        $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
+        $query = $this->db->query('select * from material_2016 order by MatId');
+
+        return $query->result_array();
+    }
+
     public function getData_duruble_goods_new_type($type) {
 
 

@@ -62,6 +62,7 @@
 
                 </div>
                 <div class="form-group">
+                
 
                     <label class="col-sm-2 control-label">ที่อยู่ :</label>
 
@@ -83,7 +84,7 @@
 
                     <label class="col-sm-2 control-label">วันที่ซื้อ :</label>
 
-                    <div class="col-sm-2">
+                    <div class="col-sm-4">
                         <div class='input-group date' id='datetimepicker1'>
                             <input type='text' class="form-control" id="date1" name="date1"/>
                             <span class="input-group-addon">

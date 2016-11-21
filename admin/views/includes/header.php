@@ -36,7 +36,15 @@
         <script src="<?php echo base_url('assets/themes/crru_inter/js/AdminLTE/app.js'); ?>"></script>
         
         
-        
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.0/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.0/js/bootstrap-select.min.js"></script>
+
+
+
+
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,3 +54,5 @@
         <![endif]-->
     </head>
     <body class="skin-blue">
+
+    
