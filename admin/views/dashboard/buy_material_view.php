@@ -38,7 +38,7 @@
 
                 <div class="col-sm-4">
                     <div class='input-group date' id='datetimepicker1'>
-                        <input type='text' class="form-control" id="date1" name="date1"/>
+                        <input type='text' class="form-control" id="date1" name="date1" required="" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -50,9 +50,8 @@
             <div class="form-group">
 
                 <label class="col-sm-2 control-label">รายการวัสดุ :</label>
-                <div class="row">
-                <div class="col-sm-9">
-                    <select class="selectpicker" data-live-search="true" id="txtNameMain">
+               
+                    <select class="selectpicker col-sm-9" data-live-search="true" id="txtNameMain" name="txtNameMain">
                     <?php
                     foreach ($record as $row) {
                     ?>                
@@ -63,14 +62,13 @@
                     ?>
                   </select>
                 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                  <input type="checkbox" name="gender" id="gender" value="notvalue"> * ไม่มีในรายการที่เลือก
+                   <br>
+                    <div class="col-sm-7 col-sm-offset-2">
+                        <input type="checkbox" name="gender" id="gender" value="notvalue"><font color="red"> * ไม่มีในรายการที่เลือก</font>
                                 
-              </div>
-              </div>
+                    </div>
 
-              <br>
+              <br><br>
 
               <div class="col-sm-7 col-sm-offset-2">
                 <input type="text" class="form-control" id="txtName" placeholder="รายการวัสดุ" name="txtName">
@@ -84,9 +82,9 @@
             <label class="col-sm-2 control-label">จำนวน :</label>
 
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="qty" placeholder="0000" name="qty">
+                <input type="text" class="form-control" id="qty" placeholder="0000" name="qty" required="">
             </div>
-            <label class="col-sm-0 control-label">บาท</label>
+            <label class="col-sm-0 control-label">หน่วย</label>
 
         </div>
         <div class="form-group">
@@ -94,11 +92,13 @@
             <label class="col-sm-2 control-label">ราคา :</label>
 
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="price" placeholder="0000" name="price">
+                <input type="text" class="form-control" id="price" placeholder="0000" name="price" required="ป้อนราคา">
             </div>
             <label class="col-sm-0 control-label">บาท</label>
 
         </div>
+
+        <br><br>
 
         <div class="form-group">
             <button type="button" class="btn btn-success col-md-offset-4" onclick="btn_con();">เพิ่ม</button>
@@ -119,6 +119,7 @@
         $('.selectpicker').selectpicker();
 
         
+        
 
     });
 </script>
@@ -127,14 +128,32 @@
     $(document).ready(function() {
 
         //$('#txtId').prop('disabled', 'disabled');
+
+        $('#gender').change(function() {
+            if ($('#gender').prop('checked')) {
+                $('#txtName').prop('disabled',false);
+                $('#txtNameMain').prop('disabled',true);
+                console.log("true");
+            }else{
+                $('#txtName').prop('disabled',true);
+                $('#txtNameMain').prop('disabled',false);
+                console.log("false");
+            }
+        });
+
+       
+
+
     });
 
 
     function btn_con() {
 
+     
+
         bootbox.confirm("ต้องการบันทึกหรือไม่ ?", function(result) {
             if (result) {
-                var faction = "<?php echo site_url('admin/dashboard/insert_goods/'); ?>";
+                var faction = "<?php echo site_url('admin/dashboard/insert_material/'); ?>";
                 var fdata = fdata = $("#select_data").serialize();
 
                 $.post(faction, fdata, function(jdata) {
