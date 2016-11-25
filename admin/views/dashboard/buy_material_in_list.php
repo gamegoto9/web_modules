@@ -1,9 +1,18 @@
+
+
 <!--pnotify-->
 <link href="<?php echo base_url('assets/bootstrap_extras/pnotify/jquery.pnotify.default.icons.css') ?>" rel="stylesheet">
 <link href="<?php echo base_url('assets/bootstrap_extras/pnotify/jquery.pnotify.default.css') ?>" rel="stylesheet">
 <script src="<?php echo base_url('assets/bootstrap_extras/pnotify/jquery.pnotify.js') ?>"></script>
 
 <script src="<?php echo base_url('assets/bootstrap_extras/bootbox/bootbox.min.js'); ?>"></script>
+
+
+
+<?php 
+$row = $record->row_array();
+?>
+
 
 
 <div class="row" id="select_type">
@@ -31,31 +40,18 @@
             </div>
             <div class="form-group">
 
+                
                 <label class="col-sm-2 control-label">รายการวัสดุ :</label>
                
-                    <select class="selectpicker col-sm-9" data-live-search="true" id="txtNameMain" name="txtNameMain">
-                    <?php
-                    foreach ($record->result_array() as $row) {
-                    ?>                
-                      <option value="<?php echo $row['MatName']; ?>"><?php echo $row['MatName']; ?></option>
                     
-                    <?php
-                    }
-                    ?>
-                  </select>
-                
-                   <br>
-                    <div class="col-sm-7 col-sm-offset-2">
-                        <input type="checkbox" name="gender" id="gender" value="notvalue"><font color="red"> * ไม่มีในรายการที่เลือก</font>
-                                
-                    </div>
+               
 
-              <br><br>
+                <div class="col-sm-8">
+           
+                <input type="text" class="form-control" id="txtName1" placeholder="รายการวัสดุ" name="txtName1" value="<?php echo $row['MatName']; ?>">
+                <input type="hidden" class="form-control" id="txtName" placeholder="รายการวัสดุ" name="txtName" value="<?php echo $row['MatName']; ?>">
 
-              <div class="col-sm-7 col-sm-offset-2">
-                <input type="text" class="form-control" id="txtName" placeholder="รายการวัสดุ" name="txtName">
-            </div>
-
+                </div>
         </div>
 
 
@@ -63,7 +59,7 @@
 
             <label class="col-sm-2 control-label">จำนวน :</label>
 
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <input type="text" class="form-control" id="qty" placeholder="0000" name="qty" required="">
             </div>
             <label class="col-sm-0 control-label">หน่วย</label>
@@ -73,8 +69,9 @@
 
             <label class="col-sm-2 control-label">ราคา :</label>
 
-            <div class="col-sm-2">
-                <input type="text" class="form-control" id="price" placeholder="0000" name="price" required="ป้อนราคา">
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="price1" value="<?php echo $row['price']; ?>">
+                <input type="hidden" class="form-control" id="price" name="price" value="<?php echo $row['price']; ?>">
             </div>
             <label class="col-sm-0 control-label">บาท</label>
 
@@ -83,7 +80,7 @@
         <br><br>
 
         <div class="form-group">
-            <button type="button" class="btn btn-success col-md-offset-4" onclick="btn_con();">เพิ่ม</button>
+            <button type="button" class="btn btn-success col-md-offset-4" onclick="btn_con1();">เพิ่ม</button>
             <button type="button" class="btn btn-danger" onclick="btn_clear();">ยกเลิก</button>
         </div>
     </div>
@@ -97,8 +94,9 @@
 <script type="text/javascript">
     $(function() {
         $('#datetimepicker1').datetimepicker({format: 'YYYY/MM/DD'});
-        $('#txtName').prop('disabled',true);
-        $('.selectpicker').selectpicker();
+        $('#txtName1').prop('disabled',true);
+        $('#price1').prop('disabled',true);
+      
 
         
         
@@ -129,7 +127,7 @@
     });
 
 
-    function btn_con() {
+    function btn_con1() {
 
      
 

@@ -59,6 +59,9 @@
                         <li>
                             <a href="#" onclick="material_buy();"><i class="fa fa-th"></i> <span>ซื้อวัสดุระหว่างปี</span></a>
                         </li>
+                        <li>
+                            <a href="#" onclick="material_lend();"><i class="fa fa-th"></i> <span>เบิกวัสดุ</span></a>
+                        </li>
                     </ul>
                 </li>
 
@@ -203,6 +206,10 @@
         }
         function material_buy() {
             $('#main_view').load('dashboard/buy_material/');
+
+        }
+        function material_lend() {
+            $('#main_view').load('dashboard/lend_material/');
 
         }
         function durable_goods_news2() {

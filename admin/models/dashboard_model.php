@@ -47,7 +47,7 @@ class Dashboard_model extends CI_Model {
 //        $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
         $query = $this->db->query('select * from material_2016 order by MatId');
 
-        return $query->result_array();
+        return $query;
     }
 
     public function getData_duruble_goods_new_type($type) {
@@ -70,6 +70,20 @@ class Dashboard_model extends CI_Model {
 
         return $query->result_array();
     }
+
+    public function getData_select_material($query2) {
+
+
+        $query = $this->db->query("SELECT * 
+            FROM material_2016
+            WHERE status = '1' and
+            id_goods NOT IN($query2)");
+        // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
+
+        return $query->result_array();
+    }
+
+
     public function getData_duruble_goods_maxid(){
         $query = $this->db->query("SELECT max(lend_id) as maxID from lend_goods_seq");
         // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));

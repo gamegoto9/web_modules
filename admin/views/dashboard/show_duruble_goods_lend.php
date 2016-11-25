@@ -47,11 +47,11 @@
 
 </style>
 
-<div align='right'>
+<!-- <div align='right'>
 
 <a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_goods_return'); ?>">Print</a>
 <br><br>
-</div>
+</div> -->
 <table class="display" cellspacing="0" width="100%">
     <thead>
 
