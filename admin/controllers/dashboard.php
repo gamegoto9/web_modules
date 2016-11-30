@@ -215,30 +215,30 @@ class Dashboard extends CI_Controller {
 
     public function lend_goode_detial(){
 
-            
-            $Pid = $this->session->userdata('Pid');
-            $id_goods = $this->input->post('id');
-            $lendId = $this->input->post('lendId');
-            $standard = $this->input->post('standard');
-            $Ddate = date('Y-m-d');
 
-            
-            $sql = "insert into lend_goods_detial
-                    (lend_id,Pid,id_goods,Ddate,standard)
-                    values ('$lendId','$Pid','$id_goods','$Ddate','$standard')";
+        $Pid = $this->session->userdata('Pid');
+        $id_goods = $this->input->post('id');
+        $lendId = $this->input->post('lendId');
+        $standard = $this->input->post('standard');
+        $Ddate = date('Y-m-d');
 
-            
-            $this->db->query($sql);
 
-            $sql = "update durable_goods_2016
-                    set status = '2'
-                    where id_goods = '$id_goods'";
+        $sql = "insert into lend_goods_detial
+        (lend_id,Pid,id_goods,Ddate,standard)
+        values ('$lendId','$Pid','$id_goods','$Ddate','$standard')";
 
-            $this->db->query($sql);
-            
-            echo json_encode(array(
-                'is_successful' => TRUE,
-                'msg' => 'บันทึกเรียบร้อย'
+
+        $this->db->query($sql);
+
+        $sql = "update durable_goods_2016
+        set status = '2'
+        where id_goods = '$id_goods'";
+
+        $this->db->query($sql);
+
+        echo json_encode(array(
+            'is_successful' => TRUE,
+            'msg' => 'บันทึกเรียบร้อย'
             ));
 
 
@@ -307,7 +307,7 @@ class Dashboard extends CI_Controller {
         //$this->form_validation->set_rules('txtNameMain', 'รายการ', 'required');
         $this->form_validation->set_rules('qty', 'จำนวน', 'required');
         $this->form_validation->set_rules('price', 'ราคา', 'required');
-       
+
 
         $this->form_validation->set_message('required', 'กรุุณาป้อน %s');
 
@@ -329,85 +329,88 @@ class Dashboard extends CI_Controller {
 
             $date1 = $this->input->post('date1');
             $select_mat = $this->input->post('txtNameMain');
-             $check = $this->input->post('gender');
+            $check = $this->input->post('gender');
             $input_name = $this->input->post('txtName');
             $qty = $this->input->post('qty');
             $price = $this->input->post('price');
 
             if($check == ""){
 
-                
+
                $sql = "select max(MatId) as maxid from material_2016";
-                $result1 = $this->db->query($sql)->result_array();
+               $result1 = $this->db->query($sql)->result_array();
 
-                foreach ($result1 as $row) {
-                    $maxid = $row['maxid'];
-                 
-                }
+               foreach ($result1 as $row) {
+                $maxid = $row['maxid'];
 
-                $maxid_full = $maxid + 1;
+            }
 
-                $data4['MatId'] = $maxid_full;
-                $data4['MatName'] = $select_mat;
+            $maxid_full = $maxid + 1;
 
-                $this->db->insert('material_2016', $data4);
+            $data4['MatId'] = $maxid_full;
+            $data4['MatName'] = $select_mat;
+            $data4['qty'] = $qty;
+            $data4['price'] = $price;
+            $data4['status_buy'] = '1';
+
+            $this->db->insert('material_2016', $data4);
 
 
-                $data5['MatId'] = $maxid_full;
-                $data5['qty'] = $qty;
-                $data5['price'] = $price;
-                $data5['Ddate'] = $date1;
+            $data5['MatId'] = $maxid_full;
+            $data5['qty'] = $qty;
+            $data5['price'] = $price;
+            $data5['Ddate'] = $date1;
 
-                $this->db->insert('buy_material_2016', $data5);
+            $this->db->insert('buy_material_2016', $data5);
 
-                
+
 
                 // $sql = "select * from material_2016 where MatId = '$select_mat'";
                 // $result = $this->db->query($sql)->result_array();
 
                 // foreach ($result as $row) {
                 //     $l_qty = $row['qty'];
-                  
+
 
                 // }
 
                 // $balance_qty = $qty + $l_qty;
-                
+
 
                 // $sql = "UPDATE material_2016 set qty=$balance_qty WHERE MatId=$select_mat";
                 // $this->db->query($sql);
 
 
-            }else{
-                
-                $sql = "select max(MatId) as maxid from material_2016";
-                $result1 = $this->db->query($sql)->result_array();
+        }else{
 
-                foreach ($result1 as $row) {
-                    $maxid = $row['maxid'];
-                 
-                }
+            $sql = "select max(MatId) as maxid from material_2016";
+            $result1 = $this->db->query($sql)->result_array();
 
-                $maxid_full = $maxid + 1;
-
-                $data2['MatId'] = $maxid_full;
-                
-                $data2['MatName'] = $input_name;
-
-                $this->db->insert('material_2016', $data2);
-
-
-                $data3['MatId'] = $maxid_full;
-                $data3['qty'] = $qty;
-                $data3['price'] = $price;
-                $data3['Ddate'] = $date1;
-
-                $this->db->insert('buy_material_2016', $data3);
-                
+            foreach ($result1 as $row) {
+                $maxid = $row['maxid'];
 
             }
 
-            
+            $maxid_full = $maxid + 1;
+
+            $data2['MatId'] = $maxid_full;
+
+            $data2['MatName'] = $input_name;
+
+            $this->db->insert('material_2016', $data2);
+
+
+            $data3['MatId'] = $maxid_full;
+            $data3['qty'] = $qty;
+            $data3['price'] = $price;
+            $data3['Ddate'] = $date1;
+
+            $this->db->insert('buy_material_2016', $data3);
+
+
+        }
+
+
             // $data['brand_goods'] = $this->input->post('txtBland');
             // $data['id_goods_crru'] = $this->input->post('txtIdCrru');
             // $data['address'] = $this->input->post('types');
@@ -417,85 +420,87 @@ class Dashboard extends CI_Controller {
 
             // $this->db->insert('durable_goods', $data);
 
-            echo json_encode(array(
-                'is_successful' => TRUE,
-                'msg' => 'บันทึกเรียบร้อย'
-                ));
-        }
+        echo json_encode(array(
+            'is_successful' => TRUE,
+            'msg' => 'บันทึกเรียบร้อย'
+            ));
     }
+}
 
 
-    public function insert_material_add() {
+public function insert_material_add() {
 
 
 
-        $this->load->library('form_validation');
+    $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('date1', 'วันที่', 'required');
-        $this->form_validation->set_rules('qty', 'จำนวน', 'required');
-        $this->form_validation->set_rules('price', 'ราคา', 'required');
-        $this->form_validation->set_rules('txtName', 'รายชื่อรายการ', 'required');
-        $this->form_validation->set_rules('matid', 'รหัส', 'required');
-       
+    $this->form_validation->set_rules('date1', 'วันที่', 'required');
+    $this->form_validation->set_rules('qty', 'จำนวน', 'required');
+    $this->form_validation->set_rules('price', 'ราคา', 'required');
+    $this->form_validation->set_rules('txtName', 'รายชื่อรายการ', 'required');
+    $this->form_validation->set_rules('matid', 'รหัส', 'required');
 
-        $this->form_validation->set_message('required', 'กรุุณาป้อน %s');
 
-        if ($this->form_validation->run() == FALSE) {
+    $this->form_validation->set_message('required', 'กรุุณาป้อน %s');
 
-            $msg = form_error('date1');
+    if ($this->form_validation->run() == FALSE) {
+
+        $msg = form_error('date1');
 //            $msg.= form_error('txtId');
-            
-
-            $msg.= form_error('qty');
-            $msg.= form_error('price');
-            $msg.= form_error('txtName');
-            $msg.= form_error('matid');
-
-            echo json_encode(array(
-                'is_successful' => FALSE,
-                'msg' => $msg
-                ));
-        } else {
 
 
-            $date1 = $this->input->post('date1');
-            $input_name = $this->input->post('txtName');
-            $qty = $this->input->post('qty');
-            $price = $this->input->post('price');
-            $matid = $this->input->post('matid');
+        $msg.= form_error('qty');
+        $msg.= form_error('price');
+        $msg.= form_error('txtName');
+        $msg.= form_error('matid');
 
-                          
-                $data['qty'] = $qty;
-                $data['price'] = $price;
-                $data['MatId'] = $matid;
-                $data['Ddate'] = $date1;
+        echo json_encode(array(
+            'is_successful' => FALSE,
+            'msg' => $msg
+            ));
+    } else {
 
-                $this->db->insert('buy_material_2016', $data);
+
+        $date1 = $this->input->post('date1');
+        $input_name = $this->input->post('txtName');
+        $qty = $this->input->post('qty');
+        $price = $this->input->post('price');
+        $matid = $this->input->post('matid');
+
+
+        $data['qty'] = $qty;
+        $data['price'] = $price;
+        $data['MatId'] = $matid;
+        $data['Ddate'] = $date1;
+
+        $this->db->insert('buy_material_2016', $data);
+
+
 
                 // $sql = "select * from material_2016 where MatId = '$select_mat'";
                 // $result = $this->db->query($sql)->result_array();
 
                 // foreach ($result as $row) {
                 //     $l_qty = $row['qty'];
-                  
+
 
                 // }
 
                 // $balance_qty = $qty + $l_qty;
-                
+
 
                 // $sql = "UPDATE material_2016 set qty=$balance_qty WHERE MatId=$select_mat";
                 // $this->db->query($sql);
 
 
-         
-                
+
+
                 // $sql = "select max(MatId) as maxid from material_2016";
                 // $result1 = $this->db->query($sql)->result_array();
 
                 // foreach ($result1 as $row) {
                 //     $maxid = $row['maxid'];
-                 
+
                 // }
 
                 // $maxid_full = $maxid + 1;
@@ -514,183 +519,204 @@ class Dashboard extends CI_Controller {
                 // $data3['Ddate'] = $date1;
 
                 // $this->db->insert('buy_material_2016', $data3);
-                
 
 
-            echo json_encode(array(
-                'is_successful' => TRUE,
-                'msg' => 'บันทึกเรียบร้อย'
-                ));
-        }
+
+        echo json_encode(array(
+            'is_successful' => TRUE,
+            'msg' => 'บันทึกเรียบร้อย'
+            ));
+    }
+}
+
+public function show_drurbleGoods_news($type) {
+
+
+    $this->load->model('dashboard_model');
+    $data['record'] = $this->dashboard_model->getData_duruble_goods_new($type);
+    $data['send'] = 'new'.$type;
+
+
+    $this->load->view('admin/dashboard/show_duruble_goods', $data);
+}
+
+public function show_material() {
+
+
+    $this->load->model('dashboard_model');
+    $data['record'] = $this->dashboard_model->getData_material();
+
+    $this->load->view('admin/dashboard/show_material', $data);
+}
+public function buy_material() {
+   $this->load->model('dashboard_model');
+   $data['record'] = $this->dashboard_model->getData_material();
+
+   $this->load->view('admin/dashboard/buy_material',$data);
+}
+
+public function table_buy_material() {
+   $this->load->model('dashboard_model');
+   $data['record'] = $this->dashboard_model->getData_material();
+
+   $this->load->view('admin/dashboard/table_buy_material',$data);
+}
+
+public function lend_goode_seq(){
+
+    $sql = "insert into lend_goods_seq values ('')";
+    $this->db->query($sql);
+
+}
+
+public function show_lend_news($type) {
+
+
+    $this->load->model('dashboard_model');
+    $data['data'] = $this->dashboard_model->getData_duruble_goods_new_type($type);
+    $data['maxid'] = $this->dashboard_model->getData_duruble_goods_maxid();
+    if($type == 1){
+        $data['type'] = 'เบิกครุภัณฑ์';
+        $data['standard'] = '1';
+    }else{
+        $data['type'] = 'เบิกครุภัณฑ์ต่ำกว่าเกณฑ์';
+        $data['standard'] = '2';
     }
 
-    public function show_drurbleGoods_news($type) {
 
 
-        $this->load->model('dashboard_model');
-        $data['record'] = $this->dashboard_model->getData_duruble_goods_new($type);
-        $data['send'] = 'new'.$type;
+    $this->load->view('admin/dashboard/lend_view', $data);
+}
+
+public function lend_material() {
 
 
-        $this->load->view('admin/dashboard/show_duruble_goods', $data);
-    }
-
-    public function show_material() {
-
-
-        $this->load->model('dashboard_model');
-        $data['record'] = $this->dashboard_model->getData_material();
-        
-        $this->load->view('admin/dashboard/show_material', $data);
-    }
-    public function buy_material() {
-       $this->load->model('dashboard_model');
-        $data['record'] = $this->dashboard_model->getData_material();
-        
-        $this->load->view('admin/dashboard/buy_material',$data);
-    }
-
-    public function table_buy_material() {
-       $this->load->model('dashboard_model');
-        $data['record'] = $this->dashboard_model->getData_material();
-        
-        $this->load->view('admin/dashboard/table_buy_material',$data);
-    }
-
-    public function lend_goode_seq(){
-        
-        $sql = "insert into lend_goods_seq values ('')";
-        $this->db->query($sql);
-
-    }
-
-    public function show_lend_news($type) {
-
-
-        $this->load->model('dashboard_model');
-        $data['data'] = $this->dashboard_model->getData_duruble_goods_new_type($type);
-        $data['maxid'] = $this->dashboard_model->getData_duruble_goods_maxid();
-        if($type == 1){
-            $data['type'] = 'เบิกครุภัณฑ์';
-            $data['standard'] = '1';
-        }else{
-            $data['type'] = 'เบิกครุภัณฑ์ต่ำกว่าเกณฑ์';
-            $data['standard'] = '2';
-        }
-        
-
-
-        $this->load->view('admin/dashboard/lend_view', $data);
-    }
-
-    public function lend_material() {
-
-
-        $this->load->model('dashboard_model');
+    $this->load->model('dashboard_model');
         //$data['data'] = $this->dashboard_model->getData_duruble_goods_new_type($type);
-        $data['maxid'] = $this->dashboard_model->getData_duruble_goods_maxid();
-      
-            $data['type'] = 'เบิกวัสดุ';
-            $data['standard'] = '1';
-       
+    $data['maxid'] = $this->dashboard_model->getData_material_maxid();
+
+    $data['type'] = 'เบิกวัสดุ';
+    $data['standard'] = '1';
+
     
-        $this->load->view('admin/dashboard/lend_material_view', $data);
-    }
+    $this->load->view('admin/dashboard/lend_material_view', $data);
+}
 
-    public function select_goods() {
+public function select_goods() {
 
-        $type = $this->input->post('id');
-        $query = $this->input->post('query');
-        $this->load->model('dashboard_model');
+    $type = $this->input->post('id');
+    $query = $this->input->post('query');
+    $this->load->model('dashboard_model');
 
-        $data['record'] = $this->dashboard_model->getData_duruble_goods_new_type2($type,$query);   
+    $data['record'] = $this->dashboard_model->getData_duruble_goods_new_type2($type,$query);   
 
-        $this->load->view('admin/dashboard/select_goods', $data);
-    }
+    $this->load->view('admin/dashboard/select_goods', $data);
+}
 
-    public function select_material() {
-
-       
-        $query = $this->input->post('query');
-        $this->load->model('dashboard_model');
-
-        $data['record'] = $this->dashboard_model->getData_duruble_goods_new_type2($query);   
-
-        $this->load->view('admin/dashboard/select_goods', $data);
-    }
+public function select_material() {
 
 
-    public function data_goods_news() {
+    $query = $this->input->post('query');
+    $this->load->model('dashboard_model');
 
-        $id = $this->input->post('id');
-        $this->load->model('dashboard_model');
-        $data['record'] = $this->dashboard_model->data_goods_new($id);
-        $data['send'] = '01';
+    $data['record'] = $this->dashboard_model->getData_select_material($query);   
 
-
-        $this->load->view('admin/dashboard/data_goods', $data);
-    }
-
-    public function data_buy_not_in() {
-
-       
-        $id = $this->input->post('id');
-        $this->load->model('dashboard_model');
-        $data['record'] = $this->dashboard_model->getData_material();
-        $data['send'] = '01';
-        $data['MatId'] = $id;
+    $this->load->view('admin/dashboard/select_goods', $data);
+}
 
 
-        $this->load->view('admin/dashboard/buy_material_view', $data);
-    }
+public function data_goods_news() {
 
-    public function data_buy_list_in() {
-
-        $id = $this->input->post('id');
-       
-        $sql = "select * from material_2016 where MatId = $id";
-
-        $data['record'] = $this->db->query($sql);
-
-        $data['send'] = '01';
-        $data['MatId'] = $id;
+    $id = $this->input->post('id');
+    $this->load->model('dashboard_model');
+    $data['record'] = $this->dashboard_model->data_goods_new($id);
+    $data['send'] = '01';
 
 
-        $this->load->view('admin/dashboard/buy_material_in_list', $data);
-    }
+    $this->load->view('admin/dashboard/data_goods', $data);
+}
 
-    public function select_goods_id() {
-
-        $id = $this->input->post('id');
-        $this->load->model('dashboard_model');
-        $data['record'] = $this->dashboard_model->data_goods_new($id);
-
-        $data['is_successful'] = TRUE;
+public function data_buy_not_in() {
 
 
-        echo json_encode($data);
+    $id = $this->input->post('id');
+    $this->load->model('dashboard_model');
+    $data['record'] = $this->dashboard_model->getData_material();
+    $data['send'] = '01';
+    $data['MatId'] = $id;
+
+
+    $this->load->view('admin/dashboard/buy_material_view', $data);
+}
+
+public function data_buy_list_in() {
+
+    $id = $this->input->post('id');
+
+    $sql = "SELECT
+    e.MatId,
+    e.MatName,
+
+    if(cnt.qty IS NULL,e.qty,(e.qty + cnt.qty) - if(lend.qty IS NULL,0,lend.qty)) as qty,
+        if(cnt.price IS NULL,e.price,cnt.price) as price,
+            if(cnt.price IS NULL,e.price * e.qty,((e.price*e.qty) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
+
+                FROM
+            material_2016 AS e
+            LEFT JOIN (
+            select sum(qty) as qty,price,MatId
+            from buy_material_2016
+            GROUP BY MatId
+            ) AS cnt ON cnt.MatId= e.MatId
+            LEFT JOIN (
+            select sum(qty) as qty,price,MatId
+            from lend_material_2016
+            GROUP BY MatId
+            ) AS lend ON lend.MatId= e.MatId
+
+            where e.MatId = $id";
+
+            $data['record'] = $this->db->query($sql);
+
+            $data['send'] = '01';
+            $data['MatId'] = $id;
+
+
+            $this->load->view('admin/dashboard/buy_material_in_list', $data);
+        }
+
+        public function select_goods_id() {
+
+            $id = $this->input->post('id');
+            $this->load->model('dashboard_model');
+            $data['record'] = $this->dashboard_model->data_goods_new($id);
+
+            $data['is_successful'] = TRUE;
+
+
+            echo json_encode($data);
 
        // $this->load->view('admin/dashboard/data_goods', $data);
-    }
-
-    public function detial_lend_paple($lend_id,$standard){
-
-        $this->load->model('dashboard_model');
-        $data['reTurnGoods'] = $this->dashboard_model->getdetiallend($lend_id,$standard);
-
-        if($standard == 1){
-            $this->load->view('admin/dashboard/detial_lend_paple',$data);
-        }else{
-            $this->load->view('admin/dashboard/detial_lend_paple_low',$data);
         }
-        
-    }
 
-    public function detial_lend_paple_now($lend_id){
+        public function detial_lend_paple($lend_id,$standard){
 
-        $this->load->model('dashboard_model');
-        $standard = '1';
-        $data['reTurnGoods'] = $this->dashboard_model->getdetiallend($lend_id,$standard);
+            $this->load->model('dashboard_model');
+            $data['reTurnGoods'] = $this->dashboard_model->getdetiallend($lend_id,$standard);
+
+            if($standard == 1){
+                $this->load->view('admin/dashboard/detial_lend_paple',$data);
+            }else{
+                $this->load->view('admin/dashboard/detial_lend_paple_low',$data);
+            }
+
+        }
+
+        public function detial_lend_paple_now($lend_id){
+
+            $this->load->model('dashboard_model');
+            $standard = '1';
+            $data['reTurnGoods'] = $this->dashboard_model->getdetiallend($lend_id,$standard);
 
         //if($standard == 1){
             $this->load->view('admin/dashboard/detial_lend_paple',$data);
@@ -699,12 +725,23 @@ class Dashboard extends CI_Controller {
         //}
 
 
-        
-    }
-    public function sample2(){
-      
-            $this->load->view('admin/dashboard/test');
-      
-    }
 
-}
+        }
+        public function sample2(){
+
+            $this->load->view('admin/dashboard/test');
+
+        }
+
+        public function mer(){
+            $sql = "SELECT Pid,Ddate,work1
+            FROM work
+            WHERE Pid IN('008','005')
+            GROUP BY Pid,Ddate";
+
+            $data['aaa'] = $this->db->query($sql);
+
+            $this->load->view('admin/dashboard/mer',$data);
+        }
+
+    }

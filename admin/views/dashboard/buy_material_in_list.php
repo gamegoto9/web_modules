@@ -133,7 +133,7 @@ $row = $record->row_array();
 
         bootbox.confirm("ต้องการบันทึกหรือไม่ ?", function(result) {
             if (result) {
-                var faction = "<?php echo site_url('admin/dashboard/insert_material_new/'); ?>";
+                var faction = "<?php echo site_url('admin/dashboard/insert_material_add/'); ?>";
                 var fdata = fdata = $("#select_data").serialize();
 
                 $.post(faction, fdata, function(jdata) {
@@ -151,7 +151,7 @@ $row = $record->row_array();
 
                         $('#view_table').load('<?php echo site_url('admin/dashboard/table_buy_material'); ?>');
 
-                        //$("#select_data").trigger('reset');
+                        $('.modal-backdrop').remove();
 
 
                     } else {

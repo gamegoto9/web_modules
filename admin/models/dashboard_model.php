@@ -45,7 +45,28 @@ class Dashboard_model extends CI_Model {
 
 
 //        $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
-        $query = $this->db->query('select * from material_2016 order by MatId');
+        $query = $this->db->query('SELECT
+            e.MatId,
+            e.MatName,
+
+            if(cnt.qty IS NULL,e.qty,(e.qty + cnt.qty) - if(lend.qty IS NULL,0,lend.qty)) as qty,
+                if(cnt.price IS NULL,e.price,cnt.price) as price,
+                    if(cnt.price IS NULL,e.price * e.qty,((e.price*e.qty) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
+
+                        FROM
+                    material_2016 AS e
+                    LEFT JOIN (
+                    select sum(qty) as qty,price,MatId
+                    from buy_material_2016
+                    GROUP BY MatId
+                    ) AS cnt ON cnt.MatId= e.MatId
+                    LEFT JOIN (
+                    select sum(qty) as qty,price,MatId
+                    from lend_material_2016
+                    GROUP BY MatId
+                    ) AS lend ON lend.MatId= e.MatId
+
+                    GROUP BY e.MatId');
 
         return $query;
     }
@@ -74,10 +95,28 @@ class Dashboard_model extends CI_Model {
     public function getData_select_material($query2) {
 
 
-        $query = $this->db->query("SELECT * 
-            FROM material_2016
-            WHERE status = '1' and
-            id_goods NOT IN($query2)");
+        $query = $this->db->query("SELECT
+            e.MatId,
+            e.MatName,
+
+            if(cnt.qty IS NULL,e.qty,(e.qty + cnt.qty) - if(lend.qty IS NULL,0,lend.qty)) as qty_totle,
+                if(cnt.price IS NULL,e.price,cnt.price) as buy_price,
+                    if(cnt.price IS NULL,e.price * e.qty,((e.price*e.qty) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
+
+                        FROM
+                    material_2016 AS e
+                    LEFT JOIN (
+                    select sum(qty) as qty,price,MatId
+                    from buy_material_2016
+                    GROUP BY MatId
+                    ) AS cnt ON cnt.MatId= e.MatId
+                    LEFT JOIN (
+                    select sum(qty) as qty,price,MatId
+                    from lend_material_2016
+                    GROUP BY MatId
+                    ) AS lend ON lend.MatId= e.MatId
+
+                    GROUP BY e.MatId");
         // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
 
         return $query->result_array();
@@ -86,6 +125,12 @@ class Dashboard_model extends CI_Model {
 
     public function getData_duruble_goods_maxid(){
         $query = $this->db->query("SELECT max(lend_id) as maxID from lend_goods_seq");
+        // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
+
+        return $query->row();
+    }
+    public function getData_material_maxid(){
+        $query = $this->db->query("SELECT max(lend_id) as maxID from lend_material_seq");
         // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
 
         return $query->row();
@@ -175,7 +220,7 @@ class Dashboard_model extends CI_Model {
 
 
     }
-     public function getdetiallend_all($id,$standard){
+    public function getdetiallend_all($id,$standard){
         $sql = "
         SELECT
         lend_goods_detial.lend_id,

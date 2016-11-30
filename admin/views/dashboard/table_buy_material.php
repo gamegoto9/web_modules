@@ -23,7 +23,7 @@
             <th>ราคา</th>
             <th>ราคารวม</th>
             <th>ซื้อวัสดุ</th>
-            <th>การเบิก</th>
+        
         </tr>
     </thead>
      <tbody>
@@ -44,9 +44,9 @@
                     <td><?php echo $row['MatName']; ?></td>
                     <td><?php echo $row['qty']; ?></td>
                     <td><?php echo $row['price']; ?></td>
-                    <td><?php echo ($row['qty'] * $row['price']); ?></td>
+                    <td><?php echo $row['price_totle']; ?></td>
                     <td><i class="fa fa-reply btn btn-warning" onclick="buy_material('<?php echo $row['MatId']; ?>')"> ซื้อวัสดุ</i></td>
-                    <td></td>
+                    
                     </tr>
 
                     <?php

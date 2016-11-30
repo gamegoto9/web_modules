@@ -100,7 +100,7 @@
                     <td><?php echo $row['MatName']; ?></td>
                     <td><?php echo $row['qty']; ?></td>
                     <td><?php echo $row['price']; ?></td>
-                    <td><?php echo ($row['qty'] * $row['price']); ?></td>
+                    <td><?php echo $row['price_totle']; ?></td>
                     <td><i class="fa fa-reply btn btn-info" onclick="">ข้อมุล</i></td>
                     <td></td>
                     </tr>

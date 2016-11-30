@@ -76,9 +76,11 @@
    <div align='right'>
 
     <i class="btn btn-success" onclick="showModal2('<?php echo $rows['MatId']; ?>')">ซื้อวัสดุนอกรายการ/ราคา</i>
-
+    <div class="col-sm-3 col-sm-offset-9">
+    <font color="red">*กรณีซื้อวัสดุ ที่ไม่มีในรายการ หรือ มีในรายการอยู่แล้ว แต่ราคาของวัสดุนั้นๆ เปลี่ยนไปจากเดิม </font>
+    </div>
 </div>
-<br><br>
+<br><br><br><br>
 <div id="view_table">
 
 </div>

@@ -47,7 +47,7 @@
 
 
             <div class="col-md-12">
-                <input type="hidden" name="maxid" id="maxid" value="<?php echo "R".sprintf("%04d",$maxid->maxID); ?>">
+                <input type="hidden" name="maxid" id="maxid" value="<?php echo "L".sprintf("%04d",$maxid->maxID); ?>">
               
                <table class="table table-bordered" id="tDataGoods">
                 <thead>
@@ -179,8 +179,6 @@
 
     function showModal_main() {
 
-        console.log(xid);
-
         var getvalue = getIdgoods();
 
         var query = getvalue.substr(0,getvalue.length - 1);
@@ -189,7 +187,7 @@
 
 
         var sdata = {query : query};
-        $('#div_show_main').load('<?php echo site_url('admin/dashboard/select_goods'); ?>', sdata);
+        $('#div_show_main').load('<?php echo site_url('admin/dashboard/select_material'); ?>', sdata);
         $('#modalShow_main').modal('show');
 
         
