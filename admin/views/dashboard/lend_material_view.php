@@ -93,7 +93,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">-- ข้อมูลครุภัณฑ์ --</h4>
+                <h4 class="modal-title" id="myModalLabel">-- ข้อมูลวัสดุ --</h4>
             </div>
             <div class="modal-body">
 
@@ -203,7 +203,7 @@
                 
                 if(rowss > 0){
 
-                    var faction1 = "<?php echo site_url('admin/dashboard/lend_goode_seq/'); ?>";
+                    var faction1 = "<?php echo site_url('admin/dashboard/lend_material_seq/'); ?>";
 
                     var fdata1 = {id: 'xxx'};
 
@@ -216,16 +216,17 @@
 
                         i++;
                         var id_goods = $('#tDataGoods').children().children().eq(i).children().eq(6).text();
-                        var standard1 = $('#tDataGoods').children().children().eq(i).children().eq(7).text();
-                        
-                        var faction = "<?php echo site_url('admin/dashboard/lend_goode_detial/'); ?>";
+                        var qty1 = $('#tDataGoods').children().children().eq(i).children().eq(3).text();
+                        var price = $('#tDataGoods').children().children().eq(i).children().eq(2).text();
 
-                        var fdata = {id: id_goods,lendId: lend_id,standard: standard1};
+                        var faction = "<?php echo site_url('admin/dashboard/lend_material_detial/'); ?>";
+
+                        var fdata = {id: id_goods,lendId: lend_id,qty: qty1,price: price};
 
                         console.log(i);
 
                         if(i === rowss-1){
-                            window.open('dashboard/detial_lend_paple_now/'+lend_id,'_blank');
+                            window.open('dashboard/detial_lend_paple_material_now/'+lend_id,'_blank');
                         }
 
                         $.post(faction, fdata, function(jdata) {
@@ -248,7 +249,7 @@
                                 update_price();
 
 
-                                loadpage_lendView('1');
+                                material_lend();
 
                                 
 

@@ -49,7 +49,7 @@ class Dashboard_model extends CI_Model {
             e.MatId,
             e.MatName,
 
-            if(cnt.qty IS NULL,e.qty,(e.qty + cnt.qty) - if(lend.qty IS NULL,0,lend.qty)) as qty,
+            if(cnt.qty IS NULL,e.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + cnt.qty) - if(lend.qty IS NULL,0,lend.qty)) as qty,
                 if(cnt.price IS NULL,e.price,cnt.price) as price,
                     if(cnt.price IS NULL,e.price * e.qty,((e.price*e.qty) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
 
@@ -99,8 +99,8 @@ class Dashboard_model extends CI_Model {
             e.MatId,
             e.MatName,
 
-            if(cnt.qty IS NULL,e.qty,(e.qty + cnt.qty) - if(lend.qty IS NULL,0,lend.qty)) as qty_totle,
-                if(cnt.price IS NULL,e.price,cnt.price) as buy_price,
+            if(cnt.qty IS NULL,e.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + cnt.qty) - if(lend.qty IS NULL,0,lend.qty)) as qty,
+                if(cnt.price IS NULL,e.price,cnt.price) as price,
                     if(cnt.price IS NULL,e.price * e.qty,((e.price*e.qty) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
 
                         FROM
@@ -115,7 +115,7 @@ class Dashboard_model extends CI_Model {
                     from lend_material_2016
                     GROUP BY MatId
                     ) AS lend ON lend.MatId= e.MatId
-
+                    WHERE e.MatId NOT IN($query2)
                     GROUP BY e.MatId");
         // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
 
@@ -142,6 +142,34 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->get_where('durable_goods_2016', array('id_goods' => $id));
 
         return $query->result_array();
+    }
+
+    public function getData_material_id($id){
+
+
+        $query = $this->db->query("SELECT
+            e.MatId,
+            e.MatName,
+
+            if(cnt.qty IS NULL,e.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + cnt.qty) - if(lend.qty IS NULL,0,lend.qty)) as qty,
+                if(cnt.price IS NULL,e.price,cnt.price) as price,
+                    if(cnt.price IS NULL,e.price * e.qty,((e.price*e.qty) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
+
+                        FROM
+                    material_2016 AS e
+                    LEFT JOIN (
+                    select sum(qty) as qty,price,MatId
+                    from buy_material_2016
+                    GROUP BY MatId
+                    ) AS cnt ON cnt.MatId= e.MatId
+                    LEFT JOIN (
+                    select sum(qty) as qty,price,MatId
+                    from lend_material_2016
+                    GROUP BY MatId
+                    ) AS lend ON lend.MatId= e.MatId
+                    WHERE e.MatId = '$id'");
+
+        return $query;
     }
 
     public function getData_reTurn_goods() {
@@ -220,6 +248,35 @@ class Dashboard_model extends CI_Model {
 
 
     }
+
+    public function getdetiallend_material($id){
+        $sql = "
+        SELECT
+        lend_goods_detial.lend_id,
+        lend_goods_detial.id_goods,
+        if(lend_goods_detial.standard = '1','ครุภัณฑ์','ครุภัณฑ์ต่ำกว่าเกณฑ์') as standard,
+            lend_goods_detial.Ddate,
+        personal.`name`,
+        durable_goods_2016.price,
+        durable_goods_2016.name_goods,
+        durable_goods_2016.brand_goods,
+        durable_goods_2016.id_buy,
+        personal.Position,
+        durable_goods_2016.id_goods_crru
+        FROM
+        lend_goods_detial
+        INNER JOIN personal ON lend_goods_detial.Pid = personal.Pid
+        INNER JOIN durable_goods_2016 ON lend_goods_detial.id_goods = durable_goods_2016.id_goods
+        WHERE lend_id = '$id' and durable_goods_2016.standard = '$standard'";
+
+        $query = $this->db->query($sql);
+        return $query;
+
+
+
+
+    }
+
     public function getdetiallend_all($id,$standard){
         $sql = "
         SELECT

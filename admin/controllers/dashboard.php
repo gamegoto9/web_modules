@@ -171,6 +171,30 @@ class Dashboard extends CI_Controller {
         }
     }
 
+    public function checkCountMaterial() {
+
+
+        $id = $this->input->post('id');
+        $count = $this->input->post('qty_num');
+
+        
+        $this->load->model('dashboard_model');
+        $data = $this->dashboard_model->getData_material_id($id)->row_array();
+       
+        if ($count > $data['qty']) {
+
+            echo json_encode(array(
+               'is_successful' => FALSE,
+               'msg' => 'วัสดุมีจำนวนไม่เพียงพอ มีอยู่ '.$data['qty']
+               ));
+        }else{
+            echo json_encode(array(
+                'is_successful' => TRUE
+                ));
+        }
+
+    }
+
     public function show_data_student() {
         $this->load->view('admin/dashboard/show_data_student');
     }
@@ -235,6 +259,39 @@ class Dashboard extends CI_Controller {
         where id_goods = '$id_goods'";
 
         $this->db->query($sql);
+
+        echo json_encode(array(
+            'is_successful' => TRUE,
+            'msg' => 'บันทึกเรียบร้อย'
+            ));
+
+
+
+    }
+
+    public function lend_material_detial(){
+
+
+        $Pid = $this->session->userdata('Pid');
+        $id_goods = $this->input->post('id');
+        $lendId = $this->input->post('lendId');
+        $qty = $this->input->post('qty');
+        $price = $this->input->post('price');
+        $Ddate = date('Y-m-d');
+
+
+        $sql = "insert into lend_material_2016
+        (LmatId,Pid,MatId,Ddate,qty,price)
+        values ('$lendId','$Pid','$id_goods','$Ddate','$qty','$price')";
+
+
+        $this->db->query($sql);
+
+        // $sql = "update durable_goods_2016
+        // set status = '2'
+        // where id_goods = '$id_goods'";
+
+        // $this->db->query($sql);
 
         echo json_encode(array(
             'is_successful' => TRUE,
@@ -568,6 +625,12 @@ public function lend_goode_seq(){
     $this->db->query($sql);
 
 }
+public function lend_material_seq(){
+
+    $sql = "insert into lend_material_seq values ('')";
+    $this->db->query($sql);
+
+}
 
 public function show_lend_news($type) {
 
@@ -621,7 +684,7 @@ public function select_material() {
 
     $data['record'] = $this->dashboard_model->getData_select_material($query);   
 
-    $this->load->view('admin/dashboard/select_goods', $data);
+    $this->load->view('admin/dashboard/select_material', $data);
 }
 
 
@@ -699,6 +762,20 @@ public function data_buy_list_in() {
        // $this->load->view('admin/dashboard/data_goods', $data);
         }
 
+        public function select_material_id() {
+
+            $id = $this->input->post('id');
+            $this->load->model('dashboard_model');
+            $data['record'] = $this->dashboard_model->getData_material_id($id)->result_array();
+
+            $data['is_successful'] = TRUE;
+
+
+            echo json_encode($data);
+
+       // $this->load->view('admin/dashboard/data_goods', $data);
+        }
+
         public function detial_lend_paple($lend_id,$standard){
 
             $this->load->model('dashboard_model');
@@ -717,6 +794,21 @@ public function data_buy_list_in() {
             $this->load->model('dashboard_model');
             $standard = '1';
             $data['reTurnGoods'] = $this->dashboard_model->getdetiallend($lend_id,$standard);
+
+        //if($standard == 1){
+            $this->load->view('admin/dashboard/detial_lend_paple',$data);
+       // }else{
+        //    $this->load->view('admin/dashboard/detial_lend_paple_low',$data);
+        //}
+
+
+
+        }
+
+        public function detial_lend_paple_material_now($lend_id){
+
+            $this->load->model('dashboard_model');
+            $data['reTurnGoods'] = $this->dashboard_model->getdetiallend_material($lend_id);
 
         //if($standard == 1){
             $this->load->view('admin/dashboard/detial_lend_paple',$data);

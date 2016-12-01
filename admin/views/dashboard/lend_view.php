@@ -189,7 +189,7 @@
 
 
         var sdata = {id: xid,query : query};
-        $('#div_show_main').load('<?php echo site_url('admin/dashboard/select_goods'); ?>', sdata);
+        $('#div_show_main').load('<?php echo site_url('admin/dashboard/select_material'); ?>', sdata);
         $('#modalShow_main').modal('show');
 
         
