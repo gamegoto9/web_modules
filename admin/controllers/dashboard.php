@@ -87,6 +87,15 @@ class Dashboard extends CI_Controller {
         $this->load->view('admin/dashboard/show_duruble_goods_lend', $data);
     }
 
+    public function DetialLendMaterial() {
+        $this->load->model('dashboard_model');
+        $data['reTurnGoods'] = $this->dashboard_model->getData_Lend_Material();
+
+    
+
+        $this->load->view('admin/dashboard/show_duruble_goods_lend_material', $data);
+    }
+
     public function detialLend(){
         $this->load->model('dashboard_model');
         $id = $this->input->post('id');
@@ -94,6 +103,15 @@ class Dashboard extends CI_Controller {
         $data['reTurnGoods'] = $this->dashboard_model->getdetiallend_all($id,$standard);
 
         $this->load->view('admin/dashboard/detial_lend', $data);
+    }
+
+    public function detialLendMaterial2(){
+        $this->load->model('dashboard_model');
+        $id = $this->input->post('id');
+    
+        $data['reTurnGoods'] = $this->dashboard_model->getdetiallend_material($id);
+
+        $this->load->view('admin/dashboard/detial_lend_material', $data);
     }
 
     public function detial_goods($type) {
@@ -811,7 +829,7 @@ public function data_buy_list_in() {
             $data['reTurnGoods'] = $this->dashboard_model->getdetiallend_material($lend_id);
 
         //if($standard == 1){
-            $this->load->view('admin/dashboard/detial_lend_paple',$data);
+            $this->load->view('admin/dashboard/detial_lend_material_paple',$data);
        // }else{
         //    $this->load->view('admin/dashboard/detial_lend_paple_low',$data);
         //}

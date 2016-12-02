@@ -115,6 +115,11 @@
                                 <i class="fa fa-newspaper-o"></i> <span>ใบเบิกครุภัณฑ์ต่ำกว่าเกณฑ์</span> <small class="badge pull-right bg-orange">new</small>
                             </a>
                         </li>
+                        <li>
+                            <a href="#" onclick="loadDetialLendMaterial();">
+                                <i class="fa fa-newspaper-o"></i> <span>ใบเบิกวัสดุ</span> <small class="badge pull-right bg-orange">new</small>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -219,6 +224,10 @@
         function loadDetialLend(standard) {
             var xstandard = standard;
             $('#main_view').load('dashboard/DetialLendGoods/'+xstandard);
+        }
+         function loadDetialLendMaterial() {
+          
+            $('#main_view').load('dashboard/DetialLendMaterial/');
         }
 
 

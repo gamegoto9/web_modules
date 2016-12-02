@@ -216,6 +216,23 @@ class Dashboard_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function getData_Lend_Material() {
+
+        $query = $this->db->query("SELECT
+            lend_material_2016.LmatId,
+            sum(lend_material_2016.qty) as count,
+            sum(lend_material_2016.price) as sum,
+            lend_material_2016.Ddate,
+            personal.`name`
+            FROM
+            lend_material_2016
+            INNER JOIN personal ON lend_material_2016.Pid = personal.Pid
+            GROUP BY lend_material_2016.LmatId
+            ");
+
+        return $query->result_array();
+    }
+
     public function getTypeDurableGoods() {
         $query = $this->db->get('type_durable_goods');
         return $query->result_array();
@@ -250,30 +267,22 @@ class Dashboard_model extends CI_Model {
     }
 
     public function getdetiallend_material($id){
-        $sql = "
-        SELECT
-        lend_goods_detial.lend_id,
-        lend_goods_detial.id_goods,
-        if(lend_goods_detial.standard = '1','ครุภัณฑ์','ครุภัณฑ์ต่ำกว่าเกณฑ์') as standard,
-            lend_goods_detial.Ddate,
+        $sql = "SELECT
+        lend_material_2016.MatId,
+        material_2016.MatName,
+        lend_material_2016.qty,
+        lend_material_2016.Ddate,
+        lend_material_2016.price,
         personal.`name`,
-        durable_goods_2016.price,
-        durable_goods_2016.name_goods,
-        durable_goods_2016.brand_goods,
-        durable_goods_2016.id_buy,
-        personal.Position,
-        durable_goods_2016.id_goods_crru
+        lend_material_2016.LmatId
         FROM
-        lend_goods_detial
-        INNER JOIN personal ON lend_goods_detial.Pid = personal.Pid
-        INNER JOIN durable_goods_2016 ON lend_goods_detial.id_goods = durable_goods_2016.id_goods
-        WHERE lend_id = '$id' and durable_goods_2016.standard = '$standard'";
+        lend_material_2016
+        INNER JOIN material_2016 ON material_2016.MatId = lend_material_2016.MatId
+        INNER JOIN personal ON lend_material_2016.Pid = personal.Pid
+        WHERE LmatId = '$id'";
 
         $query = $this->db->query($sql);
         return $query;
-
-
-
 
     }
 

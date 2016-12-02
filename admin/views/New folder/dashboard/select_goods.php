@@ -1,3 +1,4 @@
+
 <!--datatable-->
 <link href="<?php echo base_url('assets/css/jquery.dataTables123.css') ?>" rel="stylesheet">
 <script src="<?php echo base_url('assets/js/jquery.dataTables.min.js') ?>"></script>
@@ -62,11 +63,12 @@
         <tr bgcolor='#7ACCFA'>
             <th>#</th>
             <th>รายการ</th>
-
-            <th>จำนวน</th>
-            <th>ราคา/ชิ้น</th>
-
+            <th>ยี่ห้อ/รุ่น</th>
+            <th>หมายเลขครุภัณฑ์</th>
             
+            <th>ราคา</th>
+            <th>ปีงบฯ</th>
+            <th>ข้อมูล</th>
             <th>เลือก</th>
         </tr>
     </thead>
@@ -78,13 +80,16 @@
             ?>
             <tr>
                 <td bgcolor='#87FA6A'><?php echo $i ?></td>
-                <td><?php echo $row['MatName']; ?></td>              
-                <td><?php echo $row['qty']; ?></td>
+                <td><?php echo $row['name_goods']; ?></td>
+                <td><?php echo $row['brand_goods']; ?></td>
+                <td><?php echo $row['id_goods_crru']; ?></td>
+
                 <td><?php echo $row['price']; ?></td>
+                <td><?php echo $row['year']; ?></td>
 
                 <!--<td><i class="fa fa-folder-o btn btn-primary" data-toggle="modal" data-target="#myModal" onclick ="showModal(<?php echo $row['id_goods']; ?>)"> ดูข้อมูล </i></td>-->
-
-<td> <i class="fa fa-share btn btn-warning " onclick="btn_select(<?php echo $row['MatId']; ?>);"> </i></td>
+<td> <i class="fa fa-tags btn btn-success" onclick="showModal(<?php echo $row['id_goods']; ?>);"> </i></td>
+<td> <i class="fa fa-share btn btn-warning " onclick="btn_select(<?php echo $row['id_goods']; ?>);"> </i></td>
 
 </tr>
 <?php
@@ -135,83 +140,10 @@ $i++;
 
 
     function btn_select(id) {
-
-
-
-
-        bootbox.dialog({
-            message: "จำนวน : <input type='number' class='form-control' name='qty_num' id='qty_num'></input>",
-            title: "ยืนยันจำนวนที่ต้องการเบิก",
-            buttons: {
-                main: {
-                    label: "Close",
-                    className: "btn-primary",
-                },
-                success: {
-                    label: "OK!",
-                    className: "btn-success",
-                    callback: function() {
-
-
-
-                        // alert("Hi "+ $('#pass').val());
-                        var qty_num = $('#qty_num').val();
-
-                        //if(keyword == key){
-
-                            if( qty_num != ""){
-                                var sdata = {id: id,
-                                    qty_num: qty_num};
-
-                                    console.log(qty_num+" = = "+ id);
-                                    var faction = '<?php echo site_url('admin/dashboard/checkCountMaterial'); ?>';
-                                    $.post(faction, sdata, function(jdata) {
-
-                                        if (jdata.is_successful) {
-                                            
-
-                                            addDataTable(id,qty_num);
-
-                                // //  $(window.location).attr('href', '<?php echo site_url('website/index') ?>');  //โหลด function liste_data อีกครั้ง
-                                // $('#myTab a[href="#list"]').tab('show');
-                                // // LoadList();
-                            } else {
-                                $.pnotify({
-                                    title: 'แจ้งให้ทราบ',
-                                    text: jdata.msg,
-                                    type: 'error',
-                                    history: false,
-                                    delay: 3000
-                                });
-                            }
-                        }, 'json');
-
-                                }else{
-                                    $.pnotify({
-                                        title: 'แจ้งให้ทราบ',
-                                        text: 'กรุณาป้อนจำนวน',
-                                        type: 'error',
-                                        history: false,
-                                        delay: 3000
-                                    });
-                                }
-                        //}else{
-
-
-
-                        //}
-
-                    }
-                }
-
-            }
-        });
-}
-
-function addDataTable(id,qty_num){
-
         var xid = id;
-        var faction = "<?php echo site_url('admin/dashboard/select_material_id/'); ?>";
+
+
+        var faction = "<?php echo site_url('admin/dashboard/select_goods_id/'); ?>";
         var fdata = {id:xid};
         var tname,tprice,tqty,tsum;
 
@@ -219,21 +151,22 @@ function addDataTable(id,qty_num){
 
             if (jdata.is_successful) {
 
-             tname = jdata.record[0]['MatName'];
+             tname = jdata.record[0]['name_goods'];
              tprice = jdata.record[0]['price'];
-             tqty = qty_num;
+             tqty = 1;
              tsum = tprice * tqty;
              var numtitle =  $('#tDataGoods tbody tr').length+1;
 
 
              $("#tDataGoods tbody").append("<tr>"+
                 "<td class='text-center'>"+numtitle+"</td>"+
-                "<td class='text-left'>"+tname+"</td>"+
+                "<td class='text-left'>"+tname+jdata.record[0]['brand_goods']+"</td>"+
                 "<td class='text-right'>"+tprice+"</td>"+
                 "<td class='text-center'>"+tqty+"</td>"+
                 "<td class='text-right'>"+tsum+"</td>"+
                 "<td class='text-center'><button type='button' class='btn btn-small btn-danger' id='remo'><i class='fa fa-trash'></i></button></td>"+
-                "<td class='hid_p'>"+jdata.record[0]['MatId']+"</td>"+
+                "<td class='hid_p'>"+jdata.record[0]['id_goods']+"</td>"+
+                "<td class='hid_p'>"+jdata.record[0]['standard']+"</td>"+
                 "</tr>"); 
 
              $(".hid_p").hide();
@@ -257,7 +190,9 @@ function addDataTable(id,qty_num){
         }
 
     }, 'json');
-}
+
+
+    }
 
 </script>
 

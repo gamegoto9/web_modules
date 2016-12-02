@@ -200,7 +200,7 @@
             if (result) {
 
                 var rowss = $('#tDataGoods >tbody >tr').length;
-                
+                console.log("rowCount = = "+rowss);
                 if(rowss > 0){
 
                     var faction1 = "<?php echo site_url('admin/dashboard/lend_material_seq/'); ?>";
@@ -223,11 +223,11 @@
 
                         var fdata = {id: id_goods,lendId: lend_id,qty: qty1,price: price};
 
-                        console.log(i);
+                        console.log(id_goods + " - " + lend_id + " - " + qty1 + " - " + price );
 
-                        if(i === rowss-1){
-                            window.open('dashboard/detial_lend_paple_material_now/'+lend_id,'_blank');
-                        }
+                       
+                           
+                      
 
                         $.post(faction, fdata, function(jdata) {
 
@@ -244,16 +244,11 @@
 
                                 });
 
-                                $("#tDataGoods >tbody >tr").remove(); 
 
-                                update_price();
-
-
-                                material_lend();
-
-                                
-
-                                
+                            //$("#tDataGoods >tbody >tr").remove(); 
+                            //update_price();
+                            
+           
 
                         //$("#select_data").trigger('reset');
 
@@ -273,6 +268,11 @@
 
                 }, 'json');
                     }
+
+                            
+                window.open('dashboard/detial_lend_paple_material_now/'+lend_id,'_blank');
+                btn_new_page();
+
                 }else{
                  $.pnotify({
                     title: 'แจ้งให้ทราบ!',
@@ -291,9 +291,35 @@
         return false;
     }
     function btn_clear() {
-        $("#select_data").trigger('reset');
+        //$("#select_data").trigger('reset');
+         material_lend();
     }
 
+function btn_new_page() {
+
+
+
+
+        bootbox.dialog({
+            message: "ต้องการเริ่มการเบิกวัสดุใหม่หรือไม่ ?",
+            title: "ยืนยันการเบิกครั้งใหม่",
+            buttons: {
+                main: {
+                    label: "Close",
+                    className: "btn-primary",
+                },
+                success: {
+                    label: "OK!",
+                    className: "btn-success",
+                    callback: function() {
+                        
+                        material_lend();
+                    }
+                }
+
+            }
+        });
+}
 
 
 

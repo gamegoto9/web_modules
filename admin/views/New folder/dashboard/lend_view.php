@@ -226,7 +226,9 @@
 
                         console.log(i);
 
-                        
+                        if(i === rowss-1){
+                            window.open('dashboard/detial_lend_paple_now/'+lend_id,'_blank');
+                        }
 
                         $.post(faction, fdata, function(jdata) {
 
@@ -243,12 +245,13 @@
 
                                 });
 
-                                // $("#tDataGoods >tbody >tr").remove(); 
+                                $("#tDataGoods >tbody >tr").remove(); 
 
-                                // update_price();
+                                update_price();
 
 
-                                
+                                loadpage_lendView('1');
+
                                 
 
                                 
@@ -271,9 +274,6 @@
 
                 }, 'json');
                     }
-                            window.open('dashboard/detial_lend_paple_now/'+lend_id,'_blank');
-                            btn_new_page();
-                        
                 }else{
                  $.pnotify({
                     title: 'แจ้งให้ทราบ!',
@@ -292,32 +292,8 @@
         return false;
     }
     function btn_clear() {
-        //$("#select_data").trigger('reset');
-        loadpage_lendView('1');
+        $("#select_data").trigger('reset');
     }
-
-    function btn_new_page() {
-        bootbox.dialog({
-            message: "ต้องการเริ่มการเบิกวัสดุใหม่หรือไม่ ?",
-            title: "ยืนยันการเบิกครั้งใหม่",
-            buttons: {
-                main: {
-                    label: "Close",
-                    className: "btn-primary",
-                },
-                success: {
-                    label: "OK!",
-                    className: "btn-success",
-                    callback: function() {
-                        
-                        loadpage_lendView('1');
-
-                    }
-                }
-
-            }
-        });
-}
 
 
 

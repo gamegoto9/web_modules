@@ -61,9 +61,13 @@
 </style>
 
 
+<div align='left'>
+ <i class="buttonT buttonP" href="#"></i> = ครุภัณฑ์ <p>
+        <i class="buttonT buttonG" href="#"></i> = ครุภัณฑ์ต่ำกว่าเกณฑ์
+</div>
 <div align='right'>
 
-    <a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_material/'); ?>">Print</a>
+    <a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_goods/' . $send); ?>">Print</a>
     <br><br>
    
 </div>
@@ -75,40 +79,108 @@
         <tr bgcolor='#7ACCFA'>
             <th>#</th>
             <th>รายการ</th>
-            <th>จำนวน</th>
+            <th>ยี่ห้อ/รุ่น</th>
+            <th>หมายเลขครุภัณฑ์</th>
+            <th>วันที่เบิก</th>
             <th>ราคา</th>
-            <th>ราคารวม</th>
-            
-            <th>การเบิก</th>
+            <th></th>
+            <th>ข้อมูล</th>
+            <th>ส่งคืน</th>
         </tr>
     </thead>
-     <body>
+
 
 
     
         <?php
         $i = 1;
 
-       
+        if ($send == 'new1' || $send == 'new2') {
             
-            foreach ($record->result_array() as $row) {
-            ?>
+            foreach ($record as $row) {
+                ?>
 
-                    <tr>
+                <?php
+                if ($row['status'] == "0") {
+                    //echo '<tr bgcolor = "#87FA6A">';
+                } else {
+                    //echo '<tr>';
+                }
                 
-                    <td><?php echo $i ?></td>
-                    <td><?php echo $row['MatName']; ?></td>
-                    <td><?php echo $row['qty']; ?></td>
+                if($row['standard'] == '1'){
+                ?>
+    
+                    <tr bgcolor='#dc9e9e'>
+                <?php
+                }else{
+                ?>
+    
+                    <tr bgcolor='#a2d89a'>
+                <?php
+                }
+                ?>
+                
+                    <td bgcolor='#87FA6A'><?php echo $i ?></td>
+                    <td><?php echo $row['name_goods']; ?></td>
+                    <td><?php echo $row['brand_goods']; ?></td>
+                    <td><?php echo $row['id_goods_crru']; ?></td>
+                    <td><?php echo $row['date_start']; ?></td>
                     <td><?php echo $row['price']; ?></td>
-                    <td><?php echo $row['price_totle']; ?></td>
-                    <td><i class="fa fa-reply btn btn-info" onclick=""></i></td>
-                    
-                    </tr>
+                    <td><?php echo $row['year']; ?></td>
 
+
+                        <!--<td><i class="fa fa-folder-o btn btn-primary" data-toggle="modal" data-target="#myModal" onclick ="showModal(<?php echo $row['id_goods']; ?>)"> ดูข้อมูล </i></td>-->
+                    <td> <i class="fa fa-tags btn btn-success" onclick="showModal(<?php echo $row['id_goods']; ?>);"> </i></td>
                     <?php
-                     $i++;
-            } ?> 
-       
+                    if($row['status'] == '1'){
+                    ?>
+                    <td> <i class="fa fa-reply btn btn-warning" onclick="btn_delete(<?php echo $row['id_goods']; ?>);"> ส่งคืน</i></td>
+                    <?php }else if($row['status'] == '2'){
+                    ?>
+                    <td> <i class="btn btn-info"> ยืม</i></td>
+                    <?php
+                    }else if($row['status'] == '0'){
+                    ?>
+                    <td> <i class="btn btn-danger"> ส่งคืนเรียบร้อยแล้ว</i></td>
+                    <?php
+                    } ?> 
+                </tr>
+        <?php
+        $i++;
+    }
+            
+        } else {
+
+
+            foreach ($record as $row) {
+                ?>
+
+                <?php
+                if ($row['status'] == "0") {
+                    //echo '<tr bgcolor = "#87FA6A">';
+                } else {
+                    //echo '<tr>';
+                }
+                ?>
+                <tr bgcolor='#87FA6A'>
+                    <td bgcolor='#87FA6A'><?php echo $i ?></td>
+                    <td><?php echo $row['name_goods']; ?></td>
+                    <td><?php echo $row['brand_goods']; ?></td>
+                    <td><?php echo $row['id_goods_crru']; ?></td>
+                    <td><?php echo $row['date_start']; ?></td>
+                    <td><?php echo $row['price']; ?></td>
+                    <td><?php echo $row['room']; ?></td>
+
+
+                        <!--<td><i class="fa fa-folder-o btn btn-primary" data-toggle="modal" data-target="#myModal" onclick ="showModal(<?php echo $row['id_goods']; ?>)"> ดูข้อมูล </i></td>-->
+                    <td> <i class="fa fa-reply btn btn-warning" onclick="btn_delete(<?php echo $row['id_goods']; ?>);"> ส่งคืน</i></td>
+                </tr>
+        <?php
+        $i++;
+    }
+}
+?>
+    
 </table>
 
 
@@ -150,6 +222,38 @@
 
 
     function btn_delete(id) {
+
+
+//alert("aa");
+        /*
+         bootbox.confirm("ยืนยันการลบข้อมูล ? ", function(ans) {
+         if (ans) {
+         var sdata = {id: id};
+         var faction = '<?php echo site_url('admin/dashboard/delete_data_student'); ?>';
+         $.post(faction, sdata, function(jdata) {
+         
+         if (jdata.is_successful) {
+         $.pnotify({
+         title: 'แจ้งให้ทราบ',
+         text: jdata.msg,
+         type: 'success',
+         history: false,
+         delay: 3000
+         });
+         //                                       
+         //                        //$(window.location).attr('href', '<?php echo site_url('website/list_data') ?>');  //โหลด function liste_data อีกครั้ง
+         //                        //                                       $('#myTab a[href="#list"]').tab('show');
+         //                        //                                       LoadList();
+         }
+         }, 'json');
+         
+         
+         
+         }
+         });   
+         */
+
+
 
         bootbox.dialog({
             message: "Password : <input type='password' class='form-control' name='pass' id='pass'></input>",
