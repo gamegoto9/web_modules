@@ -387,7 +387,7 @@ mysql_close();
                                                 <p>
                                                     <a href="http://crruinter.crru.ac.th/Presentation.pdf" target="_blank"><img src="<?php echo base_url('assets/themes/templatemo_403_karma/images/' . $this->lang->line('inter') . '.png'); ?> " width="100%" class="center-block img-responsive"></a>
                                                 <p>
-                                                     <a href="<?php echo base_url('/admin/studentdata/'); ?>" target="_blank"><img src = "<?php echo base_url('assets/themes/agency/img/student.png'); ?>" width="100%"></a>&nbsp;&nbsp;
+                                                     <a href="http://crruinter.crru.ac.th/student/student.php" target="_blank"><img src = "<?php echo base_url('assets/themes/agency/img/student.png'); ?>" width="100%"></a>&nbsp;&nbsp;
                                                 <P>
                                                     <a href="<?php echo base_url('/site/dashboard/seateacher'); ?>" target="_blank"><img src = "<?php echo base_url('assets/themes/agency/img/sea_teacher.png'); ?>" width="100%"></a>&nbsp;&nbsp;
                                                 <P>

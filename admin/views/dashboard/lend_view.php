@@ -74,6 +74,15 @@
           </div>
       </div>
 
+      <div class="form-group">
+            <div class="pull-left">
+                <label for="inputsumPrice" class="col-sm-5 control-label ">ผู้ครอบครอง</label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="txtName2" name="txtName2" placeholder="ชื่อผู้ครอบครอง">
+              </div>
+          </div>
+      </div>
+
       <br/><br/>
       <div class="form-group">
 
@@ -202,7 +211,8 @@
             if (result) {
 
                 var rowss = $('#tDataGoods >tbody >tr').length;
-                
+                var txtNameInput = $('#txtName2').val();
+
                 if(rowss > 0){
 
                     var faction1 = "<?php echo site_url('admin/dashboard/lend_goode_seq/'); ?>";
@@ -213,6 +223,7 @@
 
                     //var Ddate = new Date().toISOString().slice(0, 10);
                     var lend_id = $('#maxid').val();
+                    
                     var i = 0;
                     while (i < rowss) {
 
@@ -222,7 +233,7 @@
                         
                         var faction = "<?php echo site_url('admin/dashboard/lend_goode_detial/'); ?>";
 
-                        var fdata = {id: id_goods,lendId: lend_id,standard: standard1};
+                        var fdata = {id: id_goods,lendId: lend_id,standard: standard1,txtName: txtNameInput};
 
                         console.log(i);
 
@@ -271,8 +282,11 @@
 
                 }, 'json');
                     }
+
+                    if(txtNameInput != ""){
                             window.open('dashboard/detial_lend_paple_now/'+lend_id,'_blank');
                             btn_new_page();
+                        }
                         
                 }else{
                  $.pnotify({

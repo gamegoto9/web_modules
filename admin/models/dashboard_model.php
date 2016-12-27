@@ -48,10 +48,13 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->query('SELECT
             e.MatId,
             e.MatName,
+                        if(e.qty IS NULL,cnt.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + if(cnt.qty IS NULL,0,cnt.qty)) - if(lend.qty IS NULL,0,lend.qty)) as qty,
 
-            if(cnt.qty IS NULL,e.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + cnt.qty) - if(lend.qty IS NULL,0,lend.qty)) as qty,
-                if(cnt.price IS NULL,e.price,cnt.price) as price,
-                    if(cnt.price IS NULL,e.price * e.qty,((e.price*e.qty) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
+            
+                if(cnt.price IS NULL,e.price,if(e.price IS NULL,cnt.price,e.price)) as price,
+
+
+                    if(cnt.price IS NULL,if(e.price IS NULL,0,e.price) * if(e.qty IS NULL,0,e.qty),((if(e.price IS NULL,0,e.price)*if(e.qty IS NULL,0,e.qty)) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
 
                         FROM
                     material_2016 AS e
@@ -98,10 +101,13 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->query("SELECT
             e.MatId,
             e.MatName,
+                    if(e.qty IS NULL,cnt.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + if(cnt.qty IS NULL,0,cnt.qty)) - if(lend.qty IS NULL,0,lend.qty)) as qty,
 
-            if(cnt.qty IS NULL,e.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + cnt.qty) - if(lend.qty IS NULL,0,lend.qty)) as qty,
-                if(cnt.price IS NULL,e.price,cnt.price) as price,
-                    if(cnt.price IS NULL,e.price * e.qty,((e.price*e.qty) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
+            
+                    if(cnt.price IS NULL,e.price,if(e.price IS NULL,cnt.price,e.price)) as price,
+
+
+                    if(cnt.price IS NULL,if(e.price IS NULL,0,e.price) * if(e.qty IS NULL,0,e.qty),((if(e.price IS NULL,0,e.price)*if(e.qty IS NULL,0,e.qty)) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
 
                         FROM
                     material_2016 AS e
@@ -115,8 +121,9 @@ class Dashboard_model extends CI_Model {
                     from lend_material_2016
                     GROUP BY MatId
                     ) AS lend ON lend.MatId= e.MatId
-                    WHERE e.MatId NOT IN($query2)
-                    GROUP BY e.MatId");
+                                        WHERE e.MatId NOT IN($query2)
+                    GROUP BY e.MatId
+                    ");
         // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
 
         return $query->result_array();
@@ -150,10 +157,13 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->query("SELECT
             e.MatId,
             e.MatName,
+                        if(e.qty IS NULL,cnt.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + if(cnt.qty IS NULL,0,cnt.qty)) - if(lend.qty IS NULL,0,lend.qty)) as qty,
 
-            if(cnt.qty IS NULL,e.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + cnt.qty) - if(lend.qty IS NULL,0,lend.qty)) as qty,
-                if(cnt.price IS NULL,e.price,cnt.price) as price,
-                    if(cnt.price IS NULL,e.price * e.qty,((e.price*e.qty) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
+            
+                if(cnt.price IS NULL,e.price,if(e.price IS NULL,cnt.price,e.price)) as price,
+
+
+                    if(cnt.price IS NULL,if(e.price IS NULL,0,e.price) * if(e.qty IS NULL,0,e.qty),((if(e.price IS NULL,0,e.price)*if(e.qty IS NULL,0,e.qty)) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
 
                         FROM
                     material_2016 AS e

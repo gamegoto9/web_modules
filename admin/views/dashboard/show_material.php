@@ -13,10 +13,20 @@
         $('table.display').dataTable();
     });
 </script>
+
 <style>
     div.dataTables_wrapper {
         margin-bottom: 3em;
     }
+    body .modal-admin {
+        /* new custom width */
+        width: 80%;
+        /* must be half of the width, minus scrollbar on the left (30px) */
+        margin-left: 10%;
+    }
+    .table thead {
+     text-align: center;   
+ }
 </style>
 
 <style>
@@ -73,13 +83,11 @@
 
     <thead>
         <tr bgcolor='#7ACCFA'>
-            <th>#</th>
-            <th>รายการ</th>
-            <th>จำนวน</th>
-            <th>ราคา</th>
-            <th>ราคารวม</th>
-            
-            <th>การเบิก</th>
+            <th><center>#</center></th>
+            <th><center>รายการ</center></th>
+            <th><center>จำนวน</center></th>
+            <th><center>ข้อมูล</center></th>
+            <th><center>บัญชีวัสดุ</center></th>
         </tr>
     </thead>
      <body>
@@ -96,13 +104,11 @@
 
                     <tr>
                 
-                    <td><?php echo $i ?></td>
+                    <td><center><?php echo $i ?></center></td>
                     <td><?php echo $row['MatName']; ?></td>
-                    <td><?php echo $row['qty']; ?></td>
-                    <td><?php echo $row['price']; ?></td>
-                    <td><?php echo $row['price_totle']; ?></td>
-                    <td><i class="fa fa-reply btn btn-info" onclick=""></i></td>
-                    
+                    <td><center><?php echo $row['qty']; ?></center></td>
+                    <td><center><i class="fa fa-info btn btn-warning" onclick="showModal(<?php echo $row['MatId']; ?>);"></i></center></td>
+                    <td><center><a class="fa fa-info btn btn-info" href="<?php echo base_url('admin/dashboard/detial_lend_paple_material_center/'.$row['MatId']); ?>"></a></center></td>
                     </tr>
 
                     <?php
@@ -114,11 +120,11 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalShow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-admin" >
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">-- ข้อมูลครุภัณฑ์ --</h4>
+                <h4 class="modal-title" id="myModalLabel">-- ข้อมูลวัสดุ --</h4>
             </div>
             <div class="modal-body">
 
@@ -141,9 +147,9 @@
     function showModal(xid) {
 
 
-        var sdata = {id: xid};
-        $('#div_show').load('<?php echo site_url('admin/dashboard/data_goods_news'); ?>', sdata);
-        $('#modalShow').modal('show');
+         var sdata = {id: xid};
+         $('#div_show').load('<?php echo site_url('admin/dashboard/data_detial_material'); ?>', sdata);
+         $('#modalShow').modal('show');
     }
     
 

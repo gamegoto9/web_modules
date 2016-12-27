@@ -62,11 +62,8 @@
         <tr bgcolor='#7ACCFA'>
             <th>#</th>
             <th>รายการ</th>
-
             <th>จำนวน</th>
-            <th>ราคา/ชิ้น</th>
-
-            
+            <th>ราคา/ชิ้น</th>           
             <th>เลือก</th>
         </tr>
     </thead>

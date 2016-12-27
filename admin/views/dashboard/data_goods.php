@@ -55,11 +55,20 @@
                                 <tr onmouseover='this.bgColor = & quot; #FFFFCC & quot;' onmouseout='this.bgColor = & quot; #ffffff & quot;'>
                                     <td><span class="thsarabunnew">สถานะ :</span></td>
                                     <td callspan="3"><span class="thsarabunnew"><?PHP if($row['status'] == '1'){
-                                        echo "ยังไม่คืน";
-                                    }else{
+                                        echo "ยังไม่คืน ใช้งานได้";
+                                    }else if($row['status'] == '2'){
                                         echo "ส่งคืนแล้ว";
+                                    }else if($row['status'] == '9'){
+                                        echo "ไม่ทราบข้อมูลที่อยู่";
+                                    }else if($row['status'] == '9'){
+                                        echo "ชำรุด";
                                     }
                                         ?></span></td>
+                                    
+                                </tr>
+                                <tr onmouseover='this.bgColor = & quot; #FFFFCC & quot;' onmouseout='this.bgColor = & quot; #ffffff & quot;'>
+                                    <td><span class="thsarabunnew">ผู้ครอบครอง(ดูแล) :</span></td>
+                                    <td callspan="3"><span class="thsarabunnew"><?php echo $row['address']; ?></span></td>
                                     
                                 </tr>
                                 <tr onmouseover='this.bgColor = & quot; #FFFFCC & quot;' onmouseout='this.bgColor = & quot; #ffffff & quot;'>
@@ -70,6 +79,13 @@
                                         echo "คุภัณฑ์ต่ำกว่าเกณฑ์";
                                     }
                                         ?></span></td>
+                                    
+                                </tr>
+                                <tr onmouseover='this.bgColor = & quot; #FFFFCC & quot;' onmouseout='this.bgColor = & quot; #ffffff & quot;'>
+                                    <td><span class="thsarabunnew">ทะเบียนคุมทรัพย์สินย์ :</span></td>
+                                    <td callspan="3"><span class="thsarabunnew">
+                                        <a class="btn btn-info" href="<?php echo base_url('admin/dashboard/detial_lend_paple_goods_center/'.$row['id_goods']); ?>" target="_blank">คลิก!</a>
+                                    </span></td>
                                     
                                 </tr>
 
@@ -129,6 +145,13 @@
                                         echo "คุภัณฑ์ต่ำกว่าเกณฑ์";
                                     }
                                         ?></span></td>
+                                    
+                                </tr>
+                                <tr onmouseover='this.bgColor = & quot; #FFFFCC & quot;' onmouseout='this.bgColor = & quot; #ffffff & quot;'>
+                                    <td><span class="thsarabunnew">ทะเบียนคุมทรัพย์สินย์ :</span></td>
+                                    <td callspan="3"><span class="thsarabunnew">
+                                        <a class="btn btn-info" href="<?php echo base_url('admin/dashboard/detial_lend_paple_goods_center/'.$row['id_goods']); ?>" target="_blank">คลิก!</a>
+                                    </span></td>
                                     
                                 </tr>
 

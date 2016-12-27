@@ -83,9 +83,9 @@
             <th>หมายเลขครุภัณฑ์</th>
             <th>วันที่เบิก</th>
             <th>ราคา</th>
-            <th></th>
+            <th>ปีงบฯ</th>
             <th>ข้อมูล</th>
-            <th>ส่งคืน</th>
+            <th>สถานะ</th>
         </tr>
     </thead>
 
@@ -134,7 +134,8 @@
                     <?php
                     if($row['status'] == '1'){
                     ?>
-                    <td> <i class="fa fa-reply btn btn-warning" onclick="btn_delete(<?php echo $row['id_goods']; ?>);"> ส่งคืน</i></td>
+                    <!-- <i class="fa fa-reply btn btn-warning" onclick="btn_delete(<?php //echo $row['id_goods']; ?><!-- );">ส่งคืน</i> -->
+                    <td> <i class="btn btn-warning"> ใช้งาน</i></td>
                     <?php }else if($row['status'] == '2'){
                     ?>
                     <td> <i class="btn btn-info"> ยืม</i></td>
@@ -142,6 +143,14 @@
                     }else if($row['status'] == '0'){
                     ?>
                     <td> <i class="btn btn-danger"> ส่งคืนเรียบร้อยแล้ว</i></td>
+                    <?php
+                    }else if($row['status'] == '9'){
+                    ?>
+                    <td> <i class="btn btn-danger"> ไม่ทราบที่อยู่</i></td>
+                    <?php
+                    }else if($row['status'] == '3'){
+                    ?>
+                    <td> <i class="btn btn-danger"> ชำรุด</i></td>
                     <?php
                     } ?> 
                 </tr>

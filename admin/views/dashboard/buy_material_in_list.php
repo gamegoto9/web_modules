@@ -23,6 +23,31 @@ $row = $record->row_array();
 
                 <input type="hidden" name="matid" id="matid" value="<?php echo $MatId; ?>">
 
+                <div class="form-group">
+
+                <label class="col-sm-2 control-label">เลขที่อ้างอิง(กองคลัง) :</label>
+
+                <div class="col-sm-4">
+                    
+                        <input type='text' class="form-control" id="idbuy" name="idbuy" required />
+                  
+
+                </div>
+
+            </div>
+            <div class="form-group">
+
+                <label class="col-sm-2 control-label">ชื่อร้านค้า :</label>
+
+                <div class="col-sm-6">
+                    
+                        <input type='text' class="form-control" id="market_name" name="market_name" required />
+                  
+
+                </div>
+
+            </div>
+
                <div class="form-group">
 
                 <label class="col-sm-2 control-label">วันที่ซื้อ :</label>

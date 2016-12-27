@@ -33,6 +33,25 @@
                                     </div>
                 
                                 </div>-->
+                <div class="form-group">
+
+                    <label class="col-sm-2 control-label">รหัสการซื้อ :</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="id_buy" placeholder="xxxxxx" name="id_buy">
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label class="col-sm-2 control-label">ร้านค้าที่ซื้อ :</label>
+
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="name_buy" placeholder="xxxxxx" name="name_buy">
+                    </div>
+
+                </div>
 
                 <div class="form-group">
 
@@ -71,7 +90,7 @@
                             <?PHP
                             foreach ($types as $row) {
                                 ?>
-                                <option value="<?php echo $row['address']; ?>"><?php echo $row['type_name']; ?></option>
+                                <option value="<?php echo $row['type_name']; ?>"><?php echo $row['type_name']; ?></option>
                                 <?PHP
                             }
                             ?>
