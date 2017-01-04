@@ -62,6 +62,11 @@
                                 <i class="fa fa-th"></i> <span>ยืมครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
                             </a>
                         </li>
+                        <li>
+                            <a href="#" onclick="return_goods();">
+                                <i class="fa fa-th"></i> <span>คืนครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
+                            </a>
+                        </li>
                     </ul>
 
 
@@ -146,6 +151,11 @@
                         <li>
                             <a href="#" onclick="loadDetialLendMaterial();">
                                 <i class="fa fa-newspaper-o"></i> <span>ใบเบิกวัสดุ</span> <small class="badge pull-right bg-orange">new</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="loadDetialGet();">
+                                <i class="fa fa-newspaper-o"></i> <span>รายงานการยืมครุภัณฑ์</span> <small class="badge pull-right bg-orange">new</small>
                             </a>
                         </li>
                     </ul>
@@ -239,6 +249,11 @@
             $('#main_view').load('dashboard/get_goods/' + xid);
 
         }
+        function return_goods() {
+         
+            $('#main_view').load('dashboard/return_goods/');
+
+        }
 
         function loadDetialReturn() {
             $('#main_view').load('dashboard/DetialReturnGoods/');
@@ -272,6 +287,10 @@
         function loadDetialLend(standard) {
             var xstandard = standard;
             $('#main_view').load('dashboard/DetialLendGoods/' + xstandard);
+        }
+
+        function loadDetialGet() {
+            $('#main_view').load('dashboard/DetialGetGoods/');
         }
 
         function loadDetialLendMaterial() {

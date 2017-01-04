@@ -200,61 +200,145 @@ function ReadNumber($number)
                 // $this->excel->getActiveSheet()->getColumnDimension('G')->setWidth(13.14);
                 // $this->excel->getActiveSheet()->getColumnDimension('H')->setWidth(13.14);
                 $this->excel->getActiveSheet()->getColumnDimension('I')->setWidth(17.29);
-                $this->excel->getActiveSheet()->getRowDimension(4)->setRowHeight(6);
-    			$this->excel->getActiveSheet()->getRowDimension(7)->setRowHeight(9.75);
+//                $this->excel->getActiveSheet()->getRowDimension(4)->setRowHeight(6);
+//    			$this->excel->getActiveSheet()->getRowDimension(7)->setRowHeight(9.75);
 //set cell A1 content with some text
-                $this->excel->getActiveSheet()->setCellValue('A1', 'ใบเบิกวัสดุ');
+                $this->excel->getActiveSheet()->setCellValue('A2', 'ใบยืมครุภัณฑ์');
 //change the font size
-                $this->excel->getActiveSheet()->getStyle('A1')->applyFromArray($styleArray);
+                $this->excel->getActiveSheet()->getStyle('A2')->applyFromArray($styleArray);
 //make the font become bold
                
 //merge cell A1 until D1
-                $this->excel->getActiveSheet()->mergeCells('A1:I1');
+                $this->excel->getActiveSheet()->mergeCells('A2:I2');
+
+                $this->excel->getActiveSheet()->setCellValue('A3', 'ชื่อหน่วยงาน กองวิเทศสัมพันธ์');
+//change the font size
+                $this->excel->getActiveSheet()->getStyle('A3')->applyFromArray($styleBoldCenter);
+//make the font become bold
+               
+//merge cell A1 until D1
+                $this->excel->getActiveSheet()->mergeCells('A3:I3');
+
 
                 $year = date("Y")+543;
 
+                 $startDate = $row['Ddate_get'];
+                $sDay = substr($startDate, 8,2);
+
+                $sMount = substr($startDate, 5,2);
+
+                function convertMouth($Mount){
+                switch ($Mount) {
+                    case '01':
+                        $sMount = 'มกราคม';
+                        break;
+                     case '02':
+                        $sMount = 'มกราคม';
+                        break;
+                     case '03':
+                        $sMount = 'มกราคม';
+                        break;
+                     case '04':
+                        $sMount = 'มกราคม';
+                        break;
+                     case '05':
+                        $sMount = 'มกราคม';
+                        break;
+                     case '06':
+                        $sMount = 'มกราคม';
+                        break;
+                     case '07':
+                        $sMount = 'มกราคม';
+                        break;
+                     case '08':
+                        $sMount = 'มกราคม';
+                        break;
+                     case '09':
+                        $sMount = 'มกราคม';
+                        break;
+                     case '10':
+                        $sMount = 'มกราคม';
+                        break;
+                     case '11':
+                        $sMount = 'มกราคม';
+                        break;
+                     case '12':
+                        $sMount = 'มกราคม';
+                        break;
+                    
+                    default:
+                        $sMount = '';
+                        break;
+                }
+                return $sMount;
+            }
+
+
+                $sYear = substr($startDate, 0,4) + 543;
+
+
                 $this->excel->getActiveSheet()
-                ->setCellValueByColumnAndRow(8, 2, 'เลขที่ใบเบิก  '.$row['LmatId'].'/'.$year);
+                ->setCellValueByColumnAndRow(8, 1, 'บย. '.$row['get_id'].'/'.$year);
 
-                $this->excel->getActiveSheet()->getStyle('I2')->applyFromArray($styleRight);
+                $this->excel->getActiveSheet()->getStyle('I1')->applyFromArray($styleBoldCenterHeaderTable);
 
-                // $this->excel->getActiveSheet()->setCellValue('A3', 'เรียน  ผู้อำนวยการกองวิเทศสัมพันธ์');
+                $this->excel->getActiveSheet()
+                ->setCellValueByColumnAndRow(8, 4, 'วันที่ '.$sDay.'  เดือน ' .convertMouth($sMount).'  ปี '.$sYear);
 
-                // $this->excel->getActiveSheet()->getStyle('A3')->applyFromArray($styleArray2);
+                $this->excel->getActiveSheet()->getStyle('I4')->applyFromArray($styleRight);
 
-                $this->excel->getActiveSheet()->setCellValue('I3', 'วันที่เบิก  '.$row['Ddate']);
-                $this->excel->getActiveSheet()->getStyle('I3')->applyFromArray($styleRight);
+                $this->excel->getActiveSheet()->setCellValue('A5', 'เรียน  ผู้อำนวยการกองวิเทศสัมพันธ์');
 
-                // $this->excel->getActiveSheet()->setCellValue('I4', 'อ้างอิงเอกสารพัสดุกลาง:เลขที่ใบเบิก '.$row['id_buy']);
-                // $this->excel->getActiveSheet()->getStyle('I4')->applyFromArray($styleRight);
+                $this->excel->getActiveSheet()->getStyle('A5')->applyFromArray($styleArray2);
 
-                $this->excel->getActiveSheet()->setCellValue('B5', 'ข้าพเจ้า นาย/นาง/นางสาว '.'.........'.$row['name'].'......................................................................................................');
+             
+
+                $this->excel->getActiveSheet()->setCellValue('B6', 'ข้าพเจ้า'.'......'.$row['name_get'].'.................................................................................................................................');
+
+                $this->excel->getActiveSheet()->setCellValue('G6', 'สังกัด '.'....'.$row['major_get'].'..............................................');
 
                 // $this->excel->getActiveSheet()->setCellValue('G6', 'ตำแหน่ง'.'.....'.$row['Position']);
 
-                 $this->excel->getActiveSheet()->setCellValue('J5', ' ');
+                $this->excel->getActiveSheet()->setCellValue('J6', ' ');
 
-                $this->excel->getActiveSheet()->setCellValue('A6', 'งาน/ฝ่าย '.' กองวิเทศสัมพันธ์ '.' มีความประสงค์จะขอเบิกวัสดุตามรายการข้างล่างนี้ เพื่อนำไปใช้ในทางราชการ');
+                $this->excel->getActiveSheet()->setCellValue('A7', '.................................................................................................................................');
 
-                // $this->excel->getActiveSheet()->setCellValue('F7', ' งาน / โปรแกรมวิชา '.'.....'.' ........................ ');
-                  $this->excel->getActiveSheet()->setCellValue('J6', ' ');
+                $this->excel->getActiveSheet()->setCellValue('F7', 'เบอร์โทร '.'....'.$row['tel'].'.................................................................................................................................');
 
-                 // $this->excel->getActiveSheet()->setCellValue('A8', ' มีความประสงค์จะขอเบิกครุภัณฑ์ เพื่อนำไปใช้ประจำที่ '.'...'.' ..... '.'...................................................');
-                 // $this->excel->getActiveSheet()->setCellValue('J8', ' ');
+                $this->excel->getActiveSheet()->setCellValue('J7', ' ');
 
-                 // $this->excel->getActiveSheet()->setCellValue('A9', 'ดังรายการต่อไปนี้');
+                $this->excel->getActiveSheet()->setCellValue('A8', 'ขอความอนุเคราะห์ยืมครุภัณฑ์เพื่อใช้ใน โครงการ/กิจกรรรม');
 
-                 $this->excel->getActiveSheet()->setCellValue('A8', 'ลำดับที่');
-                 $this->excel->getActiveSheet()->setCellValue('B8', 'รายการ/รายละเอียด');
-                 $this->excel->getActiveSheet()->mergeCells('B8:H8');
+                $this->excel->getActiveSheet()->setCellValue('A9', '.....'.$row['note'].'.....');
+
+               
+
+                $lDate = $row['Ddate_return'];
+                $lDay = substr($lDate, 8,2);
+                $lMouth = substr($lDate, 5,2);
+                $lYear = substr($lDate, 0,4) + 543;
+
+                $this->excel->getActiveSheet()->setCellValue('A10', 'ตั้งแต่วันที่...'.$sDay.'... เดือน...'.convertMouth($sMount).'... พ.ศ..'.$sYear.'..    กำหนดส่งคืนในวันที่...'.$lDay.'... เดือน...'.convertMouth($lMouth).'... พ.ศ..'.$lYear.'...');
+
+                 $this->excel->getActiveSheet()->setCellValue('A11', 'โดยมีรายละเอียดการยืมพัสดุดังนี้');
+
+               
+
+                 $this->excel->getActiveSheet()->setCellValue('A12', 'ลำดับ');
+                 $this->excel->getActiveSheet()->setCellValue('B12', 'หมาเยเลขครุภัณฑ์');
+                 $this->excel->getActiveSheet()->mergeCells('B12:D12');
+
+                  $this->excel->getActiveSheet()->setCellValue('E12', 'รายการ');
+                 $this->excel->getActiveSheet()->mergeCells('E12:G12');
                 
-                 $this->excel->getActiveSheet()->setCellValue('I8', 'จำนวนหน่วยที่เบิก');
+                 $this->excel->getActiveSheet()->setCellValue('H12', 'จำนวน');
+                 $this->excel->getActiveSheet()->setCellValue('I12', 'หมายเหตุ');
                
                  // $this->excel->getActiveSheet()->getStyle('A11')->applyFromArray($styleBoldCenterHeaderTable);
 
                  for ($col = ord('A'); $col <= ord('I'); $col++) {
                     //set column dimension
-                    $this->excel->getActiveSheet()->getStyle(chr($col).'8')->applyFromArray($styleBoldCenterHeaderTable);
+                    $this->excel->getActiveSheet()->getStyle(chr($col).'12')->applyFromArray($styleBoldCenterHeaderTable);
                     //$this->excel->getActiveSheet()->getColumnDimension(chr($col))->setWidth(8.43);
                 }
                 
@@ -266,30 +350,25 @@ function ReadNumber($number)
               
                 //$r = 4;
                 $i = 1;
-                $row1 = 9;
+                $row1 = 13;
+                $qtysum = 0;
+
                 foreach ($reTurnGoods->result_array() as $row) {
 
                     $this->excel->getActiveSheet()->setCellValue('A'.$row1, $i);
                     $this->excel->getActiveSheet()->getStyle('A'.$row1)->applyFromArray($styleCenter);
 
-                    $this->excel->getActiveSheet()->setCellValue('B'.$row1, $row['MatName']);
-                    // $row2 = $row1 + 1;
-                    // $this->excel->getActiveSheet()->setCellValue('B'.$row2, 'ยี่ห้อ : '.$row['brand_goods']);
-                    // $row3 = $row1 + 2;
-                    // $this->excel->getActiveSheet()->setCellValue('B'.$row3, 'หมาเยเลขครุภัณฑ์ต่ำกว่าเกณฑ์ :');
-                    // $row4 = $row1 + 3;
-                    // $this->excel->getActiveSheet()->setCellValue('B'.$row4, $row['id_goods_crru']);
+                    $this->excel->getActiveSheet()->setCellValue('B'.$row1, $row['id_goods_crru']);
+                    $this->excel->getActiveSheet()->mergeCells('B'.$row1.':D'.$row1);
 
-                    $this->excel->getActiveSheet()->mergeCells('B'.$row1.':H'.$row1);
-                    // $this->excel->getActiveSheet()->mergeCells('B'.$row2.':F'.$row2);
-                    // $this->excel->getActiveSheet()->mergeCells('B'.$row3.':F'.$row3);
-                    // $this->excel->getActiveSheet()->mergeCells('B'.$row4.':F'.$row4);
+                     $this->excel->getActiveSheet()->setCellValue('E'.$row1, $row['name_goods']);
+                    $this->excel->getActiveSheet()->mergeCells('E'.$row1.':G'.$row1);
 
-                    // $this->excel->getActiveSheet()->setCellValue('G'.$row1, $row['price']);
-                    // $this->excel->getActiveSheet()->getStyle('G'.$row1)->applyFromArray($styleRight);
 
-                    $this->excel->getActiveSheet()->setCellValue('I'.$row1, $row['qty']);
-                    $this->excel->getActiveSheet()->getStyle('I'.$row1)->applyFromArray($styleCenter);
+                    $this->excel->getActiveSheet()->setCellValue('H'.$row1, '1');
+                    $this->excel->getActiveSheet()->getStyle('H'.$row1)->applyFromArray($styleCenter);
+
+                     $this->excel->getActiveSheet()->setCellValue('I'.$row1, ' ');
 
                     // $this->excel->getActiveSheet()->setCellValue('I'.$row1, $row['price']);
                     // $this->excel->getActiveSheet()->getStyle('I'.$row1)->applyFromArray($styleRight);
@@ -305,10 +384,12 @@ function ReadNumber($number)
                     }
                      $i++;
                      $row1++;
+                     $qtysum++;
 
                     // $totlePrice+=$row['price'];
 
                 }
+
                 $totle1 = $row1;
                 $tableEndBorder = $totle1-1;
                 // for ($col = ord('A'); $col <= ord('J'); $col++) {
@@ -323,13 +404,23 @@ function ReadNumber($number)
                     //set column dimension
                     $this->excel->getActiveSheet()->getStyle(chr($col).$tableEndBorder)->applyFromArray($styleBorderBottom);
                 }
+
+
+
                 //$this->excel->getActiveSheet()->setCellValue('I'.$totle1, $totlePrice);
                 //$this->excel->getActiveSheet()->getStyle('I'.$totle1)->applyFromArray($styleRight);
-                
-                $this->excel->getActiveSheet()->setCellValue('B'.$totle1, 'ข้าพเจ้าขอรับรองว่า วัสดุที่ขอเบิกไปนี้ได้นำไปใช้ในราชการเท่านั้น');
+
+                $this->excel->getActiveSheet()->setCellValue('A'.$totle1, 'หมายเหตุ');
+                $this->excel->getActiveSheet()->setCellValue('B'.$totle1, 'กรณีมีพัสดุชำรุด ผู้ยืมยินดีชำระค่าซ่อมแซมตามความเสียหายของพัสดุ');
+
+                $totle1++;
+                $this->excel->getActiveSheet()->setCellValue('B'.$totle1, 'กรณีพัสดุที่ยืมสูญหายผู้ยืมยินดีหาครุภัณฑ์เดียวกันมาทดแทนหรือชำระเงินตามราคาพัสดุ');
 
                 $endTotle1 = $totle1+1;
                 $this->excel->getActiveSheet()->getRowDimension($endTotle1)->setRowHeight(10.5);
+
+                $endTotle1++;
+                $this->excel->getActiveSheet()->setCellValue('B'.$endTotle1, 'จึงเรียนมาเพื่อโปรดพิจารณา');
 
                 // $sign = $totle1+2;
                 // $name1 = $sign+1;
@@ -343,7 +434,7 @@ function ReadNumber($number)
                 // $this->excel->getActiveSheet()->getStyle('A'.$name1)->applyFromArray($styleBoldCenter);
 
 
-                $footer1 = $totle1+2;
+                $footer1 = $totle1+3;
                 $under_footer = $footer1 + 4;
 
                 $centerfooter = $footer1+5;
@@ -376,26 +467,191 @@ function ReadNumber($number)
                     //$this->excel->getActiveSheet()->getColumnDimension(chr($col))->setWidth(8.43);
                 }
 
-                $this->excel->getActiveSheet()->setCellValue('A'.$footer1, 'ผู้ขอเบิก');
+                $this->excel->getActiveSheet()->setCellValue('A'.$footer1, 'ผู้ยืม');
                 $this->excel->getActiveSheet()->setCellValue('D'.$footer1, 'เจ้าหน้าที่พัสดุ');
-                $this->excel->getActiveSheet()->setCellValue('G'.$footer1, 'ผู้อนุมัติ');
+                $this->excel->getActiveSheet()->setCellValue('G'.$footer1, 'ผู้มีอำนาจู้อนุมัติ');
+
+
+                $sign = $footer1+2;
+                $this->excel->getActiveSheet()->setCellValue('A'.$sign, 'ลงชื่อ.....................................');
+                $this->excel->getActiveSheet()->getStyle('A'.$sign)->applyFromArray($styleCenter);
+                $this->excel->getActiveSheet()->setCellValue('D'.$sign, 'ลงชื่อ.....................................');
+                $this->excel->getActiveSheet()->getStyle('D'.$sign)->applyFromArray($styleCenter);
+                $this->excel->getActiveSheet()->setCellValue('G'.$sign, 'ลงชื่อ.....................................');
+                $this->excel->getActiveSheet()->getStyle('G'.$sign)->applyFromArray($styleCenter);
 
                 
                 $sign = $footer1+3;
-                $this->excel->getActiveSheet()->setCellValue('A'.$sign, '( '.$row['name'].' )');
+                $this->excel->getActiveSheet()->setCellValue('A'.$sign, '( '.$row['name_get'].' )');
                 $this->excel->getActiveSheet()->getStyle('A'.$sign)->applyFromArray($styleCenter);
-                $this->excel->getActiveSheet()->setCellValue('D'.$sign, '( นายอนุวัฒน์ จินาจาย )');
+                $this->excel->getActiveSheet()->setCellValue('D'.$sign, '( นายลิขิต ยอดยา )');
                 $this->excel->getActiveSheet()->getStyle('D'.$sign)->applyFromArray($styleCenter);
                 $this->excel->getActiveSheet()->setCellValue('G'.$sign, '( นายธีรวัฒน์ วังมณี )');
                 $this->excel->getActiveSheet()->getStyle('G'.$sign)->applyFromArray($styleCenter);
+
+
+                $sign++;
+                $sign++;
+
+                $this->excel->getActiveSheet()->setCellValue('A'.$sign, '...........................................................................................................................................................................................................................................................................................................................................................');
+
+                $this->excel->getActiveSheet()->setCellValue('J'.$sign, ' ');
+
+                $return = $sign +1;
+
+                $this->excel->getActiveSheet()->setCellValue('B'.$return, 'ข้าพเจ้าได้ตรวจสอบและรับพัสดุคืนตามจำนวนที่ยืมไปข้างต้น   จำนวน  '.$qtysum. ' รายการ');
+
+
+                $return++;
+                $this->excel->getActiveSheet()->setCellValue('A'.$return, ' เมื่อวันที่.............เดือน.........................พ.ศ...................ปรากฏว่าพัสดุมีสภาพดังนี้');
+
+                $return++;
+                $this->excel->getActiveSheet()->setCellValue('B'.$return, '    คงอยู่ในสภาพเดิมทุกประการ');
+                $return++;
+                $this->excel->getActiveSheet()->setCellValue('B'.$return, '    จะต้องดำเนินการ ซ่อมแซม/ชดใช้ จำนวน.....................................รายการดังนี้');
+
+                $return++;
+                $this->excel->getActiveSheet()->setCellValue('B'.$return, '     .............................................................................................................................................................................................................................');
+
+                $this->excel->getActiveSheet()->setCellValue('J'.$return, ' ');
+
+
+
+                $footer1 = $return;
+                $under_footer = $return + 4;
+
+                $centerfooter = $return+5;
+
+                for($i = $footer1;$i<$under_footer;$i++){
+
+                    $this->excel->getActiveSheet()->mergeCells('A'.$i.':E'.$i);
+                    $this->excel->getActiveSheet()->mergeCells('F'.$i.':I'.$i);
+                   
+
+                    for ($col = ord('A'); $col <= ord('I'); $col++) {
+                        //set column dimension
+                        $this->excel->getActiveSheet()->getStyle(chr($col).$i)->applyFromArray($styleBorderLeftRight);
+                        //$this->excel->getActiveSheet()->getColumnDimension(chr($col))->setWidth(8.43);
+
+                        $this->excel->getActiveSheet()->getStyle(chr($col).$footer1)->applyFromArray($styleBorderTop);
+                        
+                        $this->excel->getActiveSheet()->getStyle(chr($col).$under_footer)->applyFromArray($styleBorderTop);
+
+                        // if($i >= $centerfooter){
+                        //     $this->excel->getActiveSheet()->getStyle(chr($col).$centerfooter)->applyFromArray($styleBorderBottom);
+                        //  $this->excel->getActiveSheet()->getStyle(chr($col).$centerfooter)->applyFromArray($styleBorderBottom);
+                        // }
+                    }
+                }
+
+                for ($col = ord('A'); $col <= ord('I'); $col++) {
+                    //set column dimension
+                    $this->excel->getActiveSheet()->getStyle(chr($col).$footer1)->applyFromArray($styleBoldCenterHeaderTable);
+                    //$this->excel->getActiveSheet()->getColumnDimension(chr($col))->setWidth(8.43);
+                }
+
+                $this->excel->getActiveSheet()->setCellValue('A'.$footer1, 'ผู้ส่งคืน');
+                $this->excel->getActiveSheet()->setCellValue('F'.$footer1, 'ผู้รับคืนพัสดุ');
+               
+
+
+                $sign = $footer1+2;
+                $this->excel->getActiveSheet()->setCellValue('A'.$sign, 'ลงชื่อ.......................................................................');
+                $this->excel->getActiveSheet()->getStyle('A'.$sign)->applyFromArray($styleCenter);
+                $this->excel->getActiveSheet()->setCellValue('F'.$sign, 'ลงชื่อ.......................................................................');
+                $this->excel->getActiveSheet()->getStyle('F'.$sign)->applyFromArray($styleCenter);
+               
+
                 
+                $sign = $footer1+3;
+                $this->excel->getActiveSheet()->setCellValue('A'.$sign, '(............................................................................)');
+                $this->excel->getActiveSheet()->getStyle('A'.$sign)->applyFromArray($styleCenter);
+                $this->excel->getActiveSheet()->setCellValue('F'.$sign, '(............................................................................)');
+                $this->excel->getActiveSheet()->getStyle('F'.$sign)->applyFromArray($styleCenter);
+
+                $sign++;
+                $sign++;
+
+                $this->excel->getActiveSheet()->setCellValue('A'.$sign, '...........................................................................................................................................................................................................................................................................................................................................................');
+                $this->excel->getActiveSheet()->setCellValue('J'.$sign, ' ');
+
+
+
+                $footer1 = $sign+1;
+                $under_footer = $sign + 7;
+
+                $centerfooter = $sign+5;
+
+               
+
+                $this->excel->getActiveSheet()->mergeCells('A'.$footer1.':I'.$footer1);
+                    
+                  for($i = $footer1+1;$i<$under_footer;$i++){  
+
+                    $this->excel->getActiveSheet()->mergeCells('A'.$i.':E'.$i);
+                    $this->excel->getActiveSheet()->mergeCells('F'.$i.':I'.$i);
+
+                    for ($col = ord('A'); $col <= ord('I'); $col++) {
+                        //set column dimension
+                        $this->excel->getActiveSheet()->getStyle(chr($col).$i)->applyFromArray($styleBorderLeftRight);
+                        //$this->excel->getActiveSheet()->getColumnDimension(chr($col))->setWidth(8.43);
+
+                        $this->excel->getActiveSheet()->getStyle(chr($col).$footer1)->applyFromArray($styleBorderTop);
+                        
+                        $this->excel->getActiveSheet()->getStyle(chr($col).$under_footer)->applyFromArray($styleBorderTop);
+
+                        // if($i >= $centerfooter){
+                        //     $this->excel->getActiveSheet()->getStyle(chr($col).$centerfooter)->applyFromArray($styleBorderBottom);
+                        //  $this->excel->getActiveSheet()->getStyle(chr($col).$centerfooter)->applyFromArray($styleBorderBottom);
+                        // }
+                    }
+                }
+
+                for ($col = ord('A'); $col <= ord('I'); $col++) {
+                    //set column dimension
+                    $this->excel->getActiveSheet()->getStyle(chr($col).$footer1)->applyFromArray($styleBoldCenterHeaderTable);
+                    //$this->excel->getActiveSheet()->getColumnDimension(chr($col))->setWidth(8.43);
+                }
+
+                 $this->excel->getActiveSheet()->setCellValue('A'.$footer1, 'ใบยืมพัสดุ  หน่วยงาน กองวิเทศสัมพันธ์');
+               
+               
+
+                $sign = $footer1+1;
+                $this->excel->getActiveSheet()->setCellValue('A'.$sign, 'ชื่อ - สกุล..... '.$row['name_get'].' .....');
+                $this->excel->getActiveSheet()->setCellValue('F'.$sign, 'วันที่ยืม.  วันที่  '.$sDay.' เดือน '.convertMouth($sMount).' พ.ศ  '.$sYear);
+              
+
+                 $sign++;
+                 $this->excel->getActiveSheet()->setCellValue('A'.$sign, 'ได้ขอยืมพัสดุจำนวน..  '.$qtysum.'..  รายการ');
+                $this->excel->getActiveSheet()->setCellValue('F'.$sign, 'กำหนดส่งคืน.   วันที่  '.$lDay.' เดือน '.convertMouth($lMouth).' พ.ศ  '.$lYear);
+
+                
+
+                $sign++;
+                $this->excel->getActiveSheet()->setCellValue('A'.$sign, 'ตามใบยืมเล่มที่/ เลขที่  '.'บย. '.$row['get_id'].'/'.$year);
+                // $this->excel->getActiveSheet()->getStyle('A'.$sign)->applyFromArray($style);
+
+                $sign++;
+                $this->excel->getActiveSheet()->setCellValue('F'.$sign, 'ลงชื่อ.......................................................................');
+                $this->excel->getActiveSheet()->getStyle('F'.$sign)->applyFromArray($styleCenter);
+                $sign++;
+                $this->excel->getActiveSheet()->setCellValue('F'.$sign, '(......................................................................)');
+                $this->excel->getActiveSheet()->getStyle('F'.$sign)->applyFromArray($styleCenter);
+                
+                // $sign = $footer1+3;
+                // $this->excel->getActiveSheet()->setCellValue('A'.$sign, '(............................................................................)');
+                // $this->excel->getActiveSheet()->getStyle('A'.$sign)->applyFromArray($styleCenter);
+                // $this->excel->getActiveSheet()->setCellValue('F'.$sign, '(............................................................................)');
+                // $this->excel->getActiveSheet()->getStyle('F'.$sign)->applyFromArray($styleCenter);
+               
 
                 //Fill data 
                 //->excel->getActiveSheet()->fromArray($exceldata, null, 'A5');
 //set aligment to center for that merged cell (A1 to D1)
-                $this->excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $this->excel->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-                $filename = 'รายงานการเบิกวัสดุ.xls'; //save our workbook as this file name
+                $filename = 'รายงานการยืมครุภัณฑ์.xls'; //save our workbook as this file name
                 header('Content-Type: application/vnd.ms-excel'); //mime type
                 header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
                 header('Cache-Control: max-age=0'); //no cache

@@ -120,6 +120,19 @@
 
                         </div>
 
+                        <div class="form-group">
+
+                            <label class="col-sm-1 control-label">เบอร์โทร :</label>
+
+                            <div class="col-sm-6">
+
+                                <input type="number" maxlength="10" class="form-control" rows="2" id="tel" name="tel" placeholder="08xxxxxxx">
+
+
+                            </div>
+
+                        </div>
+
 
 
                     </div>
@@ -330,8 +343,9 @@
             var date1Get = $("#date1").val();
             var date2Get = $("#date2").val();
             var noteGet = $("#txtNote").val();
+            var tel = $("#tel").val();
 
-            if(rowss > 0 && idGet != "" && nameGet != "" && nameMajorGet != "" && date1Get != "" && date2Get != "" && noteGet != ""){
+            if(rowss > 0 && idGet != "" && nameGet != "" && nameMajorGet != "" && date1Get != "" && date2Get != "" && noteGet != "" && tel != ""){
 
 
                 var faction1 = "<?php echo site_url('admin/dashboard/get_goods_seq/'); ?>";
@@ -357,7 +371,7 @@
                 
 
                 var faction = "<?php echo site_url('admin/dashboard/insert_get_goods/'); ?>";
-                var fdata = {get_id: idGet,standard: standardGet,id_goods: id_goodsGet,date_get: date1Get, date_return: date2Get, name_get: nameGet, major_get: nameMajorGet,note: noteGet,row: rowss};
+                var fdata = {get_id: idGet,standard: standardGet,id_goods: id_goodsGet,date_get: date1Get, date_return: date2Get, name_get: nameGet, major_get: nameMajorGet,note: noteGet,row: rowss,tel: tel};
 
                 $.post(faction, fdata, function(jdata) {
 
@@ -374,7 +388,7 @@
 
                         //if (idGet != "") {
                             window.open('dashboard/detial_get_goods_paple/' + idGet, '_blank');
-                            //btn_new_page();
+                            btn_new_page();
                         //}
                         //$("#select_data").trigger('reset');
 
@@ -406,117 +420,117 @@
 }
 
 
-    function btn_con() {
+    // function btn_con() {
 
-        bootbox.confirm("ยืนยันการเบิกหรือไม่ ?", function(result) {
-            if (result) {
+    //     bootbox.confirm("ยืนยันการเบิกหรือไม่ ?", function(result) {
+    //         if (result) {
 
-                var rowss = $('#tDataGoods >tbody >tr').length;
-                var txtNameInput = $('#txtName2').val();
+    //             var rowss = $('#tDataGoods >tbody >tr').length;
+    //             var txtNameInput = $('#txtName2').val();
 
-                if (rowss > 0) {
+    //             if (rowss > 0) {
 
-                    var faction1 = "<?php echo site_url('admin/dashboard/lend_goode_seq/'); ?>";
+    //                 var faction1 = "<?php echo site_url('admin/dashboard/lend_goode_seq/'); ?>";
 
-                    var fdata1 = {
-                        id: 'xxx'
-                    };
+    //                 var fdata1 = {
+    //                     id: 'xxx'
+    //                 };
 
-                    $.post(faction1, fdata1, function(jdata) {}, 'json');
+    //                 $.post(faction1, fdata1, function(jdata) {}, 'json');
 
-                    //var Ddate = new Date().toISOString().slice(0, 10);
-                    var lend_id = $('#maxid').val();
+    //                 //var Ddate = new Date().toISOString().slice(0, 10);
+    //                 var lend_id = $('#maxid').val();
 
-                    var i = 0;
-                    while (i < rowss) {
+    //                 var i = 0;
+    //                 while (i < rowss) {
 
-                        i++;
-                        var id_goods = $('#tDataGoods').children().children().eq(i).children().eq(6).text();
-                        var standard1 = $('#tDataGoods').children().children().eq(i).children().eq(7).text();
+    //                     i++;
+    //                     var id_goods = $('#tDataGoods').children().children().eq(i).children().eq(6).text();
+    //                     var standard1 = $('#tDataGoods').children().children().eq(i).children().eq(7).text();
 
-                        var faction = "<?php echo site_url('admin/dashboard/lend_goode_detial/'); ?>";
+    //                     var faction = "<?php echo site_url('admin/dashboard/lend_goode_detial/'); ?>";
 
-                        var fdata = {
-                            id: id_goods,
-                            lendId: lend_id,
-                            standard: standard1,
-                            txtName: txtNameInput
-                        };
+    //                     var fdata = {
+    //                         id: id_goods,
+    //                         lendId: lend_id,
+    //                         standard: standard1,
+    //                         txtName: txtNameInput
+    //                     };
 
-                        console.log(i);
-
-
-
-                        $.post(faction, fdata, function(jdata) {
-
-                            if (jdata.is_successful) {
+    //                     console.log(i);
 
 
-                                console.log('xxx :: ' + i);
-                                $.pnotify({
-                                    title: 'แจ้งให้ทราบ!',
-                                    text: jdata.msg,
-                                    type: 'success',
-                                    opacity: 1,
-                                    history: false
 
-                                });
+    //                     $.post(faction, fdata, function(jdata) {
 
-                                // $("#tDataGoods >tbody >tr").remove(); 
-
-                                // update_price();
+    //                         if (jdata.is_successful) {
 
 
+    //                             console.log('xxx :: ' + i);
+    //                             $.pnotify({
+    //                                 title: 'แจ้งให้ทราบ!',
+    //                                 text: jdata.msg,
+    //                                 type: 'success',
+    //                                 opacity: 1,
+    //                                 history: false
+
+    //                             });
+
+    //                             // $("#tDataGoods >tbody >tr").remove(); 
+
+    //                             // update_price();
 
 
 
 
 
-                                //$("#select_data").trigger('reset');
 
 
-                            } else {
-                                $.pnotify({
-                                    title: 'แจ้งให้ทราบ!',
-                                    text: jdata.msg,
-                                    type: 'error',
-                                    opacity: 1,
-                                    history: false
-
-                                });
+    //                             //$("#select_data").trigger('reset');
 
 
-                            }
+    //                         } else {
+    //                             $.pnotify({
+    //                                 title: 'แจ้งให้ทราบ!',
+    //                                 text: jdata.msg,
+    //                                 type: 'error',
+    //                                 opacity: 1,
+    //                                 history: false
 
-                        }, 'json');
-                    }
-
-                    if (txtNameInput != "") {
-                        window.open('dashboard/detial_lend_paple_now/' + lend_id, '_blank');
-                        btn_new_page();
-                    }
-
-                } else {
-                    $.pnotify({
-                        title: 'แจ้งให้ทราบ!',
-                        text: "กรุณาเพิ่มข้อมูล",
-                        type: 'error',
-                        opacity: 1,
-                        history: false
-
-                    });
-                }
+    //                             });
 
 
-                //
-            }
-        });
-        return false;
-    }
+    //                         }
+
+    //                     }, 'json');
+    //                 }
+
+    //                 if (txtNameInput != "") {
+    //                     window.open('dashboard/detial_lend_paple_now/' + lend_id, '_blank');
+    //                     btn_new_page();
+    //                 }
+
+    //             } else {
+    //                 $.pnotify({
+    //                     title: 'แจ้งให้ทราบ!',
+    //                     text: "กรุณาเพิ่มข้อมูล",
+    //                     type: 'error',
+    //                     opacity: 1,
+    //                     history: false
+
+    //                 });
+    //             }
+
+
+    //             //
+    //         }
+    //     });
+    //     return false;
+    // }
 
     function btn_clear() {
         //$("#select_data").trigger('reset');
-        loadpage_lendView('1');
+        get_goods('1');
     }
 
     function btn_new_page() {
@@ -533,7 +547,7 @@
                     className: "btn-success",
                     callback: function() {
 
-                        loadpage_lendView('1');
+                        get_goods('1');
 
                     }
                 }

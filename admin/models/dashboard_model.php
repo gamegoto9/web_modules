@@ -48,9 +48,9 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->query('SELECT
             e.MatId,
             e.MatName,
-                        if(e.qty IS NULL,cnt.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + if(cnt.qty IS NULL,0,cnt.qty)) - if(lend.qty IS NULL,0,lend.qty)) as qty,
+            if(e.qty IS NULL,cnt.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + if(cnt.qty IS NULL,0,cnt.qty)) - if(lend.qty IS NULL,0,lend.qty)) as qty,
 
-            
+
                 if(cnt.price IS NULL,e.price,if(e.price IS NULL,cnt.price,e.price)) as price,
 
 
@@ -101,10 +101,10 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->query("SELECT
             e.MatId,
             e.MatName,
-                    if(e.qty IS NULL,cnt.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + if(cnt.qty IS NULL,0,cnt.qty)) - if(lend.qty IS NULL,0,lend.qty)) as qty,
+            if(e.qty IS NULL,cnt.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + if(cnt.qty IS NULL,0,cnt.qty)) - if(lend.qty IS NULL,0,lend.qty)) as qty,
 
-            
-                    if(cnt.price IS NULL,e.price,if(e.price IS NULL,cnt.price,e.price)) as price,
+
+                if(cnt.price IS NULL,e.price,if(e.price IS NULL,cnt.price,e.price)) as price,
 
 
                     if(cnt.price IS NULL,if(e.price IS NULL,0,e.price) * if(e.qty IS NULL,0,e.qty),((if(e.price IS NULL,0,e.price)*if(e.qty IS NULL,0,e.qty)) + (cnt.price*cnt.qty))-if((lend.price*lend.qty) IS NULL,0,(lend.price*lend.qty))) as price_totle
@@ -121,7 +121,7 @@ class Dashboard_model extends CI_Model {
                     from lend_material_2016
                     GROUP BY MatId
                     ) AS lend ON lend.MatId= e.MatId
-                                        WHERE e.MatId NOT IN($query2)
+                    WHERE e.MatId NOT IN($query2)
                     GROUP BY e.MatId
                     ");
         // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
@@ -165,9 +165,9 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->query("SELECT
             e.MatId,
             e.MatName,
-                        if(e.qty IS NULL,cnt.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + if(cnt.qty IS NULL,0,cnt.qty)) - if(lend.qty IS NULL,0,lend.qty)) as qty,
+            if(e.qty IS NULL,cnt.qty - if(lend.qty IS NULL,0,lend.qty),(e.qty + if(cnt.qty IS NULL,0,cnt.qty)) - if(lend.qty IS NULL,0,lend.qty)) as qty,
 
-            
+
                 if(cnt.price IS NULL,e.price,if(e.price IS NULL,cnt.price,e.price)) as price,
 
 
@@ -230,6 +230,24 @@ class Dashboard_model extends CI_Model {
             ) AS dg ON dg.id_goods= e.id_goods
             WHERE e.standard = '$standard'
             GROUP BY e.lend_id");
+
+        return $query->result_array();
+    }
+
+
+    public function getData_Get_goods() {
+
+        $query = $this->db->query("SELECT
+            get_goods_detial.get_id,
+            get_goods_detial.Ddate_get,
+            get_goods_detial.name_get,
+            get_goods_detial.major_get,
+            personal.`name`,
+            count(*) as count
+            FROM
+            get_goods_detial
+            INNER JOIN personal ON get_goods_detial.Pid = personal.Pid
+            GROUP BY get_goods_detial.get_id");
 
         return $query->result_array();
     }
@@ -323,6 +341,34 @@ class Dashboard_model extends CI_Model {
         INNER JOIN personal ON lend_goods_detial.Pid = personal.Pid
         INNER JOIN durable_goods_2016 ON lend_goods_detial.id_goods = durable_goods_2016.id_goods
         WHERE lend_id = '$id'";
+
+        $query = $this->db->query($sql);
+        return $query;
+
+
+
+
+    }
+
+    public function getdetialGet_all($id){
+        $sql = "SELECT
+        get_goods_detial.get_id,
+        get_goods_detial.Ddate_get,
+        get_goods_detial.name_get,
+        get_goods_detial.major_get,
+        personal.`name`,
+        get_goods_detial.id_goods,
+        durable_goods_2016.name_goods,
+        durable_goods_2016.id_goods_crru,
+        get_goods_detial.Ddate_return,
+        get_goods_detial.note,
+        get_goods_detial.standard,
+        get_goods_detial.status
+        FROM
+        get_goods_detial
+        INNER JOIN personal ON get_goods_detial.Pid = personal.Pid
+        INNER JOIN durable_goods_2016 ON get_goods_detial.id_goods = durable_goods_2016.id_goods
+        WHERE get_id = '$id'";
 
         $query = $this->db->query($sql);
         return $query;
