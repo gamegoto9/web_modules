@@ -130,15 +130,15 @@
 
 
                         <!--<td><i class="fa fa-folder-o btn btn-primary" data-toggle="modal" data-target="#myModal" onclick ="showModal(<?php echo $row['id_goods']; ?>)"> ดูข้อมูล </i></td>-->
-                    <td> <i class="fa fa-tags btn btn-success" onclick="showModal(<?php echo $row['id_goods']; ?>);"> </i></td>
+                    <td> <i class="fa fa-tags btn btn-primary" onclick="showModal(<?php echo $row['id_goods']; ?>);"> </i></td>
                     <?php
                     if($row['status'] == '1'){
                     ?>
                     <!-- <i class="fa fa-reply btn btn-warning" onclick="btn_delete(<?php //echo $row['id_goods']; ?><!-- );">ส่งคืน</i> -->
-                    <td> <i class="btn btn-warning"> ใช้งาน</i></td>
+                    <td> <i class="btn btn-success"> วิเทศฯ (ใช้งาน)</i></td>
                     <?php }else if($row['status'] == '2'){
                     ?>
-                    <td> <i class="btn btn-info"> ยืม</i></td>
+                    <td> <i class="btn btn-info"> เบิกใช้งาน</i></td>
                     <?php
                     }else if($row['status'] == '0'){
                     ?>
@@ -151,6 +151,10 @@
                     }else if($row['status'] == '3'){
                     ?>
                     <td> <i class="btn btn-danger"> ชำรุด</i></td>
+                    <?php
+                    }else if($row['status'] == '4'){
+                    ?>
+                    <td> <i class="btn btn-warning"> ยืม</i></td>
                     <?php
                     } ?> 
                 </tr>

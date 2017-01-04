@@ -60,8 +60,10 @@
                                         echo "ส่งคืนแล้ว";
                                     }else if($row['status'] == '9'){
                                         echo "ไม่ทราบข้อมูลที่อยู่";
-                                    }else if($row['status'] == '9'){
+                                    }else if($row['status'] == '3'){
                                         echo "ชำรุด";
+                                    }else if($row['status'] == '4'){
+                                        echo "ยืม";
                                     }
                                         ?></span></td>
                                     

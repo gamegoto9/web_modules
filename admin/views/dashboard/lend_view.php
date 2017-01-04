@@ -335,5 +335,62 @@
 
 
 
+    function btn_select(id) {
+        var xid = id;
+
+
+        var faction = "<?php echo site_url('admin/dashboard/select_goods_id/'); ?>";
+        var fdata = {id:xid};
+        var tname,tprice,tqty,tsum;
+
+        $.post(faction, fdata, function(jdata) {
+
+            if (jdata.is_successful) {
+
+             tname = jdata.record[0]['name_goods'];
+             tprice = jdata.record[0]['price'];
+             tqty = 1;
+             tsum = tprice * tqty;
+             var numtitle =  $('#tDataGoods tbody tr').length+1;
+
+
+             $("#tDataGoods tbody").append("<tr>"+
+                "<td class='text-center'>"+numtitle+"</td>"+
+                "<td class='text-left'>"+tname+jdata.record[0]['brand_goods']+"</td>"+
+                "<td class='text-right'>"+tprice+"</td>"+
+                "<td class='text-center'>"+tqty+"</td>"+
+                "<td class='text-right'>"+tsum+"</td>"+
+                "<td class='text-center'><button type='button' class='btn btn-small btn-danger' id='remo'><i class='fa fa-trash'></i></button></td>"+
+                "<td class='hid_p'>"+jdata.record[0]['id_goods']+"</td>"+
+                "<td class='hid_p'>"+jdata.record[0]['standard']+"</td>"+
+                "</tr>"); 
+
+             $(".hid_p").hide();
+             update_price();
+
+
+             $('#modalShow_main').modal('hide');
+
+
+         } else {
+            $.pnotify({
+                title: 'แจ้งให้ทราบ!',
+                text: "ผิดพลาด !",
+                type: 'error',
+                opacity: 1,
+                history: false
+
+            });
+
+
+        }
+
+    }, 'json');
+
+
+    }
+
+
+
 
 </script>
