@@ -144,6 +144,13 @@ class Dashboard_model extends CI_Model {
         return $query->row();
     }
 
+    public function getData_return_goods_maxid(){
+        $query = $this->db->query("SELECT max(return_id) as maxID from return_goods_seq");
+        // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
+
+        return $query->row();
+    }
+
     public function getData_material_maxid(){
         $query = $this->db->query("SELECT max(lend_id) as maxID from lend_material_seq");
         // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));

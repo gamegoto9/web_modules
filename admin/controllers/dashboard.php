@@ -154,6 +154,7 @@ class Dashboard extends CI_Controller {
         $this->load->model('dashboard_model');
         $id = $this->input->post('id');
         $data['reTurnGoods'] = $this->dashboard_model->getdetialGet_all($id);
+        $data['maxid'] = $this->dashboard_model->getData_return_goods_maxid();
 
         $this->load->view('admin/dashboard/detial_get_form', $data);
     }
@@ -562,6 +563,51 @@ public function insert_get_goods() {
     echo json_encode(array(
         'is_successful' => TRUE,
         'msg' => 'บันทึกเรียบร้อย'
+        ));
+}
+
+public function insert_return_goods() {
+
+    $get_id = $this->input->post('get_id');
+    $id_datas = $this->input->post('value_data');
+    $maxid = $this->input->post('max');
+    $Ddate_return = $this->input->post('dateRe');
+    $name = $this->input->post('name');
+
+
+    $rows = $this->input->post('rows');
+
+    $data2['return_id'] = '0';
+    $this->db->insert('return_goods_seq', $data2);
+
+    for($i=0;$i<$rows;$i++){
+        $id_data = $id_datas[$i];
+        
+
+        $data3['get_id'] = $get_id;
+        $data3['Pid'] = $this->session->userdata('Pid');
+        $data3['return_id'] = $maxid;
+        $data3['id_goods'] = $id_data;
+        $data3['Ddate_return'] = $Ddate_return;
+        $data3['name_return'] = $name;
+        $data3['note'] = '';
+        
+
+        $this->db->insert('return_goods_detial', $data3);
+
+        $this->db->where('id_goods', $id_data);
+        $data4['status'] = '1';
+        $data4['address'] = 'วิเทศฯ';
+        $this->db->update('durable_goods_2016', $data4);
+
+        $data5['status'] = '0';
+        $this->db->update('get_goods_detial', $data5, array('id_goods' => $id_data,'get_id' => $get_id));
+
+    }
+
+    echo json_encode(array(
+        'is_successful' => TRUE,
+        'msg' => 'บันทึกเรียบร้อย'.$rows
         ));
 }
 
