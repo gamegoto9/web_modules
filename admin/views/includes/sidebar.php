@@ -95,6 +95,16 @@
                         <li>
                             <a href="#" onclick="material_lend();"><i class="fa fa-th"></i> <span>เบิกวัสดุ</span></a>
                         </li>
+                        <li>
+                            <a href="#" onclick="get_material('1');">
+                                <i class="fa fa-th"></i> <span>ยืมวัสดุ</span> <small class="badge pull-right bg-green">new</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="return_material();">
+                                <i class="fa fa-th"></i> <span>คืนวัสดุ</span> <small class="badge pull-right bg-green">new</small>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -250,6 +260,17 @@
 
         }
         function return_goods() {
+         
+            $('#main_view').load('dashboard/return_goods/');
+
+        }
+
+        function get_material(id) {
+            var xid = id;
+            $('#main_view').load('dashboard/get_material/' + xid);
+
+        }
+        function return_material() {
          
             $('#main_view').load('dashboard/return_goods/');
 

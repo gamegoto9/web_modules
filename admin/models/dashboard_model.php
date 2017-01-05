@@ -144,6 +144,13 @@ class Dashboard_model extends CI_Model {
         return $query->row();
     }
 
+    public function getData_get_material_maxid(){
+        $query = $this->db->query("SELECT max(get_material_id) as maxID from get_material_seq");
+        // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
+
+        return $query->row();
+    }
+
     public function getData_return_goods_maxid(){
         $query = $this->db->query("SELECT max(return_id) as maxID from return_goods_seq");
         // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
@@ -250,7 +257,8 @@ class Dashboard_model extends CI_Model {
             get_goods_detial.name_get,
             get_goods_detial.major_get,
             personal.`name`,
-            count(*) as count
+            count(*) as count,
+            get_goods_detial.status
             FROM
             get_goods_detial
             INNER JOIN personal ON get_goods_detial.Pid = personal.Pid

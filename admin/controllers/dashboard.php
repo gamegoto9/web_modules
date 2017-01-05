@@ -150,7 +150,7 @@ class Dashboard extends CI_Controller {
     }
 
 
-     public function detialGetReturn(){
+    public function detialGetReturn(){
         $this->load->model('dashboard_model');
         $id = $this->input->post('id');
         $data['reTurnGoods'] = $this->dashboard_model->getdetialGet_all($id);
@@ -256,9 +256,9 @@ class Dashboard extends CI_Controller {
         if ($count > $data['qty']) {
 
             echo json_encode(array(
-             'is_successful' => FALSE,
-             'msg' => 'วัสดุมีจำนวนไม่เพียงพอ มีอยู่ '.$data['qty']
-             ));
+               'is_successful' => FALSE,
+               'msg' => 'วัสดุมีจำนวนไม่เพียงพอ มีอยู่ '.$data['qty']
+               ));
         }else{
             echo json_encode(array(
                 'is_successful' => TRUE
@@ -469,10 +469,10 @@ class Dashboard extends CI_Controller {
             $tvalue = $tvalues[$i];
 
             if($tvalue == ""){
-             $sql = "select max(MatId) as maxid from material_2016";
-             $result1 = $this->db->query($sql)->result_array();
+               $sql = "select max(MatId) as maxid from material_2016";
+               $result1 = $this->db->query($sql)->result_array();
 
-             foreach ($result1 as $row) {
+               foreach ($result1 as $row) {
                 $maxid = $row['maxid'];
 
             }
@@ -566,6 +566,68 @@ public function insert_get_goods() {
         ));
 }
 
+public function insert_get_material() {
+
+    $get_material_id = $this->input->post('get_id');
+    $lmatId = $this->input->post('lmatId');
+    $id_goodss = $this->input->post('id_goods');
+    $Ddate_get = $this->input->post('date_get');
+    $tel = $this->input->post('tel');
+
+    $Ddate_return = $this->input->post('date_return');
+    $name_get = $this->input->post('name_get');
+    $major_get = $this->input->post('major_get');
+    $note = $this->input->post('note');
+
+    $qtys = $this->input->post('qty');
+    $prices = $this->input->post('price');
+
+    $rows = $this->input->post('row');
+
+    $data1['lend_id'] = '0';
+    $this->db->insert('lend_material_seq', $data1);
+
+    $data2['get_material_id'] = '0';
+    $this->db->insert('get_material_seq', $data2);
+
+    for($i=0;$i<$rows;$i++){
+
+        $id_goods = $id_goodss[$i];
+        $qty = $qtys[$i];
+        $price = $prices[$i];
+
+        $data3['get_material_id'] = $get_material_id;
+        $data3['Pid'] = $this->session->userdata('Pid');
+
+        $data3['MatId'] = $id_goods;
+        $data3['Ddate_get'] = $Ddate_get;
+        $data3['Ddate_return'] = $Ddate_return;
+        $data3['name_get'] = $name_get;
+        $data3['major_get'] = $major_get;
+        $data3['note'] = $note;
+        $data3['tel'] = $tel;
+        $data3['status'] = '1';
+
+        $this->db->insert('get_material_detial', $data3);
+
+
+        $data4['LmatId'] = $lmatId;
+        $data4['MatId'] = $id_goods;     
+        $data4['qty'] = $qty;
+        $data4['price'] = $price;
+        $data4['Ddate'] = date('Y-m-d');
+        $data4['Pid'] = $this->session->userdata('Pid');
+        
+        $this->db->insert('lend_material_2016', $data4);
+
+    }
+
+    echo json_encode(array(
+        'is_successful' => TRUE,
+        'msg' => 'บันทึกเรียบร้อย'.$prices[0]
+        ));
+}
+
 public function insert_return_goods() {
 
     $get_id = $this->input->post('get_id');
@@ -577,7 +639,7 @@ public function insert_return_goods() {
 
     $rows = $this->input->post('rows');
 
-    $data2['return_id'] = '0';
+    $data2['return_id'] = '1';
     $this->db->insert('return_goods_seq', $data2);
 
     for($i=0;$i<$rows;$i++){
@@ -740,17 +802,17 @@ public function show_material() {
     $this->load->view('admin/dashboard/show_material', $data);
 }
 public function buy_material() {
- $this->load->model('dashboard_model');
- $data['record'] = $this->dashboard_model->getData_material();
+   $this->load->model('dashboard_model');
+   $data['record'] = $this->dashboard_model->getData_material();
 
- $this->load->view('admin/dashboard/buy_material',$data);
+   $this->load->view('admin/dashboard/buy_material',$data);
 }
 
 public function table_buy_material() {
- $this->load->model('dashboard_model');
- $data['record'] = $this->dashboard_model->getData_material();
+   $this->load->model('dashboard_model');
+   $data['record'] = $this->dashboard_model->getData_material();
 
- $this->load->view('admin/dashboard/table_buy_material',$data);
+   $this->load->view('admin/dashboard/table_buy_material',$data);
 }
 
 public function lend_goode_seq(){
@@ -811,14 +873,34 @@ public function get_goods($type) {
     $this->load->view('admin/dashboard/get_goods_view', $data);
 }
 
+public function get_material($type) {
+
+
+    $this->load->model('dashboard_model');
+   // $data['data'] = $this->dashboard_model->getData_duruble_goods_new_type($type);
+    $data['maxid'] = $this->dashboard_model->getData_get_material_maxid();
+    $data['maxid2'] = $this->dashboard_model->getData_material_maxid();
+    // if($type == 1){
+    //     $data['type'] = 'ยืม ครุภัณฑ์';
+    //     $data['standard'] = '1';
+    // }else{
+    //     $data['type'] = 'ยืม ครุภัณฑ์ต่ำกว่าเกณฑ์';
+    //     $data['standard'] = '2';
+    // }
+
+
+
+    $this->load->view('admin/dashboard/get_material_view', $data);
+}
+
 public function return_goods() {
 
 
-        $this->load->model('dashboard_model');
-        $data['reTurnGoods'] = $this->dashboard_model->getData_Get_goods();
+    $this->load->model('dashboard_model');
+    $data['reTurnGoods'] = $this->dashboard_model->getData_Get_goods();
 
 
-        $this->load->view('admin/dashboard/show_get_goods_return', $data);
+    $this->load->view('admin/dashboard/show_get_goods_return', $data);
 }
 
 
@@ -1052,6 +1134,29 @@ public function data_buy_list_in() {
             INNER JOIN durable_goods_2016 ON get_goods_detial.id_goods = durable_goods_2016.id_goods
             WHERE get_id = '$id'
             ";
+            $data['reTurnGoods'] = $this->db->query($sql);
+
+            $this->load->view('admin/dashboard/detial_get_goods_paple',$data);
+
+        }
+
+        public function detial_get_material_paple($id){
+            $sql = "SELECT
+            get_material_detial.get_material_id,
+            get_material_detial.Pid,
+            get_material_detial.MatId,
+            get_material_detial.Ddate_get,
+            get_material_detial.Ddate_return,
+            get_material_detial.name_get,
+            get_material_detial.major_get,
+            get_material_detial.note,
+            get_material_detial.tel,
+            get_material_detial.`status`,
+            material_2016.MatName
+            FROM
+            get_material_detial
+            INNER JOIN material_2016 ON get_material_detial.MatId = material_2016.MatId
+            WHERE get_material_id = '$id'";
             $data['reTurnGoods'] = $this->db->query($sql);
 
             $this->load->view('admin/dashboard/detial_get_goods_paple',$data);

@@ -69,6 +69,7 @@
             <th>ผู้ยืม</th>
             <th>สังกัด</th>
             <th>จำนวน</th>
+            <th>สถานะ</th>
             <th>คืน ครุภัณฑ์</th>
            
             
@@ -93,6 +94,20 @@
                 <td><?php echo $row['name_get']; ?></td>
                 <td><?php echo $row['major_get']; ?></td>
                 <td><?php echo $row['count']; ?> ชิ้น</td>
+                <td>
+                <?php 
+                    if($row['status'] == 0){
+                    ?>
+                        <i class="fa fa-check-circle" aria-hidden="true" style="color:green"></i>
+                    <?php
+                    }else{
+                    ?>
+                        <i class="fa fa-times" aria-hidden="true" style="color:red"></i>
+                    <?php 
+                    } 
+                    ?>
+                    </td>
+
                 <td><a class="btn btn-primary" onclick="showModal('<?php echo $row['get_id']; ?>');"><i class="fa fa-newspaper-o"></i></a></td>
                 
             </tr>
