@@ -159,6 +159,15 @@ class Dashboard extends CI_Controller {
         $this->load->view('admin/dashboard/detial_get_form', $data);
     }
 
+    public function detialReturnMaterial(){
+        $this->load->model('dashboard_model');
+        $id = $this->input->post('id');
+        $data['reTurnGoods'] = $this->dashboard_model->getdetialReturn_material_all($id);
+        $data['maxid'] = $this->dashboard_model->getData_return_material_maxid();
+
+        $this->load->view('admin/dashboard/detial_get_material_form', $data);
+    }
+
     public function detialLendMaterial2(){
         $this->load->model('dashboard_model');
         $id = $this->input->post('id');
@@ -573,6 +582,7 @@ public function insert_get_material() {
     $id_goodss = $this->input->post('id_goods');
     $Ddate_get = $this->input->post('date_get');
     $tel = $this->input->post('tel');
+    $position = $this->input->post('position');
 
     $Ddate_return = $this->input->post('date_return');
     $name_get = $this->input->post('name_get');
@@ -603,10 +613,13 @@ public function insert_get_material() {
         $data3['Ddate_get'] = $Ddate_get;
         $data3['Ddate_return'] = $Ddate_return;
         $data3['name_get'] = $name_get;
+        $data3['position_get'] = $position;
         $data3['major_get'] = $major_get;
         $data3['note'] = $note;
         $data3['tel'] = $tel;
         $data3['status'] = '1';
+        $data3['qty'] = $qty;
+        $data3['price'] = $price;
 
         $this->db->insert('get_material_detial', $data3);
 
@@ -664,6 +677,59 @@ public function insert_return_goods() {
 
         $data5['status'] = '0';
         $this->db->update('get_goods_detial', $data5, array('id_goods' => $id_data,'get_id' => $get_id));
+
+    }
+
+    echo json_encode(array(
+        'is_successful' => TRUE,
+        'msg' => 'บันทึกเรียบร้อย'.$rows
+        ));
+}
+
+public function insert_return_material() {
+
+    $get_id = $this->input->post('get_id');
+    $id_datas = $this->input->post('value_data');
+    $maxid = $this->input->post('max');
+    $Ddate_return = $this->input->post('dateRe');
+    $name = $this->input->post('name');
+    $qtys = $this->input->post('qty');
+    $prices = $this->input->post('price');
+
+    $rows = $this->input->post('rows');
+
+    $data2['return_id'] = '1';
+    $this->db->insert('return_material_seq', $data2);
+
+    for($i=0;$i<$rows;$i++){
+        $id_data = $id_datas[$i];
+        $qty = $qtys[$i];
+        $price = $prices[$i];
+        
+        $data3['get_material_id'] = $get_id;
+        $data3['Pid'] = $this->session->userdata('Pid');
+        $data3['return_id'] = $maxid;
+        $data3['MatId'] = $id_data;
+        $data3['Ddate_return'] = $Ddate_return;
+        $data3['name_return'] = $name;
+        $data3['note'] = '';
+        
+
+        $this->db->insert('return_material_detial', $data3);
+
+        
+        $data4['MatId'] = $id_data;
+        $data4['qty'] = $qty;
+        $data4['price'] = $price;
+        $data4['Ddate'] = $Ddate_return;
+        $data4['id_buy'] = $get_id;
+        $data4['market_name'] = 'จากการ ยืมพัสดุ';
+        $data4['status_buy'] = '2';
+
+        $this->db->insert('buy_material_2016', $data4);
+
+        $data5['status'] = '0';
+        $this->db->update('get_material_detial', $data5, array('id_goods' => $id_data,'get_material_id' => $get_id));
 
     }
 
@@ -901,6 +967,16 @@ public function return_goods() {
 
 
     $this->load->view('admin/dashboard/show_get_goods_return', $data);
+}
+
+public function return_meterial() {
+
+
+    $this->load->model('dashboard_model');
+    $data['reTurnGoods'] = $this->dashboard_model->getData_Get_material();
+
+
+    $this->load->view('admin/dashboard/show_get_material_return', $data);
 }
 
 
@@ -1151,6 +1227,8 @@ public function data_buy_list_in() {
             get_material_detial.major_get,
             get_material_detial.note,
             get_material_detial.tel,
+            get_material_detial.qty,
+            get_material_detial.position_get,
             get_material_detial.`status`,
             material_2016.MatName
             FROM
@@ -1159,7 +1237,7 @@ public function data_buy_list_in() {
             WHERE get_material_id = '$id'";
             $data['reTurnGoods'] = $this->db->query($sql);
 
-            $this->load->view('admin/dashboard/detial_get_goods_paple',$data);
+            $this->load->view('admin/dashboard/detial_get_material_paple',$data);
 
         }
 

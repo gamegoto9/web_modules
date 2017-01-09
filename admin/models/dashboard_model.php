@@ -158,6 +158,14 @@ class Dashboard_model extends CI_Model {
         return $query->row();
     }
 
+
+    public function getData_return_material_maxid(){
+        $query = $this->db->query("SELECT max(return_id) as maxID from return_material_seq");
+        // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
+
+        return $query->row();
+    }
+
     public function getData_material_maxid(){
         $query = $this->db->query("SELECT max(lend_id) as maxID from lend_material_seq");
         // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
@@ -263,6 +271,24 @@ class Dashboard_model extends CI_Model {
             get_goods_detial
             INNER JOIN personal ON get_goods_detial.Pid = personal.Pid
             GROUP BY get_goods_detial.get_id");
+
+        return $query->result_array();
+    }
+
+    public function getData_Get_material() {
+
+        $query = $this->db->query("SELECT
+            get_material_detial.get_material_id,
+            get_material_detial.Ddate_get,
+            get_material_detial.name_get,
+            get_material_detial.major_get,
+            personal.`name`,
+            sum(qty) as count,
+            get_material_detial.`status`
+            FROM
+            get_material_detial
+            INNER JOIN personal ON get_material_detial.Pid = personal.Pid
+            GROUP BY get_material_detial.get_material_id");
 
         return $query->result_array();
     }
@@ -384,6 +410,37 @@ class Dashboard_model extends CI_Model {
         INNER JOIN personal ON get_goods_detial.Pid = personal.Pid
         INNER JOIN durable_goods_2016 ON get_goods_detial.id_goods = durable_goods_2016.id_goods
         WHERE get_id = '$id'";
+
+        $query = $this->db->query($sql);
+        return $query;
+
+
+
+
+    }
+
+    public function getdetialReturn_material_all($id){
+        $sql = "SELECT
+        get_material_detial.get_material_id,
+        get_material_detial.Pid,
+        get_material_detial.MatId,
+        get_material_detial.Ddate_get,
+        get_material_detial.Ddate_return,
+        get_material_detial.name_get,
+        get_material_detial.major_get,
+        get_material_detial.note,
+        get_material_detial.tel,
+        get_material_detial.position_get,
+        get_material_detial.qty,
+        get_material_detial.price,
+        get_material_detial.`status`,
+        material_2016.MatName,
+        personal.`name`
+        FROM
+        get_material_detial
+        INNER JOIN material_2016 ON get_material_detial.MatId = material_2016.MatId
+        INNER JOIN personal ON get_material_detial.Pid = personal.Pid
+        WHERE get_material_id = '$id'";
 
         $query = $this->db->query($sql);
         return $query;

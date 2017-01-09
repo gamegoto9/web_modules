@@ -71,6 +71,7 @@
             <th>จำนวน</th>
             <th>สถานะ</th>
             <th>คืน ครุภัณฑ์</th>
+            <th>ใบเบิก</th>
            
             
         </tr>
@@ -109,6 +110,8 @@
                     </td>
 
                 <td><a class="btn btn-primary" onclick="showModal('<?php echo $row['get_id']; ?>');"><i class="fa fa-newspaper-o"></i></a></td>
+                <td><a class="btn btn-success" href="<?php echo base_url('admin/dashboard/detial_get_goods_paple/'.$lend_id); ?>" target="_blank">ใบเบิก</a>
+                </td>
                 
             </tr>
             <?php

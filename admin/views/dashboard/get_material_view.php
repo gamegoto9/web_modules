@@ -64,6 +64,20 @@
 
                         <div class="form-group">
 
+                            <label class="col-sm-1 control-label">ตำแหน่ง :</label>
+
+                            <div class="col-sm-6">
+
+                                <input type="text" class="form-control" id="txtPosition" name="txtPosition" placeholder="ตำแหน่ง" require>
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
                             <label class="col-sm-1 control-label">หน่วยงาน :</label>
 
                             <div class="col-sm-6">
@@ -345,8 +359,9 @@
             var date2Get = $("#date2").val();
             var noteGet = $("#txtNote").val();
             var tel = $("#tel").val();
+            var position = $("#txtPosition").val();
 
-            if(rowss > 0 && idGet != "" && nameGet != "" && nameMajorGet != "" && date1Get != "" && date2Get != "" && noteGet != "" && tel != ""){
+            if(rowss > 0 && idGet != "" && nameGet != "" && nameMajorGet != "" && date1Get != "" && date2Get != "" && noteGet != "" && tel != "" && position != ""){
 
 
                 // var faction1 = "<?php echo site_url('admin/dashboard/get_goods_seq/'); ?>";
@@ -374,7 +389,7 @@
                 
 
                 var faction = "<?php echo site_url('admin/dashboard/insert_get_material/'); ?>";
-                var fdata = {get_id: idGet,id_goods: id_goodsGet,date_get: date1Get, date_return: date2Get, name_get: nameGet, major_get: nameMajorGet,note: noteGet,row: rowss,tel: tel,qty: qty1,price: price,lmatId: lmatId};
+                var fdata = {get_id: idGet,id_goods: id_goodsGet,date_get: date1Get, date_return: date2Get, name_get: nameGet, major_get: nameMajorGet,note: noteGet,row: rowss,tel: tel,qty: qty1,price: price,lmatId: lmatId,position: position};
 
                 $.post(faction, fdata, function(jdata) {
 

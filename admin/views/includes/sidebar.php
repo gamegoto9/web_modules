@@ -272,7 +272,7 @@
         }
         function return_material() {
          
-            $('#main_view').load('dashboard/return_goods/');
+            $('#main_view').load('dashboard/return_meterial/');
 
         }
 
