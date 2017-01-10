@@ -53,8 +53,9 @@
                             <a href="#" onclick="loadpage_lendView('1');"><i class="fa fa-th"></i> <span>เบิก ครุภัณฑ์</span></a>
                         </li>
                         <li>
-                            <a href="#" onclick="loadpage_insert();">
-                                <i class="fa fa-th"></i> <span>เพิ่มข้อมูลครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
+                            <a href="#" onclick="durable_goods_repair();">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>ซ่อมบำรุง ครุภัณฑ์</span> <small class="badge pull-right bg-orange">new</small>
                             </a>
                         </li>
                         <li>
@@ -65,6 +66,11 @@
                         <li>
                             <a href="#" onclick="return_goods();">
                                 <i class="fa fa-th"></i> <span>คืนครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="loadpage_insert();">
+                                <i class="fa fa-th"></i> <span>เพิ่มข้อมูลครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
                             </a>
                         </li>
                     </ul>
@@ -282,6 +288,11 @@
 
         function durable_goods_news() {
             $('#main_view').load('dashboard/show_drurbleGoods_news/1');
+
+        }
+
+        function durable_goods_repair() {
+            $('#main_view').load('dashboard/show_drurbleGoods_repair/1');
 
         }
 

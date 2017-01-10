@@ -397,11 +397,53 @@ function ReadNumber($number)
                  $this->excel->getActiveSheet()->setCellValue('D3', 'จำนวนเงิน');
                  $this->excel->getActiveSheet()->setCellValue('E3', 'หมายเหตุ');
 
-                 for ($col = ord('A'); $col <= ord('L'); $col++) {
+                 for ($col = ord('A'); $col <= ord('E'); $col++) {
                     
                     
                     $this->excel->getActiveSheet()->getStyle(chr($col).'3')->applyFromArray($styleBoldCenterHeaderTable)->getAlignment()->setWrapText(true);
                 }
+
+                $start_rows = 4;
+                $i = 1;
+                foreach ($reTurnGoods_repair->result_array() as $row) {
+
+                    $this->excel->getActiveSheet()->setCellValue('A'.$start_rows, $i);
+                    $this->excel->getActiveSheet()->getStyle('A'.$start_rows)->applyFromArray($styleCenter);
+
+                     $this->excel->getActiveSheet()->setCellValue('B'.$start_rows, $row['Ddate']);
+                    $this->excel->getActiveSheet()->getStyle('B'.$start_rows)->applyFromArray($styleCenter);
+
+                     $this->excel->getActiveSheet()->setCellValue('C'.$start_rows, $row['subject']);
+                   
+                    $this->excel->getActiveSheet()->setCellValue('D'.$start_rows, $row['price']);
+                    $this->excel->getActiveSheet()->getStyle('D'.$start_rows)->applyFromArray($styleCenter);
+
+                     $this->excel->getActiveSheet()->setCellValue('E'.$start_rows, $row['note']);
+                   
+
+                    $this->excel->getActiveSheet()->setCellValue('F'.$start_rows, ' ');
+
+                    for ($col = ord('A'); $col <= ord('E'); $col++) {
+                   
+                    $this->excel->getActiveSheet()->getStyle(chr($col).$start_rows)->applyFromArray($styleBorderLeftRight)->getAlignment()->setWrapText(true);
+                    }
+
+                $start_rows++;
+                $i++;
+                }
+
+                for($start_rows;$start_rows<=23;$start_rows++){
+                    for ($col = ord('A'); $col <= ord('E'); $col++) {
+                   
+                        $this->excel->getActiveSheet()->getStyle(chr($col).$start_rows)->applyFromArray($styleBorderLeftRight)->getAlignment()->setWrapText(true);
+                    }
+                }
+
+                for ($col = ord('A'); $col <= ord('E'); $col++) {
+                   
+                        $this->excel->getActiveSheet()->getStyle(chr($col).$start_rows)->applyFromArray($styleBorderTop)->getAlignment()->setWrapText(true);
+                }
+
 
 
 

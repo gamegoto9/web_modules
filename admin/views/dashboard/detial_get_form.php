@@ -254,6 +254,7 @@
                             // btn_new_page();
                         //}
                         //$("#select_data").trigger('reset');
+                        $("#modalShow").modal('hide');
 
 
                     } else {

@@ -265,9 +265,9 @@ class Dashboard extends CI_Controller {
         if ($count > $data['qty']) {
 
             echo json_encode(array(
-               'is_successful' => FALSE,
-               'msg' => 'วัสดุมีจำนวนไม่เพียงพอ มีอยู่ '.$data['qty']
-               ));
+             'is_successful' => FALSE,
+             'msg' => 'วัสดุมีจำนวนไม่เพียงพอ มีอยู่ '.$data['qty']
+             ));
         }else{
             echo json_encode(array(
                 'is_successful' => TRUE
@@ -455,6 +455,60 @@ class Dashboard extends CI_Controller {
     }
 
 
+
+    public function insert_repair() {
+
+
+
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('date1', 'วันที่', 'required');
+//        $this->form_validation->set_rules('txtId', 'รหัส', 'required');
+        $this->form_validation->set_rules('txtSubject', 'รายละเอียด', 'required');
+        $this->form_validation->set_rules('price', 'จำนวนเงิน', 'required');
+        $this->form_validation->set_rules('txtid', 'รหัสครุภัณฑ์', 'required');
+        $this->form_validation->set_rules('note', 'หมายเหตุ', 'required');
+
+
+
+
+        $this->form_validation->set_message('required', 'กรุุณาป้อน %s');
+
+        if ($this->form_validation->run() == FALSE) {
+
+            $msg = form_error('date1');
+            $msg.= form_error('txtSubject');
+            $msg.= form_error('price');
+            $msg.= form_error('txtid');
+            $msg.= form_error('note');
+
+
+            echo json_encode(array(
+                'is_successful' => FALSE,
+                'msg' => $msg
+                ));
+        } else {
+
+
+
+            $data['id_goods'] = $this->input->post('txtid');
+            $data['Ddate'] = $this->input->post('date1');
+            $data['price'] = $this->input->post('price');
+            $data['note'] = $this->input->post('note');
+            $data['subject'] = $this->input->post('txtSubject');
+            $data['Pid'] = $this->session->userdata('Pid');
+
+
+            $this->db->insert('durable_goods_repair', $data);
+
+            echo json_encode(array(
+                'is_successful' => TRUE,
+                'msg' => 'บันทึกเรียบร้อย'
+                ));
+        }
+    }
+
+
     public function insert_material_new() {
 
 
@@ -478,10 +532,10 @@ class Dashboard extends CI_Controller {
             $tvalue = $tvalues[$i];
 
             if($tvalue == ""){
-               $sql = "select max(MatId) as maxid from material_2016";
-               $result1 = $this->db->query($sql)->result_array();
+             $sql = "select max(MatId) as maxid from material_2016";
+             $result1 = $this->db->query($sql)->result_array();
 
-               foreach ($result1 as $row) {
+             foreach ($result1 as $row) {
                 $maxid = $row['maxid'];
 
             }
@@ -630,6 +684,7 @@ public function insert_get_material() {
         $data4['price'] = $price;
         $data4['Ddate'] = date('Y-m-d');
         $data4['Pid'] = $this->session->userdata('Pid');
+        $data4['status'] = '2';
         
         $this->db->insert('lend_material_2016', $data4);
 
@@ -695,10 +750,11 @@ public function insert_return_material() {
     $name = $this->input->post('name');
     $qtys = $this->input->post('qty');
     $prices = $this->input->post('price');
+    $note = $this->input->post('note');
 
     $rows = $this->input->post('rows');
 
-    $data2['return_id'] = '1';
+    $data2['return_id'] = '0';
     $this->db->insert('return_material_seq', $data2);
 
     for($i=0;$i<$rows;$i++){
@@ -712,9 +768,8 @@ public function insert_return_material() {
         $data3['MatId'] = $id_data;
         $data3['Ddate_return'] = $Ddate_return;
         $data3['name_return'] = $name;
-        $data3['note'] = '';
-        
-
+        $data3['note'] = $note;  
+        $data3['qty'] = $qty;      
         $this->db->insert('return_material_detial', $data3);
 
         
@@ -725,17 +780,19 @@ public function insert_return_material() {
         $data4['id_buy'] = $get_id;
         $data4['market_name'] = 'จากการ ยืมพัสดุ';
         $data4['status_buy'] = '2';
-
         $this->db->insert('buy_material_2016', $data4);
 
+
         $data5['status'] = '0';
-        $this->db->update('get_material_detial', $data5, array('id_goods' => $id_data,'get_material_id' => $get_id));
+        $this->db->update('get_material_detial', $data5, array('MatId' => $id_data,'get_material_id' => $get_id));
+
+
 
     }
 
     echo json_encode(array(
         'is_successful' => TRUE,
-        'msg' => 'บันทึกเรียบร้อย'.$rows
+        'msg' => 'บันทึกเรียบร้อย'
         ));
 }
 
@@ -859,6 +916,17 @@ public function show_drurbleGoods_news($type) {
     $this->load->view('admin/dashboard/show_duruble_goods', $data);
 }
 
+public function show_drurbleGoods_repair($type) {
+
+
+    $this->load->model('dashboard_model');
+    $data['record'] = $this->dashboard_model->getData_duruble_goods_new($type);
+    $data['send'] = 'new'.$type;
+
+
+    $this->load->view('admin/dashboard/show_duruble_goods_repair', $data);
+}
+
 public function show_material() {
 
 
@@ -868,17 +936,17 @@ public function show_material() {
     $this->load->view('admin/dashboard/show_material', $data);
 }
 public function buy_material() {
-   $this->load->model('dashboard_model');
-   $data['record'] = $this->dashboard_model->getData_material();
+ $this->load->model('dashboard_model');
+ $data['record'] = $this->dashboard_model->getData_material();
 
-   $this->load->view('admin/dashboard/buy_material',$data);
+ $this->load->view('admin/dashboard/buy_material',$data);
 }
 
 public function table_buy_material() {
-   $this->load->model('dashboard_model');
-   $data['record'] = $this->dashboard_model->getData_material();
+ $this->load->model('dashboard_model');
+ $data['record'] = $this->dashboard_model->getData_material();
 
-   $this->load->view('admin/dashboard/table_buy_material',$data);
+ $this->load->view('admin/dashboard/table_buy_material',$data);
 }
 
 public function lend_goode_seq(){
@@ -1029,6 +1097,18 @@ public function data_goods_news() {
     $this->load->view('admin/dashboard/data_goods', $data);
 }
 
+
+public function insert_goods_repair() {
+
+    $id = $this->input->post('id');
+    $this->load->model('dashboard_model');
+    $data['record'] = $this->dashboard_model->data_goods_new($id);
+    $data['send'] = '01';
+
+
+    $this->load->view('admin/dashboard/repair_goods_form', $data);
+}
+
 public function data_buy_not_in() {
 
 
@@ -1165,6 +1245,22 @@ public function data_buy_list_in() {
 
             $sql = "SELECT * FROM durable_goods_2016 WHERE id_goods = '$id'";
             $data['reTurnGoods'] = $this->db->query($sql);
+
+            $sql = "SELECT
+            durable_goods_repair.id_goods,
+            durable_goods_repair.Ddate,
+            durable_goods_repair.price,
+            durable_goods_repair.note,
+            durable_goods_repair.`subject`,
+            durable_goods_repair.Pid,
+            durable_goods_2016.name_goods,
+            durable_goods_2016.brand_goods,
+            durable_goods_2016.id_goods_crru
+            FROM
+            durable_goods_repair
+            INNER JOIN durable_goods_2016 ON durable_goods_repair.id_goods = durable_goods_2016.id_goods
+            WHERE durable_goods_repair.id_goods = '$id'";
+            $data['reTurnGoods_repair'] = $this->db->query($sql);
 
             $this->load->view('admin/dashboard/detial_lend_goods_paple_center',$data);
 
