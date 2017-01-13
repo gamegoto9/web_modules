@@ -237,7 +237,8 @@ class Dashboard_model extends CI_Model {
             e.Ddate as Ddate,
             cnt.colCount as count,
             personal.`name` as name,
-            SUM(dg.price) as sum
+            SUM(dg.price) as sum,
+            e.file
             FROM
             lend_goods_detial AS e
             INNER JOIN (

@@ -52,6 +52,12 @@
 <a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_goods_return'); ?>">Print</a>
 <br><br>
 </div> -->
+
+<div class="col-md-12" >
+        <h3><?php echo $type; ?></h3>
+        <br>
+</div>
+
 <table class="display" cellspacing="0" width="100%">
     <thead>
 
@@ -65,6 +71,7 @@
             <th>ผู้เบิก</th>
             <th>ข้อมูล</th>
             <th>พิมพ์</th>
+            <th>หลักฐาน</th>
             
         </tr>
     </thead>
@@ -90,6 +97,22 @@
                 <td><a class="btn btn-info" onclick="showModal('<?php echo $row['lend_id']; ?>','<?php echo $standard; ?>');"><i class="fa fa-newspaper-o"></i></a></td>
                 <td><a class="btn btn-success" href="<?php echo base_url('admin/dashboard/detial_lend_paple/'.$lend_id.'/'.$standard); ?>" target="_blank">พิมพ์ใบเบิก</a>
                 </td>
+
+                <?php
+                    if($row['file'] == ''){
+                ?>
+                    <td><a class="btn btn-warning" onclick="showModal_file('<?php echo $row['lend_id']; ?>','<?php echo $standard; ?>');"><i class="fa fa-plus"></i></a>
+                    </td>
+
+                <?php
+                    }else{
+                ?>
+                    <td><a class="btn btn-primary"><i class="fa fa-file"></i></a>
+                    </td>
+                <?php
+                    }
+                ?>
+                
             </tr>
             <?php
             $i++;
@@ -123,6 +146,32 @@
         </div>
     </div>
 
+
+     <!-- Modal -->
+    <div class="modal fade" id="modalShow2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bgmodal">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">เพิ่มไฟล์หลักฐาน</h4>
+                </div>
+                <div class="modal-body">
+                    
+                    
+                    <div id="div_show2">
+                        
+                    </div>
+                  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="btn_con_save_file()">บันทึก</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
 <script>
     
     
@@ -132,6 +181,14 @@
         var sdata = {id:xid,standard:xstandard};
         $('#div_show').load('<?php echo site_url('admin/dashboard/detialLend'); ?>',sdata);
         $('#modalShow').modal('show');
+    }
+
+    function showModal_file(xid,xstandard){
+        
+        
+        var sdata = {id:xid,standard:xstandard};
+        $('#div_show2').load('<?php echo site_url('admin/dashboard/insert_file_form'); ?>',sdata);
+        $('#modalShow2').modal('show');
     }
     
     

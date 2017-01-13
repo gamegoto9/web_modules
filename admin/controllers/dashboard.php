@@ -61,6 +61,74 @@ class Dashboard extends CI_Controller {
         $this->load->view('admin/dashboard/test', $data);
     }
 
+    public function insert_file_form(){
+
+        $data['lendId'] = $this->input->post('id');
+         $data['standard'] = $this->input->post('standard');
+         
+        $this->load->view('admin/dashboard/insert_file_form', $data);
+    }
+
+    public function insert_file(){
+
+        $lend_id = $this->input->post('lendId');
+
+
+        foreach ($_FILES as $key => $value) {
+
+            $config['upload_path'] = './assets/upload/goods_material/goods_lend_detial';
+            $part = $config['upload_path'];
+            $config['allowed_types'] = '*';
+            $config['max_size'] = '1024*8';
+            $config['overwrite'] = FALSE;
+            $config['remove_spaces'] = TRUE;
+            $config['file_name'] = $lend_id;
+            $this->load->library('upload', $config);
+            //$this->upload->do_upload($lend_id)
+            $this->upload->initialize($config);
+
+            $aaa = $config['allowed_types'];
+
+            if(!empty($_FILES['file']['name'])){
+
+
+                if (!empty($value['tmp_name']) && $value['size'] > 0) {
+                    if (!$this->upload->do_upload($key)) {
+                        $msg = $this->upload->display_errors();
+                        echo json_encode(array(
+                            'is_successful' => FALSE,
+                            'msg' => $msg
+                            ));
+                    } else {
+                        $name = $this->upload->data();
+                        $data['file'] = base_url() . 'assets/upload/goods_material/goods_lend_detial/'. $lend_id;
+                    }
+                }
+
+
+                $this->db->where('lend_id', $lend_id);
+                $this->db->update('lend_goods_detial', $data); 
+
+                echo json_encode(array(
+                    'is_successful' => TRUE,
+                    'msg' => 'บันทึกเรียบร้อย'
+                    ));
+
+            }else{
+                echo json_encode(array(
+                    'is_successful' => FALSE,
+                    'msg' => 'ไม่ได้เพื่มไฟล์'
+                    ));
+            }
+        }
+
+        
+
+
+
+        
+    }
+
     public function show_drurbleGoods($type) {
 
 
@@ -83,6 +151,12 @@ class Dashboard extends CI_Controller {
         $data['reTurnGoods'] = $this->dashboard_model->getData_Lend_goods($standard);
 
         $data['standard'] = $standard;
+
+        if($standard == '1'){
+            $data['type'] = 'รายงาน การเบิกครุภัณฑ์';
+        }else{
+            $data['type'] = 'รายงาน การเบิกครุภัณฑ์ ต่ำกว่าเกณฑ์';
+        }
 
         $this->load->view('admin/dashboard/show_duruble_goods_lend', $data);
     }
@@ -1230,17 +1304,39 @@ public function data_buy_list_in() {
 
         }
 
-        public function detial_lend_paple_material_center($lend_id){
-
-            $sql = "SELECT Ddate FROM buy_material_2016 WHERE Ddate = '$lend_id' ORDER BY Ddate asc";
-            
-
-            //$this->load->view('admin/dashboard/detial_lend_material_paple',$data);
+        public function detial_lend_paple_material_center($id){
 
 
+            $sql = "SELECT * FROM material_2016 WHERE MatId = '$id' and status_buy = '0'";
+            $data['contiMaterial'] = $this->db->query($sql);
 
+            $sql = "SELECT * FROM buy_material_2016 WHERE MatId = '$id'";
+            $data['buyMaterial'] = $this->db->query($sql);
 
+            $Ddate = array();
+            $i = 0;
+
+            foreach ($data['buyMaterial']->result_array() as $row) {
+                $Ddate[$i] = $row['Ddate'];
+                $i++;
+            }
+
+            $sql = "SELECT * FROM lend_material_2016 WHERE MatId = '$id'";
+            $data['LendMaterial'] = $this->db->query($sql);
+
+            foreach ($data['LendMaterial']->result_array() as $row) {
+                $Ddate[$i] = $row['Ddate'];
+                $i++;
+            }
+
+            $data['Ddate_all'] = $Ddate;
+            $data['MatId'] = $id;
+
+            //print_r($data['Ddate_all']);
+
+            $this->load->view('admin/dashboard/detial_lend_material_paple_center',$data);
         }
+
         public function detial_lend_paple_goods_center($id){
 
             $sql = "SELECT * FROM durable_goods_2016 WHERE id_goods = '$id'";
@@ -1268,6 +1364,9 @@ public function data_buy_list_in() {
 
 
         }
+
+
+
 
         public function sample2(){
 

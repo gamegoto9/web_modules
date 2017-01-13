@@ -16,7 +16,7 @@
                     <a href="#">
                         <small class="badge pull-right bg-green">1</small>
                         <i class="fa fa-bar-chart-o"></i>
-                        <span>เพิ่มข้อมูล Student</span>
+                        <span>เพิ่มข้อมูล Student + + + </span>
                         
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>

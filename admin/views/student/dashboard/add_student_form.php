@@ -23,7 +23,7 @@ if ($view == 1 || $view == 2) {
                     <form class="form-horizontal" name="form1" id="form1">
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">รหัสนักศึกษา :Student ID<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">รหัสนักศึกษา :Student ID : 学号<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <input type="text" name="stdId1" id="stdId1" parsley-trigger="change" required placeholder="5214631xx" class="form-control" value="<?php echo $students['stdId']; ?>">
                                 <input type="hidden" maxlength="15" name="stdId" id="stdId" parsley-trigger="change" required placeholder="5214631xx" class="form-control" value="<?php echo $students['sid']; ?>">
@@ -31,33 +31,33 @@ if ($view == 1 || $view == 2) {
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">รหัสหนังสือเดินทาง :Passport Number<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">รหัสหนังสือเดินทาง :Passport Number : 护照号码<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <input type="text" name="passport" id="passport" parsley-trigger="change" required placeholder="E246884XX" class="form-control" value="<?php echo $students['passport_number']; ?>">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">คำนำหน้า : Title<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">คำนำหน้า : Title : 女士/先生<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <select class="form-control" id="title_name" name="title_name">
 
-                                    <option value="Mr.">Mr.</option>
-                                    <option value="Miss.">Miss.</option>
+                                    <option value="Mr.">Mr./女士</option>
+                                    <option value="Miss.">Miss./先生</option>
 
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">ชื่อ : Name<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">ชื่อ : Name : 名字<font color="red">*</font></label>
                             <div class="col-sm-6">
                                 <input type="text"  name="fname" id="fname" parsley-trigger="change" required placeholder="Name" class="form-control" value="<?php echo $students['std_fname_th']; ?>">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">นามสกุล : Last Name<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">นามสกุล : Last Name : 姓氏<font color="red">*</font></label>
                             <div class="col-sm-6">
                                 <input type="text" name="lname" id="lname" parsley-trigger="change" required placeholder="Last Name" class="form-control" value="<?php echo $students['std_lname_th']; ?>">
                             </div>
@@ -65,16 +65,16 @@ if ($view == 1 || $view == 2) {
 
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">วันเกิด : Birthday<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">วันเกิด : Birthday : 生日<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <input type="date" data-date-format="DD MMMM YYYY" name="birthday" id="birthday" parsley-trigger="change" required  class="form-control" value="<?php echo $students['date_birth']; ?>">
                             </div>
-                            <label class="control-label"><font color="red">Ex. dd = Day , mm = Month , yyyy = Year</font></label>
+                            <label class="control-label"><font color="red">Ex. (30/1/1990) dd = Day , mm = Month , yyyy = Year</font></label>
                         </div>
 
                         <div class="form-group">
 
-                            <label class="col-sm-3 control-label">หลักสูตร : Major <font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">หลักสูตร : Major : 专业 <font color="red">*</font></label>
 
                             <div class="col-sm-6">
                                 <select class="form-control" id="major" name="major">
@@ -95,29 +95,29 @@ if ($view == 1 || $view == 2) {
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">วันที่ออกหนังสือเดินทาง : Passport Start<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">วันที่ออกหนังสือเดินทาง : Passport Start : 护照签发日<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <input type="date" data-date-format="DD MMMM YYYY" name="startdate" id="startdate" parsley-trigger="change" required  class="form-control" value="<?php echo $students['passport_statdate']; ?>">
                             </div>
-                            <label class="control-label"><font color="red">Ex. dd = Day , mm = Month , yyyy = Year</font></label>
+                            <label class="control-label"><font color="red">Ex. (30/1/1990) dd = Day , mm = Month , yyyy = Year</font></label>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">วันหมดอายุของหนังสือเดินทาง : Passport expired<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">วันหมดอายุของหนังสือเดินทาง : Passport expired : 护照到期日<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <input type="date" data-date-format="DD MMMM YYYY" name="enddate" id="enddate" parsley-trigger="change" required  class="form-control" value="<?php echo $students['passport_enddate']; ?>">
                             </div>
-                            <label class="control-label"><font color="red">Ex. dd = Day , mm = Month , yyyy = Year</font></label>
+                            <label class="control-label"><font color="red">Ex. (30/1/1990) dd = Day , mm = Month , yyyy = Year</font></label>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">วันหมดอายุของวีซ่า : Visa expired<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">วันหมดอายุของวีซ่า : Visa expired : 签证到期日<font color="red">*</font></label>
                             <div class="col-sm-2">
 
                                 <input type="date" format="dd/MM/yyyy" name="visaend" id="visaend"  required  class="date form-control" value="<?php echo $students['visa_enddate']; ?>">
 
                             </div>
-                            <label class="control-label"><font color="red">Ex. dd = Day , mm = Month , yyyy = Year</font></label>
+                            <label class="control-label"><font color="red">Ex. (30/1/1990) dd = Day , mm = Month , yyyy = Year</font></label>
 
 
 
@@ -125,7 +125,7 @@ if ($view == 1 || $view == 2) {
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">ประเภทหนังสือเดินทาง : Passport Status Type<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">ประเภทหนังสือเดินทาง : Passport Status Type : 护照类别 <font color="red">*</font></label>
                             <div class="col-sm-5">
                                 <div class="radio">
                                     <label>
@@ -186,40 +186,40 @@ if ($view == 1 || $view == 2) {
                     <form class="form-horizontal" name="form1" id="form1">
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">รหัสนักศึกษา :Student ID<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">รหัสนักศึกษา :Student ID: 学号<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <input type="text"  maxlength="15" name="stdId" id="stdId" parsley-trigger="change" required placeholder="5214631xx" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">รหัสหนังสือเดินทาง :Passport Number<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">รหัสหนังสือเดินทาง :Passport Number : 护照号码<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <input type="text" name="passport" id="passport" parsley-trigger="change" required placeholder="E246884XX" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">คำนำหน้า : Title<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">คำนำหน้า : Title : 女士/先生<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <select class="form-control" id="title_name" name="title_name">
 
-                                    <option value="Mr.">Mr.</option>
-                                    <option value="Miss.">Miss.</option>
+                                    <option value="Mr.">Mr. / 女士</option>
+                                    <option value="Miss.">Miss. / 先生</option>
 
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">ชื่อ : Name<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">ชื่อ : Name : 名字<font color="red">*</font></label>
                             <div class="col-sm-6">
                                 <input type="text" name="fname" id="fname" parsley-trigger="change" required placeholder="Name" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">นามสกุล : Last Name<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">นามสกุล : Last Name : 姓氏<font color="red">*</font></label>
                             <div class="col-sm-6">
                                 <input type="text" name="lname" id="lname" parsley-trigger="change" required placeholder="Last Name" class="form-control">
                             </div>
@@ -227,16 +227,16 @@ if ($view == 1 || $view == 2) {
 
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">วันเกิด : Birthday<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">วันเกิด : Birthday : 生日<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <input type="date" data-date-format="DD MMMM YYYY" name="birthday" id="birthday" parsley-trigger="change" required  class="form-control">
                             </div>
-                            <label class="control-label"><font color="red">Ex. dd = Day , mm = Month , yyyy = Year</font></label>
+                            <label class="control-label"><font color="red">Ex. (30/1/1990) dd = Day , mm = Month , yyyy = Year</font></label>
                         </div>
 
                         <div class="form-group">
 
-                            <label class="col-sm-3 control-label">หลักสูตร : Major <font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">หลักสูตร : Major : 专业<font color="red">*</font></label>
 
                             <div class="col-sm-6">
                                 <select class="form-control" id="major" name="major">
@@ -257,29 +257,29 @@ if ($view == 1 || $view == 2) {
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">วันที่ออกหนังสือเดินทาง : Passport Start<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">วันที่ออกหนังสือเดินทาง : Passport Start : 护照签发日<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <input type="date" data-date-format="DD MMMM YYYY" name="startdate" id="startdate" parsley-trigger="change" required  class="form-control">
                             </div>
-                            <label class="control-label"><font color="red">Ex. dd = Day , mm = Month , yyyy = Year</font></label>
+                            <label class="control-label"><font color="red">Ex. (30/1/1990) dd = Day , mm = Month , yyyy = Year</font></label>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">วันหมดอายุของหนังสือเดินทาง : Passport expired<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">วันหมดอายุของหนังสือเดินทาง : Passport expired : 护照到期日<font color="red">*</font></label>
                             <div class="col-sm-2">
                                 <input type="date" data-date-format="DD MMMM YYYY" name="enddate" id="enddate" parsley-trigger="change" required  class="form-control">
                             </div>
-                            <label class="control-label"><font color="red">Ex. dd = Day , mm = Month , yyyy = Year</font></label>
+                            <label class="control-label"><font color="red">Ex. (30/1/1990) dd = Day , mm = Month , yyyy = Year</font></label>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">วันหมดอายุของวีซ่า : Visa expired<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">วันหมดอายุของวีซ่า : Visa expired : 签证到期日<font color="red">*</font></label>
                             <div class="col-sm-2">
 
                                 <input type="date" format="dd/MM/yyyy"  name="visaend" id="visaend"  required  class="date form-control">
 
                             </div>
-                            <label class="control-label"><font color="red">Ex. dd = Day , mm = Month , yyyy = Year</font></label>
+                            <label class="control-label"><font color="red">Ex. (30/1/1990) dd = Day , mm = Month , yyyy = Year</font></label>
 
 
 
@@ -287,7 +287,7 @@ if ($view == 1 || $view == 2) {
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">ประเภทหนังสือเดินทาง : Passport Status Type<font color="red">*</font></label>
+                            <label class="col-sm-3 control-label">ประเภทหนังสือเดินทาง : Passport Status Type : 护照类别<font color="red">*</font></label>
                             <div class="col-sm-5">
                                 <div class="radio">
                                     <label>

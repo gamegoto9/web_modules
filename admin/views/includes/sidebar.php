@@ -16,6 +16,15 @@
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
             </div>
+
+            <?php
+            $pid = $this->session->userdata('Pid');
+            $sql = "select * from personal where Pid = '$pid'";
+            $data['personal'] = $this->db->query($sql);
+            foreach ($data['personal']->result_array() as $row) {
+                $status_goods_material = $row['status_goods_material'];
+            }
+            ?>
             <!-- search form -->
             <!--            <form action="#" method="get" class="sidebar-form">
                             <div class="input-group">
@@ -43,6 +52,25 @@
                     </a>
 
                     <ul class="treeview-menu">
+
+                        <?php
+                        if($status_goods_material == '1'){
+                        ?>
+                        <li>
+                            <a href="#" onclick="durable_goods_repair();">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>ซ่อมบำรุง ครุภัณฑ์</span> <small class="badge pull-right bg-orange">new</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="loadpage_insert();">
+                                <i class="fa fa-th"></i> <span>เพิ่มข้อมูลครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
+                            </a>
+                        </li>
+
+                        <?php
+                        }
+                        ?>
                         <li>
                             <a href="#" onclick="durable_goods_news();">
                                 <i class="fa fa-bar-chart-o"></i>
@@ -52,12 +80,7 @@
                         <li>
                             <a href="#" onclick="loadpage_lendView('1');"><i class="fa fa-th"></i> <span>เบิก ครุภัณฑ์</span></a>
                         </li>
-                        <li>
-                            <a href="#" onclick="durable_goods_repair();">
-                                <i class="fa fa-bar-chart-o"></i>
-                                <span>ซ่อมบำรุง ครุภัณฑ์</span> <small class="badge pull-right bg-orange">new</small>
-                            </a>
-                        </li>
+                        
                         <li>
                             <a href="#" onclick="get_goods('1');">
                                 <i class="fa fa-th"></i> <span>ยืมครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
@@ -68,11 +91,7 @@
                                 <i class="fa fa-th"></i> <span>คืนครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
                             </a>
                         </li>
-                        <li>
-                            <a href="#" onclick="loadpage_insert();">
-                                <i class="fa fa-th"></i> <span>เพิ่มข้อมูลครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
-                            </a>
-                        </li>
+                        
                     </ul>
 
 
@@ -88,29 +107,39 @@
                     <a href="#">
                         <small class="badge pull-right bg-orange">new</small>
                         <i class="fa fa-bar-chart-o"></i>
-                        <span>วัสดุ</span>
+                        <span>พัสดุ</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
                         <li>
-                            <a href="#" onclick="material_news();"><i class="fa fa-th"></i> <span>ข้อมูลวัสดุ</span></a>
+                            <a href="#" onclick="material_news();"><i class="fa fa-th"></i> <span>ข้อมูลพัสดุ</span></a>
                         </li>
+                        
                         <li>
-                            <a href="#" onclick="material_buy();"><i class="fa fa-th"></i> <span>ซื้อวัสดุระหว่างปี</span></a>
-                        </li>
-                        <li>
-                            <a href="#" onclick="material_lend();"><i class="fa fa-th"></i> <span>เบิกวัสดุ</span></a>
+                            <a href="#" onclick="material_lend();"><i class="fa fa-th"></i> <span>เบิกพัสดุ</span></a>
                         </li>
                         <li>
                             <a href="#" onclick="get_material('1');">
-                                <i class="fa fa-th"></i> <span>ยืมวัสดุ</span> <small class="badge pull-right bg-green">new</small>
+                                <i class="fa fa-th"></i> <span>ยืมพัสดุ</span> <small class="badge pull-right bg-green">new</small>
                             </a>
                         </li>
                         <li>
                             <a href="#" onclick="return_material();">
-                                <i class="fa fa-th"></i> <span>คืนวัสดุ</span> <small class="badge pull-right bg-green">new</small>
+                                <i class="fa fa-th"></i> <span>คืนพัสดุ</span> <small class="badge pull-right bg-green">new</small>
                             </a>
                         </li>
+
+                        <?php
+                        if($status_goods_material == '1'){
+                        ?>
+                            <li>
+                            <a href="#" onclick="material_buy();"><i class="fa fa-th"></i> <span>ซื้อพัสดุระหว่างปี</span></a>
+                        </li>
+
+                        <?php
+                        }
+                        ?>
+
                     </ul>
                 </li>
 
@@ -156,7 +185,7 @@
                         </li>
                         <li>
                             <a href="#" onclick="loadDetialLend('1');">
-                                <i class="fa fa-newspaper-o"></i> <span>ใบเบิกครุภัณฑ์</span> <small class="badge pull-right bg-orange">new</small>
+                                <i class="fa fa-newspaper-o"></i> <span>การเบิกครุภัณฑ์</span> <small class="badge pull-right bg-orange">new</small>
                             </a>
                         </li>
                         <li>
@@ -166,7 +195,7 @@
                         </li>
                         <li>
                             <a href="#" onclick="loadDetialLendMaterial();">
-                                <i class="fa fa-newspaper-o"></i> <span>ใบเบิกวัสดุ</span> <small class="badge pull-right bg-orange">new</small>
+                                <i class="fa fa-newspaper-o"></i> <span>ใบเบิกพัสดุ</span> <small class="badge pull-right bg-orange">new</small>
                             </a>
                         </li>
                         <li>
