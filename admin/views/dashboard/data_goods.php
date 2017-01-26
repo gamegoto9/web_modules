@@ -170,6 +170,53 @@
 
             </div>
 
+            <div class="col-md-12 col-md-offset-0" style="padding: 20px">
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">ข้อมูลการซ่อมบำรุงครุภัณฑ์
+                    </div>
+
+                    <table class="table table-bordered table-striped table-condensed">
+
+                        <thead>
+                            <th>#</th>
+                            <th>รหัสการซ่อม</th>
+                            <th>วันที่ส่งซ่อม</th>
+                            <th>เหตุผลที่ซ่อม</th>
+                            <th>ราคา</th>
+                            <th>หมายเหตุ</th>
+                            <th>ใบเสนอราคา</th>
+
+                        </thead>
+
+                        <tbody>
+                            <?php
+                            
+                            $i=1;
+                                foreach ($repair as $row) {
+                                ?>
+                                <tr>
+                                    <td><?php echo $i; ?></td>
+                                    <td><?php echo $row['id_repair']; ?></td>
+                                    <td><?php echo $row['Ddate']; ?></td>
+                                    <td><?php echo $row['subject']; ?></td>
+                                    <td><?php echo $row['price']; ?></td>
+                                    <td><?php echo $row['note']; ?></td>
+                                    <td><a class="btn btn-primary" href="<?php echo $row['file']; ?>" target="_blank"><i class="fa fa-file"></i></a></td>
+                                   
+                                </tr>
+                                <?php
+                                $i++;
+                            }
+                            
+                            ?>
+                        </tbody>
+                    </table> 
+
+                </div>
+
+            </div>
+
         </div>
     </div>
 </div>

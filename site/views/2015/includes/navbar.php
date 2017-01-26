@@ -24,7 +24,7 @@ echo $user_language;
                 <div class="navbar-collapse collapse menu">
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#home"><i class="fa fa-home"></i><?PHP echo $this->lang->line('nav_home'); ?></a></li>
+                        <li><a href="http://crruinter.crru.ac.th/inter_2014/site/inter2015"><i class="fa fa-home"></i><?PHP echo $this->lang->line('nav_home'); ?></a></li>
                         <li><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user dropdown"></i><?PHP echo $this->lang->line('nav_about'); ?></a>
                             <ul class="dropdown-menu" style="background-color: #ddd;">
 

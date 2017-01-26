@@ -17,6 +17,12 @@
     div.dataTables_wrapper {
         margin-bottom: 3em;
     }
+    body .modal-admin {
+        /* new custom width */
+        width: 80%;
+        /* must be half of the width, minus scrollbar on the left (30px) */
+        margin-left: 10%;
+    }
 </style>
 
 <style>
@@ -199,7 +205,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalShow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg modal-admin" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>

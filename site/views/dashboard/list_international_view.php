@@ -1,6 +1,6 @@
-<?php $this->load->view('includes/header'); ?>
-<?php $this->load->view('includes/navbar'); ?>
-<?php $this->load->view('includes/sidebar'); ?>
+<?php $this->load->view('../2015/includes/header'); ?>
+<?php $this->load->view('../2015/includes/navbar'); ?>
+
 
 
 <?php $this->load->view('includes2/header'); ?>
@@ -35,7 +35,7 @@
 
         <div class="row">
 
-
+            <br><br><br><br><br><br><br><br>
 
             <div class="col-xs-12 col-sm-12 ">	
                 <div class="border-radius-top-teerawat">
@@ -45,13 +45,13 @@
                     
                     <table width="100%" class="table table-bordered">
                         <thead>
-                            <tr bgcolor="#770000">
+                            <tr bgcolor="#b35900">
                      
                   
                                 <td align="center"><h3>ลำดับที่</h3></td>
-                                <td ><h3>มหาวิทยาลัย / องกรณ์ / ความร่วมมือกับต่างชาติ</h3></td>
-                                <td ><h3>ประเทศ</h3></td>
-                                <td ><h3>Website</h3></td>
+                                <td align="center"><h3>มหาวิทยาลัย / องกรณ์ / ความร่วมมือกับต่างชาติ</h3></td>
+                                <td align="center"><h3>ประเทศ</h3></td>
+                                <td align="center"><h3>Website</h3></td>
                              
                             </tr>
                         </thead>
@@ -62,8 +62,8 @@
                                 <tr>
                                     <td align="center"><?php echo $row['id']; ?></td>
                                     <td><?php echo $row['name']; ?></td>
-                                    <td><?php echo $row['international']; ?></td>
-                                    <td><a href="<?php echo $row['link']; ?>" target="_blank">Website</a></td>
+                                    <td align="center"><?php echo $row['international']; ?></td>
+                                    <td align="center"><a href="<?php echo $row['link']; ?>" target="_blank">Website</a></td>
                                 </tr>
                             <?php
                                 }
@@ -73,7 +73,7 @@
                     <div align="right">
                         ข้อมูล ณ วันที่ 31 มีนาคม 2558<br>
                         กองวิเทศสัมพันธ์ สำนักงานอธิการบดี<br>
-                        <a class="btn btn-danger  view-pdf" href="<?php echo base_url('site/dashboard/list_international/1'); ?>">Print</a>
+                        <a class="btn btn-danger  view-pdf" href="<?php echo base_url('site/dashboard/detial_MOU/'); ?>">Print</a>
                     </div>
                     
                     </div>
@@ -136,4 +136,4 @@
 
 
 </script>
-    <?php $this->load->view('includes/footer'); ?>
+   

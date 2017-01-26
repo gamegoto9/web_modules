@@ -59,12 +59,18 @@
                         <li>
                             <a href="#" onclick="durable_goods_repair();">
                                 <i class="fa fa-bar-chart-o"></i>
-                                <span>ซ่อมบำรุง ครุภัณฑ์</span> <small class="badge pull-right bg-orange">new</small>
+                                <span>ซ่อมบำรุง ครุภัณฑ์</span> 
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="durable_goods_return2();">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>ส่งคืน/โอนย้าย ครุภัณฑ์</span> 
                             </a>
                         </li>
                         <li>
                             <a href="#" onclick="loadpage_insert();">
-                                <i class="fa fa-th"></i> <span>เพิ่มข้อมูลครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
+                                <i class="fa fa-th"></i> <span>เพิ่มข้อมูลครุภัณฑ์</span> 
                             </a>
                         </li>
 
@@ -74,7 +80,7 @@
                         <li>
                             <a href="#" onclick="durable_goods_news();">
                                 <i class="fa fa-bar-chart-o"></i>
-                                <span>ครุภัณฑ์</span> <small class="badge pull-right bg-orange">new</small>
+                                <span>ครุภัณฑ์</span> 
                             </a>
                         </li>
                         <li>
@@ -83,12 +89,12 @@
                         
                         <li>
                             <a href="#" onclick="get_goods('1');">
-                                <i class="fa fa-th"></i> <span>ยืมครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
+                                <i class="fa fa-th"></i> <span>ยืมครุภัณฑ์</span> 
                             </a>
                         </li>
                         <li>
                             <a href="#" onclick="return_goods();">
-                                <i class="fa fa-th"></i> <span>คืนครุภัณฑ์</span> <small class="badge pull-right bg-green">new</small>
+                                <i class="fa fa-th"></i> <span>คืนครุภัณฑ์</span> 
                             </a>
                         </li>
                         
@@ -120,12 +126,12 @@
                         </li>
                         <li>
                             <a href="#" onclick="get_material('1');">
-                                <i class="fa fa-th"></i> <span>ยืมพัสดุ</span> <small class="badge pull-right bg-green">new</small>
+                                <i class="fa fa-th"></i> <span>ยืมพัสดุ</span> 
                             </a>
                         </li>
                         <li>
                             <a href="#" onclick="return_material();">
-                                <i class="fa fa-th"></i> <span>คืนพัสดุ</span> <small class="badge pull-right bg-green">new</small>
+                                <i class="fa fa-th"></i> <span>คืนพัสดุ</span> 
                             </a>
                         </li>
 
@@ -179,28 +185,39 @@
                     <ul class="treeview-menu">
                         <li>
                             <a href="#" onclick="loadDetialReturn();">
-                                <i class="fa fa-newspaper-o"></i> <span>รายงานครุภัณฑ์ที่ส่งคืน</span>
+                                <i class="fa fa-newspaper-o"></i> <span>ข้อมูลครุภัณฑ์ที่ส่งคืน</span>
+
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="loadDetialRepair();">
+                                <i class="fa fa-newspaper-o"></i> <span>ข้อมูลการซ่อมแซมครุภัณฑ์</span>
 
                             </a>
                         </li>
                         <li>
                             <a href="#" onclick="loadDetialLend('1');">
-                                <i class="fa fa-newspaper-o"></i> <span>การเบิกครุภัณฑ์</span> <small class="badge pull-right bg-orange">new</small>
+                                <i class="fa fa-newspaper-o"></i> <span>ข้อมูลการเบิกครุภัณฑ์</span> 
                             </a>
                         </li>
                         <li>
                             <a href="#" onclick="loadDetialLend('2');">
-                                <i class="fa fa-newspaper-o"></i> <span>ใบเบิกครุภัณฑ์ต่ำกว่าเกณฑ์</span> <small class="badge pull-right bg-orange">new</small>
+                                <i class="fa fa-newspaper-o"></i> <span>ข้อมูลการเบิกครุภัณฑ์ต่ำกว่าเกณฑ์</span> 
                             </a>
                         </li>
                         <li>
                             <a href="#" onclick="loadDetialLendMaterial();">
-                                <i class="fa fa-newspaper-o"></i> <span>ใบเบิกพัสดุ</span> <small class="badge pull-right bg-orange">new</small>
+                                <i class="fa fa-newspaper-o"></i> <span>ข้อมูลการเบิกพัสดุ</span> 
                             </a>
                         </li>
                         <li>
                             <a href="#" onclick="loadDetialGet();">
-                                <i class="fa fa-newspaper-o"></i> <span>รายงานการยืมครุภัณฑ์</span> <small class="badge pull-right bg-orange">new</small>
+                                <i class="fa fa-newspaper-o"></i> <span>ข้อมูลการยืมครุภัณฑ์</span> 
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="loadDetialGetMaterial();">
+                                <i class="fa fa-newspaper-o"></i> <span>ข้อมูลการยืมพัสดุ</span> 
                             </a>
                         </li>
                     </ul>
@@ -315,6 +332,10 @@
             $('#main_view').load('dashboard/DetialReturnGoods/');
         }
 
+         function loadDetialRepair() {
+            $('#main_view').load('dashboard/DetialRepair/');
+        }
+
         function durable_goods_news() {
             $('#main_view').load('dashboard/show_drurbleGoods_news/1');
 
@@ -322,6 +343,11 @@
 
         function durable_goods_repair() {
             $('#main_view').load('dashboard/show_drurbleGoods_repair/1');
+
+        }
+
+        function durable_goods_return2() {
+            $('#main_view').load('dashboard/show_drurbleGoods_return2/1');
 
         }
 
@@ -352,6 +378,10 @@
 
         function loadDetialGet() {
             $('#main_view').load('dashboard/DetialGetGoods/');
+        }
+
+        function loadDetialGetMaterial() {
+            $('#main_view').load('dashboard/DetialGetMaterial/');
         }
 
         function loadDetialLendMaterial() {

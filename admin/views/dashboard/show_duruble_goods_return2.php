@@ -44,27 +44,16 @@
             <div class="col-md-12 col-md-offset-0" style="padding: 10px">
 
                 <div class="panel panel-primary ">
-                    <div class="panel-heading">ข้อวัสดุหลัก</div>
+                    <div class="panel-heading">ข้อมูลหลัก</div>
                     <div class="panel-body" id="panelMain">
 
 
 
-                        <div class="form-group">
 
-                            <label class="col-sm-1 control-label">ชื่อผู้ยืม :</label>
-
-                            <div class="col-sm-6">
-
-                                <input type="text" class="form-control" id="txtNameGet" name="txtNameGet" placeholder="ชื่อผู้ยืม" require>
-
-
-                            </div>
-
-                        </div>
 
                         <div class="form-group">
 
-                            <label class="col-sm-1 control-label">หน่วยงาน :</label>
+                            <label class="col-sm-3 control-label">ส่งคืน/โอนย้ายให้ หน่วยงาน :</label>
 
                             <div class="col-sm-6">
 
@@ -77,7 +66,7 @@
 
                         <div class="form-group">
 
-                            <label class="col-sm-1 control-label">วันที่ยืม :</label>
+                            <label class="col-sm-3 control-label">วันที่ส่งคืน :</label>
 
                             <div class="col-sm-4">
                                 <div class='input-group date' id='datetimepicker1'>
@@ -91,50 +80,43 @@
 
                         </div>
 
-                        <div class="form-group">
 
-                            <label class="col-sm-1 control-label">วันที่จะคืน :</label>
-
-                            <div class="col-sm-4">
-                                <div class='input-group date' id='datetimepicker2'>
-                                    <input type='text' class="form-control" id="date2" name="date2" required="" />
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                                </div>
-
-                            </div>
-
-                        </div>
 
                         <div class="form-group">
 
-                            <label class="col-sm-1 control-label">โครงการ/กิจกรรรม :</label>
+                            <label class="col-sm-3 control-label">เหตุผลในการส่งคืน/โอนย้าย :</label>
 
                             <div class="col-sm-6">
 
-                                <textarea class="form-control" rows="2" id="txtNote" name="txtNote" placeholder="โครงการ/กิจกรรรม"></textarea>
-
+                                <textarea class="form-control" rows="2" id="txtNote" name="txtNote" placeholder="เหตุผลในการส่งคืน/โอนย้าย"></textarea>
 
                             </div>
 
-                        </div>
+                        </div> 
 
                         <div class="form-group">
 
-                            <label class="col-sm-1 control-label">เบอร์โทร :</label>
+                            <label class="col-sm-3 control-label">แนบ บันทึกข้อความ :</label>
 
                             <div class="col-sm-6">
 
-                                <input type="number" maxlength="10" class="form-control" rows="2" id="tel" name="tel" placeholder="08xxxxxxx">
-
+                                <input type="file" name="file">
 
                             </div>
 
-                        </div>
+                        </div>  
 
+                        <div class="form-group">
 
+                            <label class="col-sm-3 control-label">ชื่อผู้ส่งคืน :</label>
 
+                            <div class="col-sm-6">
+
+                                <input type="text" class="form-control" id="name_aa" name="name_aa" placeholder="ชื่อผู้ส่งคืน" require>
+
+                            </div>
+
+                        </div>                   
                     </div>
                 </div>
 
@@ -147,46 +129,38 @@
                 <div class="panel panel-primary ">
                     <div class="panel-heading">ข้อมูลครุภัณฑ์</div>
                     <div class="panel-body" id="panelMain">
-            <div class="col-md-12">
+                        <div class="col-md-12">
 
 
 
-                
-
-                <div align='right'>
-                    <button type="button" class="btn btn-success" onclick="showModal_main('<?php echo $standard; ?>');"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                </div>
-                <br/><br/>
 
 
+                            <div align='right'>
+                                <button type="button" class="btn btn-success" onclick="showModal_main();"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                            </div>
+                            <br/><br/>
 
-                <div class="col-md-12">
-                    <input type="hidden" name="maxid" id="maxid" value="<?php echo "G".sprintf("%04d",$maxid->maxID); ?>">
 
-                    <table class="table table-bordered" id="tDataGoods">
-                        <thead>
-                            <th class="text-center">#</th>
-                            <th class="text-center">รายการ/รายละเอียด</th>
-                            <th class="text-center">ราคา</th>
-                            <th class="text-center">จำนวน</th>
-                            <th class="text-center">ราคารวม</th>
-                            <th class="text-center">ยกเลิก</th>
-                        </thead>
-                        <tbody>
 
-                        </tbody>
-                    </table>
-                </div>
-                <br/><br/>
+                            <div class="col-md-12">
+                                <input type="text" name="maxid" id="maxid" value="<?php echo "T".sprintf("%04d",$maxid->maxID); ?>">
 
-                <div class="form-group">
-                    <div class="pull-right">
-                        <label for="inputsumPrice" class="col-sm-6 control-label ">ราคารวม</label>
-                        <div class="col-sm-5">
-                            <input type="text" class="form-control" id="sumPrice" placeholder="ราคารวม">
-                        </div>
-                    </div>
-                </div>
+                                <table class="table table-bordered" id="tDataGoods">
+                                    <thead>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">รายการ/รายละเอียด</th>
+                                        <th class="text-center">หมายเลขครุภัณฑ์</th>
+                                        <th class="text-center">จำนวน</th>
+                                        <th class="text-center">ยกเลิก</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br/><br/>
+
+
 
                 <!--<div class="form-group">
                     <div class="pull-left">
@@ -204,12 +178,12 @@
                     <button type="button" class="btn btn-danger" onclick="btn_clear();">ยกเลิก</button>
                 </div>
             </div>
-</div>
-</div>
+        </div>
+    </div>
 </div>
 
-        </form>
-    </div>
+</form>
+</div>
 </div>
 
 <!-- Modal -->
@@ -317,10 +291,9 @@
 
 
         var sdata = {
-            id: xid,
             query: query
         };
-        $('#div_show_main').load('<?php echo site_url('admin/dashboard/select_goods'); ?>', sdata);
+        $('#div_show_main').load('<?php echo site_url('admin/dashboard/select_goods_return'); ?>', sdata);
         $('#modalShow_main').modal('show');
 
 
@@ -331,38 +304,38 @@
 
 
 
-    bootbox.confirm("ต้องการบันทึกหรือไม่ ?", function(result) {
-        if (result) {
+        bootbox.confirm("ต้องการบันทึกหรือไม่ ?", function(result) {
+            if (result) {
 
-            var rowss = $('#tDataGoods >tbody >tr').length;
-            console.log(rowss);
+                var rowss = $('#tDataGoods >tbody >tr').length;
+                console.log(rowss);
 
-            var idGet = $("#maxid").val();
-            var nameGet = $("#txtNameGet").val();
-            var nameMajorGet = $("#txtMajor").val();
-            var date1Get = $("#date1").val();
-            var date2Get = $("#date2").val();
-            var noteGet = $("#txtNote").val();
-            var tel = $("#tel").val();
+                var idGet = $("#maxid").val();
 
-            if(rowss > 0 && idGet != "" && nameGet != "" && nameMajorGet != "" && date1Get != "" && date2Get != "" && noteGet != "" && tel != ""){
+                var nameMajorGet = $("#txtMajor").val();
+                var date1Get = $("#date1").val();
+
+                var noteGet = $("#txtNote").val();
+                var name_aa = $("#name_aa").val();
+
+                if(rowss > 0 && idGet != "" && nameMajorGet != "" && date1Get != "" && noteGet != "" && name_aa != ""){
 
 
-                var faction1 = "<?php echo site_url('admin/dashboard/get_goods_seq/'); ?>";
-                // var fdata1 = {
-                //     id: 'xxx'
-                // };
-                $.post(faction1, function(jdata) {}, 'json');
+                // var faction1 = "<?php echo site_url('admin/dashboard/get_goods_seq/'); ?>";
+                // // var fdata1 = {
+                // //     id: 'xxx'
+                // // };
+                // $.post(faction1, function(jdata) {}, 'json');
 
                 var i = 0;
                 var row = 1;
                 var id_goodsGet = new Array();
-                var standardGet = new Array();
-           
+                // var standardGet = new Array();
+
                 while(row <= rowss){
-                    
-                    id_goodsGet[i] = $('#tDataGoods').children().children().eq(row).children().eq(6).text();
-                    standardGet[i] = $('#tDataGoods').children().children().eq(row).children().eq(7).text();
+
+                    id_goodsGet[i] = $('#tDataGoods').children().children().eq(row).children().eq(5).text();
+                    // standardGet[i] = $('#tDataGoods').children().children().eq(row).children().eq(7).text();
                     
                     i++;
                     row++;
@@ -370,25 +343,78 @@
 
                 
 
-                var faction = "<?php echo site_url('admin/dashboard/insert_get_goods/'); ?>";
-                var fdata = {get_id: idGet,standard: standardGet,id_goods: id_goodsGet,date_get: date1Get, date_return: date2Get, name_get: nameGet, major_get: nameMajorGet,note: noteGet,row: rowss,tel: tel};
+                var faction = "<?php echo site_url('admin/dashboard/insert_get_goods_return/'); ?>";
+                var fdata = {get_id: idGet,id_goods: id_goodsGet,date_get: date1Get , major_get: nameMajorGet,note: noteGet,row: rowss,name_aa: name_aa};
 
                 $.post(faction, fdata, function(jdata) {
 
                     if (jdata.is_successful) {
 
-                        $.pnotify({
-                            title: 'แจ้งให้ทราบ!',
-                            text: jdata.msg,
-                            type: 'success',
-                            opacity: 1,
-                            history: false
+                        // $.pnotify({
+                        //     title: 'แจ้งให้ทราบ!',
+                        //     text: jdata.msg,
+                        //     type: 'success',
+                        //     opacity: 1,
+                        //     history: false
 
-                        });
+                        // });
 
                         //if (idGet != "") {
-                            window.open('dashboard/detial_get_goods_paple/' + idGet, '_blank');
-                            btn_new_page();
+                         //   window.open('dashboard/detial_get_goods_paple/' + idGet, '_blank');
+                          //  btn_new_page();
+
+
+
+
+                          var formData = new FormData($('#select_data')[0]);
+
+                          $.ajax({
+                            url: "dashboard/insert_file_goods_return2",
+                            type: 'POST',
+                            data: formData,
+                            mimeType: "multipart/form-data",
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success: function(data) {
+
+
+                                var posts = JSON.parse(data);
+                                console.log(posts);
+
+                                if (posts.is_successful) {
+                                   $.pnotify({
+                                    title: 'แจ้งให้ทราบ',
+                                    text: posts.msg,
+                                    type: 'success',
+                                    history: false,
+
+                                });
+                                   
+
+                               }else{
+                                   $.pnotify({
+                                    title: 'แจ้งให้ทราบ',
+                                    text: posts.msg,
+                                    type: 'error',
+                                    history: false,
+
+                                });
+                               }
+
+                           },
+                           error: function(jqXHR, textStatus, errorThrown) {
+                            //handle here error returned
+                        }
+                    });
+
+
+
+                          
+                          $('.modal').modal('hide');
+                        durable_goods_return2();
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
                         //}
                         //$("#select_data").trigger('reset');
 
@@ -408,6 +434,13 @@
 
                 }, 'json');
 
+
+
+
+
+
+
+
             }else{
                 bootbox.alert("*ไม่ได้ป้อน ข้อมูลวัสดุหลัก");
 
@@ -416,7 +449,7 @@
             
         }
     });
-    return false;
+return false;
 }
 
 
@@ -583,16 +616,15 @@
                 $("#tDataGoods tbody").append("<tr>" +
                     "<td class='text-center'>" + numtitle + "</td>" +
                     "<td class='text-left'>" + tname + jdata.record[0]['brand_goods'] + "</td>" +
-                    "<td class='text-right'>" + tprice + "</td>" +
+                    "<td class='text-center'>" + jdata.record[0]['id_goods_crru'] + "</td>" +
                     "<td class='text-center'>" + tqty + "</td>" +
-                    "<td class='text-right'>" + tsum + "</td>" +
                     "<td class='text-center'><button type='button' class='btn btn-small btn-danger' id='remo'><i class='fa fa-trash'></i></button></td>" +
                     "<td class='hid_p'>" + jdata.record[0]['id_goods'] + "</td>" +
                     "<td class='hid_p'>" + jdata.record[0]['standard'] + "</td>" +
                     "</tr>");
 
                 $(".hid_p").hide();
-                update_price();
+                //update_price();
 
 
                 $('#modalShow_main').modal('hide');

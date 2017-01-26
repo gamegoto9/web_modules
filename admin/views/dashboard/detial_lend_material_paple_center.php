@@ -262,7 +262,7 @@ function ReadNumber($number)
 
                  $this->excel->getActiveSheet()->setCellValue('H4', 'รหัส ');
                  $this->excel->getActiveSheet()->getStyle('H4')->applyFromArray($styleRight);
-                 $this->excel->getActiveSheet()->setCellValue('I4', '...............................................................................');
+                 $this->excel->getActiveSheet()->setCellValue('I4', '.................'.$row['MatId'].'..........................................................................');
                  $this->excel->getActiveSheet()->setCellValue('J4', ' ');
 
                  $this->excel->getActiveSheet()->setCellValue('A5', 'ขนาดหรือลักษณะ');
@@ -378,28 +378,69 @@ function ReadNumber($number)
 
                                 foreach ($data['BuyMaterial']->result_array() as $row) {
 
-                                    $this->excel->getActiveSheet()->setCellValue('A'.$start, $row['Ddate']);
-                                    $this->excel->getActiveSheet()->getStyle('A'.$start)->applyFromArray($styleCenter);
+                                    if($row['status_buy'] == '2'){
 
-                                    $this->excel->getActiveSheet()->setCellValue('B'.$start, 'รับจาก '.$row['market_name']);
-                                    
+                                        $sql3 = "SELECT * FROM return_material_detial WHERE MatId = '$id_mat' and Ddate_return = '$Ddate_all[$i]'";
+                                        $data3['return_material'] = $this->db->query($sql3);
 
-                                    $this->excel->getActiveSheet()->setCellValue('C'.$start, $row['id_buy']);
-                                    $this->excel->getActiveSheet()->getStyle('C'.$start)->applyFromArray($styleCenter);
-                                   
-                                    $this->excel->getActiveSheet()->setCellValue('D'.$start, $row['price']);
-                                    $this->excel->getActiveSheet()->getStyle('D'.$start)->applyFromArray($styleRight);
+                                         foreach ($data3['return_material']->result_array() as $row3) {
 
-                                     
 
-                                    $this->excel->getActiveSheet()->setCellValue('F'.$start, $row['qty']);
-                                    $this->excel->getActiveSheet()->getStyle('F'.$start)->applyFromArray($styleCenter);
+                                            $this->excel->getActiveSheet()->setCellValue('A'.$start, $row3['Ddate_return']);
+                                            $this->excel->getActiveSheet()->getStyle('A'.$start)->applyFromArray($styleCenter);
 
-                                    $totle += $row['qty'];
+                                            $this->excel->getActiveSheet()->setCellValue('B'.$start, 'รับคืนจาก '.$row3['name_return']);
+                                        
 
-                                    $this->excel->getActiveSheet()->setCellValue('H'.$start, $totle);
-                                    $this->excel->getActiveSheet()->getStyle('H'.$start)->applyFromArray($styleCenter);
+                                            $this->excel->getActiveSheet()->setCellValue('C'.$start, $row3['return_id']);
+                                            $this->excel->getActiveSheet()->getStyle('C'.$start)->applyFromArray($styleCenter);
+                                            
+                                            $material_id = $row3['get_material_id'];
 
+                                            $sql4 = "SELECT * FROM get_material_detial WHERE MatId = '$id_mat' and get_material_id = '$material_id'";
+                                            $data4['get_material_price'] = $this->db->query($sql4);
+                                            $price_get = $data4['get_material_price']->row_array();
+
+                                            $this->excel->getActiveSheet()->setCellValue('D'.$start,$price_get['price']);
+                                            $this->excel->getActiveSheet()->getStyle('D'.$start)->applyFromArray($styleRight);
+
+                                         
+
+                                            $this->excel->getActiveSheet()->setCellValue('F'.$start, $row3['qty']);
+                                            $this->excel->getActiveSheet()->getStyle('F'.$start)->applyFromArray($styleCenter);
+
+                                            $totle += $row3['qty'];
+
+                                            $this->excel->getActiveSheet()->setCellValue('H'.$start, $totle);
+                                            $this->excel->getActiveSheet()->getStyle('H'.$start)->applyFromArray($styleCenter);
+
+                                            $start++;
+                                        }
+
+                                    }else{
+
+                                        $this->excel->getActiveSheet()->setCellValue('A'.$start, $row['Ddate']);
+                                        $this->excel->getActiveSheet()->getStyle('A'.$start)->applyFromArray($styleCenter);
+
+                                        $this->excel->getActiveSheet()->setCellValue('B'.$start, 'รับจาก '.$row['market_name']);
+                                        
+
+                                        $this->excel->getActiveSheet()->setCellValue('C'.$start, $row['id_buy']);
+                                        $this->excel->getActiveSheet()->getStyle('C'.$start)->applyFromArray($styleCenter);
+                                       
+                                        $this->excel->getActiveSheet()->setCellValue('D'.$start, $row['price']);
+                                        $this->excel->getActiveSheet()->getStyle('D'.$start)->applyFromArray($styleRight);
+
+                                         
+
+                                        $this->excel->getActiveSheet()->setCellValue('F'.$start, $row['qty']);
+                                        $this->excel->getActiveSheet()->getStyle('F'.$start)->applyFromArray($styleCenter);
+
+                                        $totle += $row['qty'];
+
+                                        $this->excel->getActiveSheet()->setCellValue('H'.$start, $totle);
+                                        $this->excel->getActiveSheet()->getStyle('H'.$start)->applyFromArray($styleCenter);
+                                    }
                                     // for ($col = ord('A'); $col <= ord('L'); $col++) {
                                    
                                     // $this->excel->getActiveSheet()->getStyle(chr($col).$start)->applyFromArray($styleCenterHeaderTable)->getAlignment()->setWrapText(true);
@@ -432,34 +473,71 @@ function ReadNumber($number)
 
                                 foreach ($data['LendMaterial']->result_array() as $row) {
 
-                                    $this->excel->getActiveSheet()->setCellValue('A'.$start, $row['Ddate']);
-                                    $this->excel->getActiveSheet()->getStyle('A'.$start)->applyFromArray($styleCenter);
 
-                                    $this->excel->getActiveSheet()->setCellValue('B'.$start, 'จ่ายให้ '.$row['name']);
-                             
+                                    if($row['status'] == '2'){
 
-                                    $this->excel->getActiveSheet()->setCellValue('C'.$start, $row['LmatId']);
-                                    $this->excel->getActiveSheet()->getStyle('C'.$start)->applyFromArray($styleCenter);
-                                   
-                                    $this->excel->getActiveSheet()->setCellValue('D'.$start, $row['price']);
-                                    $this->excel->getActiveSheet()->getStyle('D'.$start)->applyFromArray($styleRight);
+                                        $sql2 = "SELECT * FROM get_material_detial WHERE MatId = '$id_mat' and Ddate_get = '$Ddate_all[$i]'";
+                                        $data2['get_material'] = $this->db->query($sql2);
 
+                                         foreach ($data2['get_material']->result_array() as $row2) {
+
+
+                                            $this->excel->getActiveSheet()->setCellValue('A'.$start, $row2['Ddate_get']);
+                                            $this->excel->getActiveSheet()->getStyle('A'.$start)->applyFromArray($styleCenter);
+
+                                            $this->excel->getActiveSheet()->setCellValue('B'.$start, 'ยืมพัสดุ โดย '.$row2['name_get'].' '.$row2['major_get']);
                                      
 
-                                    $this->excel->getActiveSheet()->setCellValue('G'.$start, $row['qty']);
-                                    $this->excel->getActiveSheet()->getStyle('G'.$start)->applyFromArray($styleCenter);
+                                            $this->excel->getActiveSheet()->setCellValue('C'.$start, $row2['get_material_id']);
+                                            $this->excel->getActiveSheet()->getStyle('C'.$start)->applyFromArray($styleCenter);
+                                           
+                                            $this->excel->getActiveSheet()->setCellValue('D'.$start, $row2['price']);
+                                            $this->excel->getActiveSheet()->getStyle('D'.$start)->applyFromArray($styleRight);
 
-                                    $totle -= $row['qty'];
+                                             
 
-                                    $this->excel->getActiveSheet()->setCellValue('H'.$start, $totle);
-                                    $this->excel->getActiveSheet()->getStyle('H'.$start)->applyFromArray($styleCenter);
+                                            $this->excel->getActiveSheet()->setCellValue('G'.$start, $row2['qty']);
+                                            $this->excel->getActiveSheet()->getStyle('G'.$start)->applyFromArray($styleCenter);
 
-                                    // for ($col = ord('A'); $col <= ord('L'); $col++) {
-                                   
-                                    // $this->excel->getActiveSheet()->getStyle(chr($col).$start)->applyFromArray($styleCenterHeaderTable)->getAlignment()->setWrapText(true);
-                                    // }
+                                            $totle -= $row2['qty'];
 
-                                 $start++;
+                                            $this->excel->getActiveSheet()->setCellValue('H'.$start, $totle);
+                                            $this->excel->getActiveSheet()->getStyle('H'.$start)->applyFromArray($styleCenter);
+
+                                            $start++;
+                                        }
+
+                                    }else{
+
+                                            $this->excel->getActiveSheet()->setCellValue('A'.$start, $row['Ddate']);
+                                            $this->excel->getActiveSheet()->getStyle('A'.$start)->applyFromArray($styleCenter);
+
+                                            $this->excel->getActiveSheet()->setCellValue('B'.$start, 'จ่ายให้ '.$row['name']);
+                                     
+
+                                            $this->excel->getActiveSheet()->setCellValue('C'.$start, $row['LmatId']);
+                                            $this->excel->getActiveSheet()->getStyle('C'.$start)->applyFromArray($styleCenter);
+                                           
+                                            $this->excel->getActiveSheet()->setCellValue('D'.$start, $row['price']);
+                                            $this->excel->getActiveSheet()->getStyle('D'.$start)->applyFromArray($styleRight);
+
+                                             
+
+                                            $this->excel->getActiveSheet()->setCellValue('G'.$start, $row['qty']);
+                                            $this->excel->getActiveSheet()->getStyle('G'.$start)->applyFromArray($styleCenter);
+
+                                            $totle -= $row['qty'];
+
+                                            $this->excel->getActiveSheet()->setCellValue('H'.$start, $totle);
+                                            $this->excel->getActiveSheet()->getStyle('H'.$start)->applyFromArray($styleCenter);
+
+                                            // for ($col = ord('A'); $col <= ord('L'); $col++) {
+                                           
+                                            // $this->excel->getActiveSheet()->getStyle(chr($col).$start)->applyFromArray($styleCenterHeaderTable)->getAlignment()->setWrapText(true);
+                                            // }
+
+                                         $start++;
+                                     }
 
                                 }
                             }

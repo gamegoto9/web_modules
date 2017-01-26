@@ -52,6 +52,30 @@
 <a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_goods_return'); ?>">Print</a>
 <br><br>
 </div> -->
+
+<?php 
+function compareDate($date1, $date2, $check) {
+    $arrDate1 = explode("-", $date1);
+    $arrDate2 = explode("-", $date2);
+    $timStmp1 = mktime(0, 0, 0, $arrDate1[1], $arrDate1[2], $arrDate1[0]);
+    $timStmp2 = mktime(0, 0, 0, $arrDate2[1], $arrDate2[2], $arrDate2[0]);
+
+    if ($timStmp1 == $timStmp2) {
+        $check = "2";
+    } else if ($timStmp1 > $timStmp2) {
+        $check = "1";
+    } else if ($timStmp1 < $timStmp2) {
+        $check = "2";
+    }
+    return $check;
+}
+$date2 = date('Y-m-d', strtotime("-1 week"));
+
+?>
+<div class="col-md-12" >
+        <h3>ข้อมูล การยืมครุภัณฑ์</h3>
+        <br>
+</div>
 <table class="display" cellspacing="0" width="100%">
     <thead>
 
@@ -60,11 +84,13 @@
             <th>#</th>
             <th>รหัสการยืม</th>
             <th>วันที่ยืม</th>
+            <th>กำหนดการคืน</th>
             <th>ผู้ยืม</th>
             <th>สังกัด</th>
             <th>จำนวน</th>
             <th>ข้อมูล</th>
-            <th>พิมพ์</th>
+             <th>พิมพ์</th>
+            <th>หลักฐาน</th>
             
         </tr>
     </thead>
@@ -77,19 +103,47 @@
         $i = 1;
         foreach ($reTurnGoods as $row) {
             $lend_id = $row['get_id'];
+            $Ddate_return = $row['Ddate_return'];
+
+            $check = compareDate($Ddate_return, $date2, "0");
+
+            if($check == 2){
+                ?>
+                <tr bgcolor='#dc9e9e'>
+                <?php
+            }else{
+            ?>
+                <tr>
+            <?php
+            }
             ?>
 
             
-            <tr>
+           
                 <td><?php echo $i ?></td>
                 <td><?php echo $row['get_id']; ?></td>
                 <td><?php echo $row['Ddate_get']; ?></td>
+                <td><?php echo $row['Ddate_return']; ?></td>
                 <td><?php echo $row['name_get']; ?></td>
                 <td><?php echo $row['major_get']; ?></td>
                 <td><?php echo $row['count']; ?> ชิ้น</td>
                 <td><a class="btn btn-info" onclick="showModal('<?php echo $row['get_id']; ?>');"><i class="fa fa-newspaper-o"></i></a></td>
                 <td><a class="btn btn-success" href="<?php echo base_url('admin/dashboard/detial_get_goods_paple/'.$lend_id); ?>" target="_blank">พิมพ์ใบเบิก</a>
                 </td>
+                <?php
+                    if($row['file'] == ''){
+                ?>
+                    <td><a class="btn btn-warning" onclick="showModal_file('<?php echo $row['get_id']; ?>');"><i class="fa fa-plus"></i></a>
+                    </td>
+
+                <?php
+                    }else{
+                ?>
+                    <td><a class="btn btn-primary" href="<?php echo $row['file']; ?>" target="_blank"><i class="fa fa-file"></i></a>
+                    </td>
+                <?php
+                    }
+                ?>
             </tr>
             <?php
             $i++;
@@ -123,6 +177,31 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="modalShow2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bgmodal">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">เพิ่มไฟล์หลักฐาน</h4>
+                </div>
+                <div class="modal-body">
+                    
+                    
+                    <div id="div_show2">
+                        
+                    </div>
+                  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="btn_con_save_file_get_goods()">บันทึก</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
 <script>
     
     
@@ -132,6 +211,15 @@
         var sdata = {id:xid};
         $('#div_show').load('<?php echo site_url('admin/dashboard/detialGet'); ?>',sdata);
         $('#modalShow').modal('show');
+    }
+
+    function showModal_file(xid){
+        var type_type = 4;
+        var sdata = {id:xid,type:type_type};
+        
+      
+        $('#div_show2').load('<?php echo site_url('admin/dashboard/insert_file_form'); ?>',sdata);
+        $('#modalShow2').modal('show');
     }
     
     

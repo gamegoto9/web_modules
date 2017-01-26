@@ -41,34 +41,30 @@
         margin-bottom: 3em;
     }
 
-    .bgmodal {
-        background-color: #9cec40;
-    }
-
 </style>
-
-<!-- <div align='right'>
-
-<a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_goods_return'); ?>">Print</a>
-<br><br>
-</div> -->
 <div class="col-md-12" >
-        <h3>ข้อมูลการเบิกพัสดุ</h3>
+        <h3>ข้อมูล การซ่อมบำรุง ครุภัณฑ์</h3>
         <br>
 </div>
+<div align='right'>
+
+<!-- <a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_goods_return'); ?>">Print</a> -->
+<br><br>
+</div>
+
 <table class="display" cellspacing="0" width="100%">
     <thead>
 
 
         <tr bgcolor='#7ACCFA'>
-            <th>#</th>
-            <th>รหัสการเบิก</th>
-            <th>วันที่เบิก</th>
+           <th>#</th>
+            <th>รหัสการซ่อม</th>
+            <th>วันที่ส่งซ่อม</th>
+            <th>ผู้ส่งซ่อม</th>
+           
             <th>จำนวน</th>
-            <th>ราคารวม</th>
-            <th>ผู้เบิก</th>
             <th>ข้อมูล</th>
-            <th>พิมพ์</th>
+            
             <th>หลักฐาน</th>
             
         </tr>
@@ -81,26 +77,22 @@
       
         $i = 1;
         foreach ($reTurnGoods as $row) {
-            $lend_id = $row['LmatId'];
             ?>
 
             
             <tr>
                 <td><?php echo $i ?></td>
-                <td><?php echo $row['LmatId']; ?></td>
+                <td><?php echo $row['id_repair']; ?></td>
                 <td><?php echo $row['Ddate']; ?></td>
-                <td><?php echo $row['count']; ?> ชิ้น</td>
-                <td><?php echo $row['sum']; ?> บาท</td>
                 <td><?php echo $row['name']; ?></td>
-                <td><a class="btn btn-info" onclick="showModal('<?php echo $row['LmatId']; ?>');"><i class="fa fa-newspaper-o"></i></a></td>
-                <td><a class="btn btn-success" href="<?php echo base_url('admin/dashboard/detial_lend_paple_material_now/'.$lend_id); ?>" target="_blank">พิมพ์ใบเบิก</a>
-                </td>
+              
+                <td><?php echo $row['count']; ?> รายการ</td>
+                <td><a class="btn btn-info" onclick="showModal('<?php echo $row['id_repair']; ?>');"><i class="fa fa-newspaper-o"></i></a></td>
                 <?php
                     if($row['file'] == ''){
                 ?>
-                    <td><a class="btn btn-warning" onclick="showModal_file('<?php echo $row['LmatId']; ?>');"><i class="fa fa-plus"></i></a>
+                    <td><a class="btn btn-warning" onclick="showModal_file('<?php echo $row['id_repair']; ?>');"><i class="fa fa-plus"></i></a>
                     </td>
-
                 <?php
                     }else{
                 ?>
@@ -122,9 +114,9 @@
     <div class="modal fade" id="modalShow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bgmodal">
+                <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">รายละเอียดการเบิก</h4>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                 </div>
                 <div class="modal-body">
                     
@@ -136,12 +128,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                   
+                    <button type="button" class="btn btn-primary" onclick="save_edit()">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
-
     <!-- Modal -->
     <div class="modal fade" id="modalShow2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -159,13 +150,14 @@
                   
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" onclick="btn_con_save_file_lend_material()">บันทึก</button>
+                    <button type="button" class="btn btn-success" onclick="btn_save_file_repair()">บันทึก</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                    
                 </div>
             </div>
         </div>
     </div>
+
 
 <script>
     
@@ -174,12 +166,12 @@
         
         
         var sdata = {id:xid};
-        $('#div_show').load('<?php echo site_url('admin/dashboard/detialLendMaterial2'); ?>',sdata);
+        $('#div_show').load('<?php echo site_url('admin/dashboard/detialRepair2'); ?>',sdata);
         $('#modalShow').modal('show');
     }
 
     function showModal_file(xid){
-        var type_type = 2;
+        var type_type = 6;
         var sdata = {id:xid,type:type_type};
         
       
@@ -190,7 +182,102 @@
     
     function btn_delete(id) {
         
-        
+
+//alert("aa");
+        /*
+         bootbox.confirm("ยืนยันการลบข้อมูล ? ", function(ans) {
+         if (ans) {
+         var sdata = {id: id};
+         var faction = '<?php echo site_url('admin/dashboard/delete_data_student'); ?>';
+         $.post(faction, sdata, function(jdata) {
+         
+         if (jdata.is_successful) {
+         $.pnotify({
+         title: 'แจ้งให้ทราบ',
+         text: jdata.msg,
+         type: 'success',
+         history: false,
+         delay: 3000
+         });
+         //                                       
+         //                        //$(window.location).attr('href', '<?php echo site_url('website/list_data') ?>');  //โหลด function liste_data อีกครั้ง
+         //                        //                                       $('#myTab a[href="#list"]').tab('show');
+         //                        //                                       LoadList();
+         }
+         }, 'json');
+         
+         
+         
+         }
+         });   
+         */
+
+
+
+        bootbox.dialog({
+            message: "Password : <input type='password' class='form-control' name='pass' id='pass'></input>",
+            title: "ยืนยันการส่งคืน",
+            buttons: {
+                
+                main: {
+                    label: "Close",
+                    className: "btn-primary",
+                    
+                },
+                success: {
+                    label: "OK!",
+                    className: "btn-success",
+                    callback: function() {
+                         var key = "sphrd2345";
+                         
+                        
+                    // alert("Hi "+ $('#pass').val());
+                        var keyword = $('#pass').val();
+                        
+                        //if(keyword == key){
+                        
+                     
+                        var sdata = {id: id,
+                                    key: keyword};
+                        var faction = '<?php echo site_url('admin/dashboard/delete_data_durable'); ?>';
+                        $.post(faction, sdata, function(jdata) {
+         
+                        if (jdata.is_successful) {
+                            $.pnotify({
+                            title: 'แจ้งให้ทราบ',
+                            text: jdata.msg,
+                            type: 'success',
+                            history: false,
+                            delay: 3000
+                        });
+                                              
+                            //  $(window.location).attr('href', '<?php echo site_url('website/index') ?>');  //โหลด function liste_data อีกครั้ง
+                                                                     $('#myTab a[href="#list"]').tab('show');
+                                                                    // LoadList();
+                        }else{
+                            $.pnotify({
+                            title: 'แจ้งให้ทราบ',
+                            text: jdata.msg,
+                            type: 'error',
+                            history: false,
+                            delay: 3000
+                            });
+                        }
+                        }, 'json');
+                        
+                        
+                        //}else{
+                        
+                       
+                        
+                        //}
+                      
+                    }
+                }
+                
+            }
+        });
+ 
     }
 
 </script>

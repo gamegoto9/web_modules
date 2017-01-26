@@ -71,12 +71,12 @@
 </style>
 
 
-<div align='right'>
+<!-- <div align='right'>
 
     <a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_material/'); ?>">Print</a>
     <br><br>
    
-</div>
+</div> -->
           <br><br>
 <table class="display" cellspacing="0" width="100%">
     

@@ -1,42 +1,31 @@
 <?php
-session_start();
+//session_start();
 
-$user = $_SESSION['user'];
-$name = $_SESSION['name'];
+//$user = $_SESSION['user'];
+//$name = $_SESSION['name'];
 
-$Pid = $_SESSION['Pid'];
+//$dataUser = array(
+//        'username'  => $user,
+//        'name'     => $name
+//);
 
-if(isset($_SESSION['user'])){
-
- $dataUser = array(
-    'username'  => $user,
-    'name'     => $name,
-    'Pid'     => $Pid
-    );
+/*
+$user = $this->session->userdata('name');
 
 
-
- $this->session->set_userdata($dataUser);
-
-}else
-{
-    header("Refresh : 0;url = ../.../../../");
-    echo "<h3>Please login</h3>";
+if($user == ""){
+    header("Refresh : 1;url = http://crruinter.crru.ac.th/inter_2014/site/dashboard");
+    echo "<center><h3>Please Login Wait 3 seconds </h3></center>";
     echo "</body></html>";
-    exit;
+        exit;
 }
-
-
-
-
-
-
+*/
 ?>
 
 <header class="header">
     <a href="index.html" class="logo">
         <!-- Add the class icon to your logo image or logo icon to add the margining -->
-        ทะเบียนครุภัณฑ์ 
+        ข้อมูล MOU
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -59,7 +48,7 @@ if(isset($_SESSION['user'])){
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="glyphicon glyphicon-user"></i>
-                        <span><?php echo $this->session->userdata('name'); ?><i class="caret"></i></span>
+                        <span><?php echo $this->session->userdata('name');?><i class="caret"></i></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -88,7 +77,7 @@ if(isset($_SESSION['user'])){
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="<?php echo base_url('admin/student/Logout');?>" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>

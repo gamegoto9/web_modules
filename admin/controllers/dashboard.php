@@ -63,10 +63,38 @@ class Dashboard extends CI_Controller {
 
     public function insert_file_form(){
 
-        $data['lendId'] = $this->input->post('id');
-         $data['standard'] = $this->input->post('standard');
-         
-        $this->load->view('admin/dashboard/insert_file_form', $data);
+        $type = $this->input->post('type');
+
+        if($type == 1){
+            $data['lendId'] = $this->input->post('id');
+            $data['standard'] = $this->input->post('standard');
+            $data['type'] = $type;
+
+            $this->load->view('admin/dashboard/insert_file_form', $data);
+        }else if($type == 2){
+            $data['LmatId'] = $this->input->post('id');
+            $data['type'] = $type;
+            $this->load->view('admin/dashboard/insert_file_form', $data);
+        }else if($type == 3){
+            $data['get_material_id'] = $this->input->post('id');
+            $data['type'] = $type;
+            $this->load->view('admin/dashboard/insert_file_form', $data);
+        }else if($type == 4){
+            $data['get_id'] = $this->input->post('id');
+            $data['type'] = $type;
+            $this->load->view('admin/dashboard/insert_file_form', $data);
+        }else if($type == 5){
+            $data['detial_return_id'] = $this->input->post('id');
+            $data['type'] = $type;
+            $this->load->view('admin/dashboard/insert_file_form', $data);
+        }else if($type == 6){
+            $data['id_repair'] = $this->input->post('id');
+            $data['type'] = $type;
+            $this->load->view('admin/dashboard/insert_file_form', $data);
+        }
+
+
+        
     }
 
     public function insert_file(){
@@ -79,7 +107,7 @@ class Dashboard extends CI_Controller {
             $config['upload_path'] = './assets/upload/goods_material/goods_lend_detial';
             $part = $config['upload_path'];
             $config['allowed_types'] = '*';
-            $config['max_size'] = '1024*8';
+            $config['max_size'] = '8388608';
             $config['overwrite'] = FALSE;
             $config['remove_spaces'] = TRUE;
             $config['file_name'] = $lend_id;
@@ -101,13 +129,198 @@ class Dashboard extends CI_Controller {
                             ));
                     } else {
                         $name = $this->upload->data();
-                        $data['file'] = base_url() . 'assets/upload/goods_material/goods_lend_detial/'. $lend_id;
+
+                        $data['file'] = base_url() . 'assets/upload/goods_material/goods_lend_detial/'. $name['file_name'];
                     }
                 }
 
 
                 $this->db->where('lend_id', $lend_id);
                 $this->db->update('lend_goods_detial', $data); 
+
+                echo json_encode(array(
+                    'is_successful' => TRUE,
+                    'msg' => 'บันทึกเรียบร้อย'
+                    ));
+
+            }else{
+                echo json_encode(array(
+                    'is_successful' => FALSE,
+                    'msg' => 'ไม่ได้เพื่มไฟล์'
+                    ));
+            }
+        }
+
+        
+
+
+
+        
+    }
+
+    public function insert_file_lend_material(){
+
+        $lend_id = $this->input->post('LmatId');
+
+
+        foreach ($_FILES as $key => $value) {
+
+            $config['upload_path'] = './assets/upload/goods_material/goods_lend_material';
+            $part = $config['upload_path'];
+            $config['allowed_types'] = '*';
+            $config['max_size'] = '8388608';
+            $config['overwrite'] = FALSE;
+            $config['remove_spaces'] = TRUE;
+            $config['file_name'] = $lend_id;
+            $this->load->library('upload', $config);
+            //$this->upload->do_upload($lend_id)
+            $this->upload->initialize($config);
+
+            $aaa = $config['allowed_types'];
+
+            if(!empty($_FILES['file']['name'])){
+
+
+                if (!empty($value['tmp_name']) && $value['size'] > 0) {
+                    if (!$this->upload->do_upload($key)) {
+                        $msg = $this->upload->display_errors();
+                        echo json_encode(array(
+                            'is_successful' => FALSE,
+                            'msg' => $msg
+                            ));
+                    } else {
+                        $name = $this->upload->data();
+
+                        $data['file'] = base_url() . 'assets/upload/goods_material/goods_lend_material/'. $name['file_name'];
+                    }
+                }
+
+
+                $this->db->where('LmatId', $lend_id);
+                $this->db->update('lend_material_2016', $data); 
+
+                echo json_encode(array(
+                    'is_successful' => TRUE,
+                    'msg' => 'บันทึกเรียบร้อย'
+                    ));
+
+            }else{
+                echo json_encode(array(
+                    'is_successful' => FALSE,
+                    'msg' => 'ไม่ได้เพื่มไฟล์'
+                    ));
+            }
+        }
+
+        
+
+
+
+        
+    }
+
+    public function insert_file_get_material(){
+
+        $lend_id = $this->input->post('get_material_id');
+
+
+        foreach ($_FILES as $key => $value) {
+
+            $config['upload_path'] = './assets/upload/goods_material/get_material';
+            $part = $config['upload_path'];
+            $config['allowed_types'] = '*';
+            $config['max_size'] = '8388608';
+            $config['overwrite'] = FALSE;
+            $config['remove_spaces'] = TRUE;
+            $config['file_name'] = $lend_id;
+            $this->load->library('upload', $config);
+            //$this->upload->do_upload($lend_id)
+            $this->upload->initialize($config);
+
+            $aaa = $config['allowed_types'];
+
+            if(!empty($_FILES['file']['name'])){
+
+
+                if (!empty($value['tmp_name']) && $value['size'] > 0) {
+                    if (!$this->upload->do_upload($key)) {
+                        $msg = $this->upload->display_errors();
+                        echo json_encode(array(
+                            'is_successful' => FALSE,
+                            'msg' => $msg
+                            ));
+                    } else {
+                        $name = $this->upload->data();
+
+                        $data['file'] = base_url() . 'assets/upload/goods_material/get_material/'. $name['file_name'];
+                    }
+                }
+
+
+                $this->db->where('get_material_id', $lend_id);
+                $this->db->update('get_material_detial', $data); 
+
+                echo json_encode(array(
+                    'is_successful' => TRUE,
+                    'msg' => 'บันทึกเรียบร้อย'
+                    ));
+
+            }else{
+                echo json_encode(array(
+                    'is_successful' => FALSE,
+                    'msg' => 'ไม่ได้เพื่มไฟล์'
+                    ));
+            }
+        }
+
+        
+
+
+
+        
+    }
+
+
+    public function insert_file_get_goods(){
+
+        $lend_id = $this->input->post('get_id');
+
+
+        foreach ($_FILES as $key => $value) {
+
+            $config['upload_path'] = './assets/upload/goods_material/get_goods';
+            $part = $config['upload_path'];
+            $config['allowed_types'] = '*';
+            $config['max_size'] = '8388608';
+            $config['overwrite'] = FALSE;
+            $config['remove_spaces'] = TRUE;
+            $config['file_name'] = $lend_id;
+            $this->load->library('upload', $config);
+            //$this->upload->do_upload($lend_id)
+            $this->upload->initialize($config);
+
+            $aaa = $config['allowed_types'];
+
+            if(!empty($_FILES['file']['name'])){
+
+
+                if (!empty($value['tmp_name']) && $value['size'] > 0) {
+                    if (!$this->upload->do_upload($key)) {
+                        $msg = $this->upload->display_errors();
+                        echo json_encode(array(
+                            'is_successful' => FALSE,
+                            'msg' => $msg
+                            ));
+                    } else {
+                        $name = $this->upload->data();
+
+                        $data['file'] = base_url() . 'assets/upload/goods_material/get_goods/'.$name['file_name'];
+                    }
+                }
+
+
+                $this->db->where('get_id', $lend_id);
+                $this->db->update('get_goods_detial', $data); 
 
                 echo json_encode(array(
                     'is_successful' => TRUE,
@@ -146,6 +359,13 @@ class Dashboard extends CI_Controller {
         $this->load->view('admin/dashboard/show_duruble_goods_ruturn', $data);
     }
 
+    public function DetialRepair() {
+        $this->load->model('dashboard_model');
+        $data['reTurnGoods'] = $this->dashboard_model->getData_Detial_Repair();
+
+        $this->load->view('admin/dashboard/show_duruble_goods_repair2', $data);
+    }
+
     public function DetialLendGoods($standard) {
         $this->load->model('dashboard_model');
         $data['reTurnGoods'] = $this->dashboard_model->getData_Lend_goods($standard);
@@ -167,6 +387,15 @@ class Dashboard extends CI_Controller {
 
 
         $this->load->view('admin/dashboard/show_get_goods', $data);
+    }
+
+
+    public function DetialGetMaterial() {
+        $this->load->model('dashboard_model');
+        $data['reTurnGoods'] = $this->dashboard_model->getData_Get_material();
+
+
+        $this->load->view('admin/dashboard/show_get_material', $data);
     }
 
     public function DetialLendMaterial() {
@@ -223,6 +452,14 @@ class Dashboard extends CI_Controller {
         $this->load->view('admin/dashboard/detial_get', $data);
     }
 
+    public function detialGetMaterial2(){
+        $this->load->model('dashboard_model');
+        $id = $this->input->post('id');
+        $data['reTurnGoods'] = $this->dashboard_model->getdetialGetMaterial_all($id);
+
+        $this->load->view('admin/dashboard/detial_get_material', $data);
+    }
+
 
     public function detialGetReturn(){
         $this->load->model('dashboard_model');
@@ -251,6 +488,61 @@ class Dashboard extends CI_Controller {
         $this->load->view('admin/dashboard/detial_lend_material', $data);
     }
 
+    public function detialTranform(){
+        $this->load->model('dashboard_model');
+        $id = $this->input->post('id');
+
+        $sql = "SELECT
+        detial_goods_return.id_goods,
+        detial_goods_return.date,
+        detial_goods_return.detial_return_id,
+        detial_goods_return.return_major,
+        detial_goods_return.note,
+        detial_goods_return.file,
+        detial_goods_return.name_return,
+        personal.`name`,
+        durable_goods_2016.name_goods,
+        durable_goods_2016.brand_goods,
+        durable_goods_2016.id_goods_crru,
+        count(*) as count
+        FROM
+        detial_goods_return
+        INNER JOIN personal ON personal.Pid = detial_goods_return.Pid
+        INNER JOIN durable_goods_2016 ON detial_goods_return.id_goods = durable_goods_2016.id_goods
+        WHERE detial_goods_return.detial_return_id = '$id'";
+
+        $data['reTurnGoods'] = $this->db->query($sql);
+
+        $this->load->view('admin/dashboard/detial_tranform', $data);
+    }
+
+    public function detialRepair2(){
+        $this->load->model('dashboard_model');
+        $id = $this->input->post('id');
+
+        $sql = "SELECT
+        durable_goods_repair.id_repair,
+        durable_goods_repair.id_goods,
+        durable_goods_repair.Ddate,
+        durable_goods_repair.`subject`,
+        durable_goods_repair.note,
+        durable_goods_repair.price,
+        personal.`name`,
+        durable_goods_2016.name_goods,
+        durable_goods_2016.brand_goods,
+        durable_goods_2016.id_goods_crru,
+        durable_goods_repair.file
+        FROM
+        durable_goods_repair
+        INNER JOIN durable_goods_2016 ON durable_goods_repair.id_goods = durable_goods_2016.id_goods
+        INNER JOIN personal ON durable_goods_repair.Pid = personal.Pid
+        WHERE durable_goods_repair.id_repair = '$id'";
+
+        $data['reTurnGoods'] = $this->db->query($sql);
+
+        $this->load->view('admin/dashboard/detial_repair', $data);
+    }
+
     public function detial_goods($type) {
 
         if ($type == 'new1') {
@@ -267,7 +559,7 @@ class Dashboard extends CI_Controller {
         }
         $this->load->view('admin/dashboard/detial_goods', $data);
     }
-
+/////////////////return_detiak///////////////////////////////////////////////////////////////////////////
     public function detial_goods_return() {
         $this->load->model('dashboard_model');
         $data['record'] = $this->dashboard_model->getData_reTurn_goods($type);
@@ -275,7 +567,7 @@ class Dashboard extends CI_Controller {
 
         $this->load->view('admin/dashboard/detial_goods_return', $data);
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////
     public function delete_data_student() {
 
 
@@ -304,7 +596,7 @@ class Dashboard extends CI_Controller {
             $data = array('status' => '0');
 
             $this->db->where('id_goods', $id);
-            $this->db->update('durable_goods', $data);
+            $this->db->update('durable_goods_2016', $data);
 
 
             $data_insert = array('Pid' => $user,
@@ -542,7 +834,8 @@ class Dashboard extends CI_Controller {
         $this->form_validation->set_rules('price', 'จำนวนเงิน', 'required');
         $this->form_validation->set_rules('txtid', 'รหัสครุภัณฑ์', 'required');
         $this->form_validation->set_rules('note', 'หมายเหตุ', 'required');
-
+        
+        $this->form_validation->set_rules('maxid', 'รหัสการซ่อม', 'required');
 
 
 
@@ -555,6 +848,7 @@ class Dashboard extends CI_Controller {
             $msg.= form_error('price');
             $msg.= form_error('txtid');
             $msg.= form_error('note');
+            $msg.= form_error('maxid');
 
 
             echo json_encode(array(
@@ -563,22 +857,73 @@ class Dashboard extends CI_Controller {
                 ));
         } else {
 
+            $lend_id = $this->input->post('maxid');
 
 
-            $data['id_goods'] = $this->input->post('txtid');
-            $data['Ddate'] = $this->input->post('date1');
-            $data['price'] = $this->input->post('price');
-            $data['note'] = $this->input->post('note');
-            $data['subject'] = $this->input->post('txtSubject');
-            $data['Pid'] = $this->session->userdata('Pid');
+            foreach ($_FILES as $key => $value) {
+
+                $config['upload_path'] = './assets/upload/goods_material/goods_repair';
+                $part = $config['upload_path'];
+                $config['allowed_types'] = '*';
+                $config['max_size'] = '8388608';
+                $config['overwrite'] = FALSE;
+                $config['remove_spaces'] = TRUE;
+                $config['file_name'] = $lend_id;
+                $this->load->library('upload', $config);
+            //$this->upload->do_upload($lend_id)
+                $this->upload->initialize($config);
+
+                $aaa = $config['allowed_types'];
+
+                if(!empty($_FILES['file']['name'])){
 
 
-            $this->db->insert('durable_goods_repair', $data);
+                    if (!empty($value['tmp_name']) && $value['size'] > 0) {
+                        if (!$this->upload->do_upload($key)) {
+                            $msg = $this->upload->display_errors();
+                            echo json_encode(array(
+                                'is_successful' => FALSE,
+                                'msg' => $msg
+                                ));
+                        } else {
+                            $name = $this->upload->data();
 
-            echo json_encode(array(
-                'is_successful' => TRUE,
-                'msg' => 'บันทึกเรียบร้อย'
-                ));
+                            $data['file'] = base_url() . 'assets/upload/goods_material/goods_repair/'. $name['file_name'];
+                        }
+                    }
+
+
+                    // $this->db->where('id_repair', $lend_id);
+                    // $this->db->update('durable_goods_repair', $data);
+                    $data['id_goods'] = $this->input->post('txtid');
+                    $data['Ddate'] = $this->input->post('date1');
+                    $data['price'] = $this->input->post('price');
+                    $data['note'] = $this->input->post('note');
+                    $data['subject'] = $this->input->post('txtSubject');
+                    $data['Pid'] = $this->session->userdata('Pid');
+
+
+                    $this->db->insert('durable_goods_repair', $data);
+
+
+                    echo json_encode(array(
+                        'is_successful' => TRUE,
+                        'msg' => 'บันทึกเรียบร้อย'
+                        ));
+
+                }else{
+                    echo json_encode(array(
+                        'is_successful' => FALSE,
+                        'msg' => 'ไม่ได้เพื่มไฟล์'
+                        ));
+                }
+            }
+
+            
+            // echo json_encode(array(
+            //     'is_successful' => TRUE,
+            //     'msg' => 'บันทึกเรียบร้อย'
+            //     ));
         }
     }
 
@@ -701,6 +1046,165 @@ public function insert_get_goods() {
         'is_successful' => TRUE,
         'msg' => 'บันทึกเรียบร้อย'
         ));
+}
+
+
+public function insert_get_goods_return() {
+
+    $get_id = $this->input->post('get_id');
+
+    $id_goodss = $this->input->post('id_goods');
+    $Ddate_get = $this->input->post('date_get');
+    $name_aa = $this->input->post('name_aa');
+
+
+    $major_get = $this->input->post('major_get');
+    $note = $this->input->post('note');
+
+    $rows = $this->input->post('row');
+
+
+    $data2['detial_return_id'] = '0';
+    $this->db->insert('detial_goods_return_seq', $data2);
+
+    for($i=0;$i<$rows;$i++){
+
+        $id_goods = $id_goodss[$i];
+
+        $data3['detial_return_id'] = $get_id;
+        $data3['Pid'] = $this->session->userdata('Pid');
+        $data3['id_goods'] = $id_goods;
+        $data3['date'] = $Ddate_get;
+        $data3['return_major'] = $major_get;
+        $data3['note'] = $note;
+        $data3['name_return'] = $name_aa;
+
+
+        $this->db->insert('detial_goods_return', $data3);
+
+        $this->db->where('id_goods', $id_goods);
+        $data4['status'] = '0';
+        $data4['address'] = $major_get;
+        $this->db->update('durable_goods_2016', $data4); 
+
+    }
+
+    echo json_encode(array(
+        'is_successful' => TRUE,
+        'msg' => 'บันทึกเรียบร้อย'
+        ));
+}
+
+public function insert_file_goods_return2(){
+
+    $lend_id = $this->input->post('maxid');
+
+
+    foreach ($_FILES as $key => $value) {
+
+        $config['upload_path'] = './assets/upload/goods_material/goods_tranform';
+        $part = $config['upload_path'];
+        $config['allowed_types'] = '*';
+        $config['max_size'] = '8388608';
+        $config['overwrite'] = FALSE;
+        $config['remove_spaces'] = TRUE;
+        $config['file_name'] = $lend_id;
+        $this->load->library('upload', $config);
+            //$this->upload->do_upload($lend_id)
+        $this->upload->initialize($config);
+
+        $aaa = $config['allowed_types'];
+
+        if(!empty($_FILES['file']['name'])){
+
+
+            if (!empty($value['tmp_name']) && $value['size'] > 0) {
+                if (!$this->upload->do_upload($key)) {
+                    $msg = $this->upload->display_errors();
+                    echo json_encode(array(
+                        'is_successful' => FALSE,
+                        'msg' => $msg
+                        ));
+                } else {
+                    $name = $this->upload->data();
+
+                    $data['file'] = base_url() . 'assets/upload/goods_material/goods_tranform/'. $name['file_name'];
+                }
+            }
+
+
+            $this->db->where('detial_return_id', $lend_id);
+            $this->db->update('detial_goods_return', $data); 
+
+            echo json_encode(array(
+                'is_successful' => TRUE,
+                'msg' => 'บันทึกเรียบร้อย'
+                ));
+
+        }else{
+            echo json_encode(array(
+                'is_successful' => FALSE,
+                'msg' => 'ไม่ได้เพื่มไฟล์'
+                ));
+        }
+    }
+
+}
+
+public function insert_file_repair(){
+
+    $lend_id = $this->input->post('id_repair');
+
+
+    foreach ($_FILES as $key => $value) {
+
+        $config['upload_path'] = './assets/upload/goods_material/goods_repair';
+        $part = $config['upload_path'];
+        $config['allowed_types'] = '*';
+        $config['max_size'] = '8388608';
+        $config['overwrite'] = FALSE;
+        $config['remove_spaces'] = TRUE;
+        $config['file_name'] = $lend_id;
+        $this->load->library('upload', $config);
+            //$this->upload->do_upload($lend_id)
+        $this->upload->initialize($config);
+
+        $aaa = $config['allowed_types'];
+
+        if(!empty($_FILES['file']['name'])){
+
+
+            if (!empty($value['tmp_name']) && $value['size'] > 0) {
+                if (!$this->upload->do_upload($key)) {
+                    $msg = $this->upload->display_errors();
+                    echo json_encode(array(
+                        'is_successful' => FALSE,
+                        'msg' => $msg
+                        ));
+                } else {
+                    $name = $this->upload->data();
+
+                    $data['file'] = base_url() . 'assets/upload/goods_material/goods_repair/'. $name['file_name'];
+                }
+            }
+
+
+            $this->db->where('id_repair', $lend_id);
+            $this->db->update('durable_goods_repair', $data); 
+
+            echo json_encode(array(
+                'is_successful' => TRUE,
+                'msg' => 'บันทึกเรียบร้อย'
+                ));
+
+        }else{
+            echo json_encode(array(
+                'is_successful' => FALSE,
+                'msg' => 'ไม่ได้เพื่มไฟล์'
+                ));
+        }
+    }
+
 }
 
 public function insert_get_material() {
@@ -1001,6 +1505,26 @@ public function show_drurbleGoods_repair($type) {
     $this->load->view('admin/dashboard/show_duruble_goods_repair', $data);
 }
 
+public function show_drurbleGoods_return2($type) {
+
+
+    $this->load->model('dashboard_model');
+    $data['data'] = $this->dashboard_model->getData_duruble_goods_new_type($type);
+    $data['maxid'] = $this->dashboard_model->getData_get_goods_ruturn_maxid();
+    
+    if($type == 1){
+        $data['type'] = 'ส่งคืน / โอนย้าย ครุภัณฑ์';
+        $data['standard'] = '1';
+    }else{
+        $data['type'] = 'ยืม ครุภัณฑ์ต่ำกว่าเกณฑ์';
+        $data['standard'] = '2';
+    }
+
+
+
+    $this->load->view('admin/dashboard/show_duruble_goods_return2', $data);
+}
+
 public function show_material() {
 
 
@@ -1148,6 +1672,24 @@ public function select_goods() {
     $this->load->view('admin/dashboard/select_goods', $data);
 }
 
+public function select_goods_return() {
+
+
+    $query = $this->input->post('query');
+
+
+    $sql = "SELECT * 
+    FROM durable_goods_2016
+    WHERE status != '0' and
+    id_goods NOT IN($query)";
+        // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
+
+    $data['record'] = $this->db->query($sql)->result_array();
+
+    $this->load->view('admin/dashboard/select_goods', $data);
+}
+
+
 public function select_material() {
 
 
@@ -1167,6 +1709,9 @@ public function data_goods_news() {
     $data['record'] = $this->dashboard_model->data_goods_new($id);
     $data['send'] = '01';
 
+    $sql = "select * from durable_goods_repair WHERE id_goods = '$id'";
+    $data['repair'] = $this->db->query($sql)->result_array();
+
 
     $this->load->view('admin/dashboard/data_goods', $data);
 }
@@ -1178,7 +1723,8 @@ public function insert_goods_repair() {
     $this->load->model('dashboard_model');
     $data['record'] = $this->dashboard_model->data_goods_new($id);
     $data['send'] = '01';
-
+    $sql = "select max(id_repair) as maxid from durable_goods_repair";
+    $data['maxid'] = $this->db->query($sql)->row_array();
 
     $this->load->view('admin/dashboard/repair_goods_form', $data);
 }

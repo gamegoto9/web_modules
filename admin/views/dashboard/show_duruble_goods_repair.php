@@ -76,12 +76,12 @@
  <i class="buttonT buttonP" href="#"></i> = ครุภัณฑ์ <p>
         <i class="buttonT buttonG" href="#"></i> = ครุภัณฑ์ต่ำกว่าเกณฑ์
 </div>
-<div align='right'>
+<!-- <div align='right'>
 
     <a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_goods/' . $send); ?>">Print</a>
     <br><br>
    
-</div>
+</div> -->
           <br><br>
 <table class="display" cellspacing="0" width="100%">
     
@@ -186,7 +186,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalShow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg modal-admin" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>

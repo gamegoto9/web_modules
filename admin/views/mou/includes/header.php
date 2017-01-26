@@ -1,19 +1,19 @@
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Interaffairs | Duruble</title>
+    <title>Memorandum of Understanding || CRRU</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.0.2 -->
     <link href="<?php echo base_url('assets/themes/crru_inter/css/bootstrap.min.css'); ?>" rel="stylesheet">
-    <link href="<?php echo base_url('assets/bootstrap/css/bootstrap-datetimepicker.css'); ?>" rel="stylesheet">
 
     <link href="<?php echo base_url('assets/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet">
 
     <!-- bootboxjs -->
     <!--<script src="<?php echo base_url('assets/bootstrap_extras/bootbox/bootbox.min.js'); ?>"></script>-->
 
-    
+
 
     <!--datatable-->
 <!--        <link href="<?php echo base_url('assets/css/jquery.dataTables.css') ?>" rel="stylesheet">
@@ -28,23 +28,14 @@
     <script src="<?php echo base_url('assets/themes/crru_inter/js/jquery-ui-1.10.3.min.js'); ?>"></script>
     <!-- Bootstrap -->
     <script src="<?php echo base_url('assets/themes/crru_inter/js/bootstrap.min.js'); ?>"></script>
-    <!-- Bootstrap-datetimepicker -->
-    <script src="<?php echo base_url('assets/bootstrap/js/moment-with-locales.js'); ?>"></script>
-    <script src="<?php echo base_url('assets/bootstrap/js/bootstrap-datetimepicker.js'); ?>"></script>
-    
     <!-- AdminLTE App -->
     <script src="<?php echo base_url('assets/themes/crru_inter/js/AdminLTE/app.js'); ?>"></script>
-    
-    
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.0/css/bootstrap-select.min.css">
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.0/js/bootstrap-select.min.js"></script>
-
-
-
-
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,5 +45,3 @@
           <![endif]-->
       </head>
       <body class="skin-blue">
-
-        

@@ -107,7 +107,7 @@
                 <?php
                     }else{
                 ?>
-                    <td><a class="btn btn-primary"><i class="fa fa-file"></i></a>
+                    <td><a class="btn btn-primary" href="<?php echo $row['file']; ?>" target="_blank"><i class="fa fa-file"></i></a>
                     </td>
                 <?php
                     }
@@ -185,8 +185,8 @@
 
     function showModal_file(xid,xstandard){
         
-        
-        var sdata = {id:xid,standard:xstandard};
+        var type_type = 1;
+        var sdata = {id:xid,standard:xstandard,type:type_type};
         $('#div_show2').load('<?php echo site_url('admin/dashboard/insert_file_form'); ?>',sdata);
         $('#modalShow2').modal('show');
     }

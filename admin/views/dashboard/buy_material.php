@@ -69,7 +69,12 @@
        text-align: center;   
 
    </style>
-   <br><br>
+
+<div class="col-md-12" >
+        <h3>การซื้อพัสดุ</h3>
+        <br>
+</div>
+
    <?php
    $rows = $record->row_array();
    ?>

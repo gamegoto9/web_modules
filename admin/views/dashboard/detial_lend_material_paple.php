@@ -384,7 +384,7 @@ function ReadNumber($number)
                 $sign = $footer1+3;
                 $this->excel->getActiveSheet()->setCellValue('A'.$sign, '( '.$row['name'].' )');
                 $this->excel->getActiveSheet()->getStyle('A'.$sign)->applyFromArray($styleCenter);
-                $this->excel->getActiveSheet()->setCellValue('D'.$sign, '( นายอนุวัฒน์ จินาจาย )');
+                $this->excel->getActiveSheet()->setCellValue('D'.$sign, '( นายลิขิต ยอดยา )');
                 $this->excel->getActiveSheet()->getStyle('D'.$sign)->applyFromArray($styleCenter);
                 $this->excel->getActiveSheet()->setCellValue('G'.$sign, '( นายธีรวัฒน์ วังมณี )');
                 $this->excel->getActiveSheet()->getStyle('G'.$sign)->applyFromArray($styleCenter);

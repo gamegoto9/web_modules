@@ -144,6 +144,13 @@ class Dashboard_model extends CI_Model {
         return $query->row();
     }
 
+    public function getData_get_goods_ruturn_maxid(){
+        $query = $this->db->query("SELECT max(detial_return_id) as maxID from detial_goods_return_seq");
+        // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
+
+        return $query->row();
+    }
+
     public function getData_get_material_maxid(){
         $query = $this->db->query("SELECT max(get_material_id) as maxID from get_material_seq");
         // $query = $this->db->get_where('durable_goods_2016', array('standard' => $type, 'status' => '1'));
@@ -214,18 +221,52 @@ class Dashboard_model extends CI_Model {
 
     public function getData_reTurn_goods() {
 
-        $query = $this->db->query('SELECT
-            durable_goods.id_goods_crru,
-            durable_goods.name_goods,
-            durable_goods.brand_goods,
-            durable_goods.price,
+        $query = $this->db->query("SELECT
+            detial_goods_return.id_goods,
+            detial_goods_return.date,
+            detial_goods_return.detial_return_id,
+            detial_goods_return.return_major,
+            detial_goods_return.note,
+            detial_goods_return.file,
+            detial_goods_return.name_return,
             personal.`name`,
-            detial_goods_return.date
-
+            durable_goods_2016.name_goods,
+            durable_goods_2016.brand_goods,
+            durable_goods_2016.id_goods_crru,
+            count(*) as count
             FROM
             detial_goods_return
-            INNER JOIN durable_goods ON durable_goods.id_goods = detial_goods_return.id_goods
-            INNER JOIN personal ON detial_goods_return.Pid = personal.Pid;');
+            INNER JOIN personal ON personal.Pid = detial_goods_return.Pid
+            INNER JOIN durable_goods_2016 ON detial_goods_return.id_goods = durable_goods_2016.id_goods
+            WHERE detial_goods_return.detial_return_id != ''
+            GROUP BY detial_goods_return.detial_return_id");
+
+        return $query->result_array();
+    }
+
+    public function getData_Detial_Repair() {
+
+        $query = $this->db->query("SELECT
+            Count(*) AS count,
+            durable_goods_repair.id_repair,
+            durable_goods_repair.id_goods,
+            durable_goods_repair.Ddate,
+            durable_goods_repair.`subject`,
+            durable_goods_repair.note,
+            durable_goods_repair.price,
+            personal.`name`,
+            durable_goods_2016.name_goods,
+            durable_goods_2016.brand_goods,
+            durable_goods_2016.id_goods_crru,
+            durable_goods_repair.file,
+            count(*) as count
+            FROM
+            durable_goods_repair
+            INNER JOIN durable_goods_2016 ON durable_goods_repair.id_goods = durable_goods_2016.id_goods
+            INNER JOIN personal ON durable_goods_repair.Pid = personal.Pid
+            GROUP BY durable_goods_repair.id_repair
+
+            ");
 
         return $query->result_array();
     }
@@ -265,9 +306,11 @@ class Dashboard_model extends CI_Model {
             get_goods_detial.Ddate_get,
             get_goods_detial.name_get,
             get_goods_detial.major_get,
+            get_goods_detial.Ddate_return,
             personal.`name`,
             count(*) as count,
-            get_goods_detial.status
+            get_goods_detial.status,
+            get_goods_detial.file
             FROM
             get_goods_detial
             INNER JOIN personal ON get_goods_detial.Pid = personal.Pid
@@ -281,11 +324,13 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->query("SELECT
             get_material_detial.get_material_id,
             get_material_detial.Ddate_get,
+            get_material_detial.Ddate_return,
             get_material_detial.name_get,
             get_material_detial.major_get,
             personal.`name`,
             sum(qty) as count,
-            get_material_detial.`status`
+            get_material_detial.`status`,
+            get_material_detial.file
             FROM
             get_material_detial
             INNER JOIN personal ON get_material_detial.Pid = personal.Pid
@@ -301,7 +346,8 @@ class Dashboard_model extends CI_Model {
             sum(lend_material_2016.qty) as count,
             sum(lend_material_2016.price) as sum,
             lend_material_2016.Ddate,
-            personal.`name`
+            personal.`name`,
+            lend_material_2016.file
             FROM
             lend_material_2016
             INNER JOIN personal ON lend_material_2016.Pid = personal.Pid
@@ -411,6 +457,38 @@ class Dashboard_model extends CI_Model {
         INNER JOIN personal ON get_goods_detial.Pid = personal.Pid
         INNER JOIN durable_goods_2016 ON get_goods_detial.id_goods = durable_goods_2016.id_goods
         WHERE get_id = '$id'";
+
+        $query = $this->db->query($sql);
+        return $query;
+
+
+
+
+    }
+
+    public function getdetialGetMaterial_all($id){
+        $sql = "SELECT
+        personal.`name`,
+        get_material_detial.get_material_id,
+        get_material_detial.MatId,
+        get_material_detial.Ddate_get,
+        get_material_detial.Ddate_return,
+        get_material_detial.name_get,
+        get_material_detial.position_get,
+        get_material_detial.major_get,
+        get_material_detial.note,
+        get_material_detial.tel,
+        get_material_detial.`status`,
+        get_material_detial.qty,
+        get_material_detial.price,
+        get_material_detial.file,
+        material_2016.MatName
+        FROM
+        personal
+        INNER JOIN get_material_detial ON get_material_detial.Pid = personal.Pid
+        INNER JOIN material_2016 ON get_material_detial.MatId = material_2016.MatId
+
+        WHERE get_material_id = '$id'";
 
         $query = $this->db->query($sql);
         return $query;

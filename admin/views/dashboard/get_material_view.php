@@ -175,7 +175,7 @@
 
 
                 <div class="col-md-12">
-                    <input type="hidden" name="maxid" id="maxid" value="<?php echo "M".sprintf("%04d ",$maxid->maxID); ?>">
+                    <input type="hidden" name="maxid" id="maxid" value="<?php echo "M".sprintf("%04d",$maxid->maxID); ?>">
                     <input type="hidden" name="maxid2" id="maxid2" value="<?php echo "L".sprintf("%04d",$maxid2->maxID); ?>">
 
                     <table class="table table-bordered" id="tDataGoods">

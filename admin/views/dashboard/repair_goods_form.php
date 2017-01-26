@@ -78,7 +78,7 @@
                     <div class="panel-body" id="panelMain">
 
 
-                        <form name="form_select_data" id="select_data" class="form-horizontal">
+                        <form name="form_select_data" id="select_data" class="form-horizontal" enctype="multipart/form-data">
                             <div class="form-group">
 
 
@@ -110,10 +110,21 @@
                       <div class="col-md-2">
                        <input type="number" name="price" id="price" class="form-control">
                        <input type="hidden" name="txtid" id="txtid" class="form-control" value="<?php echo $id_goods; ?>">
+                       <input type="hidden" name="maxid" id="maxid" class="form-control" value="<?php echo $maxid['maxid']+1; ?>">
                    </div>
                    <div class="col-md-2">
                       <label for="inputsumPrice" class="control-label "> บาท</label>
                   </div>
+              </div>
+
+              <div class="form-group">
+                        <div class="col-md-2">
+                          <label for="inputsumPrice" class="control-label ">แนบใบเสนอราคา :</label>
+                      </div>
+                      <div class="col-md-2">
+                       <input type="file" name="file">
+                   </div>
+                   
               </div>
 
               <div class="form-group">
@@ -163,39 +174,86 @@
 
         bootbox.confirm("ต้องการบันทึกหรือไม่ ?", function(result) {
             if (result) {
-                var faction = "<?php echo site_url('admin/dashboard/insert_repair/'); ?>";
-                var fdata = fdata = $("#select_data").serialize();
+                // var faction = "<?php echo site_url('admin/dashboard/insert_repair/'); ?>";
+                // var fdata = fdata = $("#select_data").serialize();
 
-                $.post(faction, fdata, function(jdata) {
+                // $.post(faction, fdata, function(jdata) {
 
-                    if (jdata.is_successful) {
+                //     if (jdata.is_successful) {
 
-                        $.pnotify({
-                            title: 'แจ้งให้ทราบ!',
-                            text: jdata.msg,
+                //         $.pnotify({
+                //             title: 'แจ้งให้ทราบ!',
+                //             text: jdata.msg,
+                //             type: 'success',
+                //             opacity: 1,
+                //             history: false
+
+                //         });
+
+                //         //$("#select_data").trigger('reset');
+
+
+                //     } else {
+                //         $.pnotify({
+                //             title: 'แจ้งให้ทราบ!',
+                //             text: jdata.msg,
+                //             type: 'error',
+                //             opacity: 1,
+                //             history: false
+
+                //         });
+
+
+                //     }
+
+                // }, 'json');
+
+                var formData = new FormData($('#select_data')[0]);
+
+                $.ajax({
+                    url: "dashboard/insert_repair",
+                    type: 'POST',
+                    data: formData,
+                    mimeType: "multipart/form-data",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(data) {
+
+
+                        var posts = JSON.parse(data);
+                        console.log(posts);
+
+                        if (posts.is_successful) {
+                           $.pnotify({
+                            title: 'แจ้งให้ทราบ',
+                            text: posts.msg,
                             type: 'success',
-                            opacity: 1,
-                            history: false
+                            history: false,
 
                         });
+                           $('.modal').modal('hide');
 
-                        //$("#select_data").trigger('reset');
 
+                           //loadDetialGetMaterial();
+                           $('body').removeClass('modal-open');
+                           $('.modal-backdrop').remove();
 
-                    } else {
-                        $.pnotify({
-                            title: 'แจ้งให้ทราบ!',
-                            text: jdata.msg,
+                       }else{
+                           $.pnotify({
+                            title: 'แจ้งให้ทราบ',
+                            text: posts.msg,
                             type: 'error',
-                            opacity: 1,
-                            history: false
+                            history: false,
 
                         });
+                       }
 
-
-                    }
-
-                }, 'json');
+                   },
+                   error: function(jqXHR, textStatus, errorThrown) {
+                            //handle here error returned
+                        }
+                    });
             }
         });
         return false;

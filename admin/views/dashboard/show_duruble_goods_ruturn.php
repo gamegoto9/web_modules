@@ -43,9 +43,15 @@
 
 </style>
 
+
+<div class="col-md-12" >
+        <h3>ข้อมูล กการส่งคืน/โอนย้าย ครุภัณฑ์</h3>
+        <br>
+</div>
+
 <div align='right'>
 
-<a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_goods_return'); ?>">Print</a>
+<!-- <a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_goods_return'); ?>">Print</a> -->
 <br><br>
 </div>
 <table class="display" cellspacing="0" width="100%">
@@ -53,13 +59,15 @@
 
 
         <tr bgcolor='#7ACCFA'>
-            <th>#</th>
-            <th>รหัสครุภัณฑ์</th>
-            <th>รายการ</th>
-            <th>ยี่ห้อ/รุ่น</th>
-            <th>ราคา</th>
-            <th>ผู้ส่งคืน</th>
+           <th>#</th>
+            <th>รหัสการส่งคืน/โอนย้าย</th>
             <th>วันที่ส่งคืน</th>
+            <th>ผู้ส่งคืน</th>
+           
+            <th>จำนวน</th>
+            <th>ข้อมูล</th>
+            
+            <th>หลักฐาน</th>
             
         </tr>
     </thead>
@@ -76,13 +84,26 @@
             
             <tr>
                 <td><?php echo $i ?></td>
-                <td><?php echo $row['id_goods_crru']; ?></td>
-                <td><?php echo $row['name_goods']; ?></td>
-                <td><?php echo $row['brand_goods']; ?></td>
-                <td><?php echo $row['price']; ?></td>
-                <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['detial_return_id']; ?></td>
                 <td><?php echo $row['date']; ?></td>
+                <td><?php echo $row['name_return']; ?></td>
+              
+                <td><?php echo $row['count']; ?> รายการ</td>
+                <td><a class="btn btn-info" onclick="showModal('<?php echo $row['detial_return_id']; ?>');"><i class="fa fa-newspaper-o"></i></a></td>
+                <?php
+                    if($row['file'] == ''){
+                ?>
+                    <td><a class="btn btn-warning" onclick="showModal_file('<?php echo $row['detial_return_id']; ?>');"><i class="fa fa-plus"></i></a>
+                    </td>
 
+                <?php
+                    }else{
+                ?>
+                    <td><a class="btn btn-primary" href="<?php echo $row['file']; ?>" target="_blank"><i class="fa fa-file"></i></a>
+                    </td>
+                <?php
+                    }
+                ?>
             </tr>
             <?php
             $i++;
@@ -115,6 +136,31 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalShow2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bgmodal">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">เพิ่มไฟล์หลักฐาน</h4>
+                </div>
+                <div class="modal-body">
+                    
+                    
+                    <div id="div_show2">
+                        
+                    </div>
+                  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="btn_save_file_tranform()">บันทึก</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 <script>
     
@@ -123,8 +169,17 @@
         
         
         var sdata = {id:xid};
-        $('#div_show').load('<?php echo site_url('website/show'); ?>',sdata);
+        $('#div_show').load('<?php echo site_url('admin/dashboard/detialTranform'); ?>',sdata);
         $('#modalShow').modal('show');
+    }
+
+    function showModal_file(xid){
+        var type_type = 5;
+        var sdata = {id:xid,type:type_type};
+        
+      
+        $('#div_show2').load('<?php echo site_url('admin/dashboard/insert_file_form'); ?>',sdata);
+        $('#modalShow2').modal('show');
     }
     
     

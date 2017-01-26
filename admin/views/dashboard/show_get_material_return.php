@@ -58,6 +58,10 @@
 <a class="btn btn-success  view-pdf" href="<?php echo base_url('admin/dashboard/detial_goods_return'); ?>">Print</a>
 <br><br>
 </div> -->
+<div class="col-md-12" >
+        <h3>การคืนพัสดุ</h3>
+        <br>
+</div>
 <table class="display" cellspacing="0" width="100%">
     <thead>
 

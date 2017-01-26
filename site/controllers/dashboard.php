@@ -68,17 +68,24 @@ class Dashboard extends CI_Controller {
         $this->load->view('site/dashboard/list_km_view',$data);
     }
 
-
-    public function list_international($count) {
-
-        if($count == "1"){
+    public function detial_MOU(){
             $sql = "select * from international_support";
             
             $data['mou'] = $this->db->query($sql)->result_array();
             
             $this->load->view('site/dashboard/detial_MOU', $data);
+    }
+
+    public function list_international() {
+
+        // if($count == "1"){
+        //     $sql = "select * from international_support";
             
-        }
+        //     $data['mou'] = $this->db->query($sql)->result_array();
+            
+        //     $this->load->view('site/dashboard/detial_MOU', $data);
+            
+        // }
         //$this->load->model('student/website_model');
         //$data['rec_data'] = $this->website_model->getData();
 

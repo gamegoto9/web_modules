@@ -23,11 +23,13 @@
     <body>
         
         <?php $this->load->view('includes3/navbar'); ?>
+
+        
         <div class="section primary-section" id="about">
             <div class="triangle"></div>
             <div class="container">
                 <div class="title">
-                    <h1>Personal International Affair Division.</h1>
+                    <h1>Personel International Affair Division.</h1>
                     <p></p>
                 </div>
                 <center>
