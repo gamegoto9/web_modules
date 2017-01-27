@@ -141,4 +141,16 @@ class Mou extends CI_Controller {
          $this->load->view('admin/mou/dashboard/dataTable_view',$data);
   
     }
+
+    public function show_file_mou(){
+         $name = $this->input->post('id');
+
+         $baseURL = base_url('assets/upload/MOU/');
+
+         $fileURL = $baseURL.'/'.$name;
+
+         $data['file'] = $fileURL;
+
+         $this->load->view('admin/mou/dashboard/show_file_mou_view',$data);
+    }
 }

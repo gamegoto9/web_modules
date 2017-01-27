@@ -1,25 +1,33 @@
 <?php
-//session_start();
+session_start();
 
-//$user = $_SESSION['user'];
-//$name = $_SESSION['name'];
+$user = $_SESSION['user'];
+$name = $_SESSION['name'];
 
-//$dataUser = array(
-//        'username'  => $user,
-//        'name'     => $name
-//);
+$Pid = $_SESSION['Pid'];
 
-/*
-$user = $this->session->userdata('name');
+if(isset($_SESSION['user'])){
+
+ $dataUser = array(
+    'username'  => $user,
+    'name'     => $name,
+    'Pid'     => $Pid
+    );
 
 
-if($user == ""){
-    header("Refresh : 1;url = http://crruinter.crru.ac.th/inter_2014/site/dashboard");
-    echo "<center><h3>Please Login Wait 3 seconds </h3></center>";
+
+ $this->session->set_userdata($dataUser);
+
+}else
+{
+    header("Refresh : 0;url = ../.../../../");
+    echo "<center><h3>Please login</h3></center>";
     echo "</body></html>";
-        exit;
+    exit;
 }
-*/
+
+
+
 ?>
 
 <header class="header">

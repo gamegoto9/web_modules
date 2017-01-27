@@ -21,7 +21,7 @@ if(isset($_SESSION['user'])){
 }else
 {
     header("Refresh : 0;url = ../.../../../");
-    echo "<h3>Please login</h3>";
+    echo "<center><h3>Please login</h3></center>";
     echo "</body></html>";
     exit;
 }

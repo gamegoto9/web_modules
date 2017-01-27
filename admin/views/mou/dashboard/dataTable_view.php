@@ -18,6 +18,12 @@
     /* must be half of the width, minus scrollbar on the left (30px) */
     margin-left: 10%;
   }
+  body .modal-admin2 {
+    /* new custom width */
+    width: 50%;
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    margin-left: 25%;
+  }
 </style>
 
 <style>
@@ -64,7 +70,7 @@
 <!-- <table class="table-bordered display" cellspacing="0" width="100%" id="myTable">
 -->  
 <table class="table-bordered" cellspacing="0" width="100%" id="myTable">
- <thead>
+ <thead bgcolor="#ffffe6">
   <tr>
     <th rowspan="2" class="text-center"  width="30">#</th>
     <th rowspan="2" class="text-center" width="350">ชื่อมหาวิทยาลัย</th>
@@ -76,6 +82,7 @@
     <th rowspan="2" class="text-center"  width="80">วันหมดอายุ</th>
     <th rowspan="2" class="text-center" width="100">หมายเหตุ</th>
     <th rowspan="2" class="text-center" width="50">#</th>
+    <th rowspan="2" class="text-center" width="70">MOU</th>
 
   </tr>
   <tr>
@@ -126,6 +133,19 @@
       <button type="button" class="btn btn-warning btn-sm" onclick="showModal_main('<?php echo $row['id']; ?>');"><i class="fa fa-info" aria-hidden="true"></i></button>
       </td>
 
+      <td class="text-center">
+      <?php 
+        if($row['file'] != ''){
+          ?>
+            <button type="button" class="btn btn-info btn-sm" onclick="showModal_main2('<?php echo $row['file']; ?>');"><i class="fa fa-file" aria-hidden="true"></i></button>
+          <?php
+        }else{
+          echo "<font color='red'>ไม่มีไฟล์</font>";
+        }
+      ?>
+      
+      </td>
+
     </tr>
     <?php
     $i++;
@@ -157,6 +177,30 @@
 
 
         <div id="div_show_main">
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalShow_main2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-admin2" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">-- Memorandum of Understanding --</h4>
+      </div>
+      <div class="modal-body">
+
+
+        <div id="div_show_main2">
 
         </div>
 
@@ -210,6 +254,14 @@
     var sdata = {id: xid};
     $('#div_show_main').load('<?php echo site_url('admin/mou/get_mou_by_id'); ?>', sdata);
     $('#modalShow_main').modal('show');
+
+  }
+
+  function showModal_main2(xid) {
+
+    var sdata = {id: xid};
+    $('#div_show_main2').load('<?php echo site_url('admin/mou/show_file_mou'); ?>', sdata);
+    $('#modalShow_main2').modal('show');
 
   }
 </script>
