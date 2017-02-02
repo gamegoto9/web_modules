@@ -24,8 +24,7 @@
                             <div class="row">
 
                                 <div class="col-md-3">
-
-                                  <select  class="form-control" name="select" id="select" tabindex="2">
+                                  <select  class="form-control selectpicker" data-live-search="true" name="select" id="select" tabindex="2">
                                     <option value="11">ค้นหาทั้งหมด</option>
                                     <option value="0">ค้นหาจากชื่อมหาวิทยาลัย</option>
                                     <option value="1">MOU ที่หมดอายุ</option>
@@ -36,7 +35,6 @@
                                     <option value="12">เรียงตามวันที่เริ่มลงนาม</option>
                                     <option value="13">เรียงตามเรียงตามวันที่ต่ออนยุ ครั้งล่าสุด</option>
                                     <option value="14">เรียงตามวันหมดอายุ</option>
-                                    <option value="12">ตามประเทศ</option>
                                     <option value="6">ตามความร่วมมือ/แลกเปลี่ยน ด้านการศึกษา</option>
                                     <option value="7">ตามความร่วมมือ/แลกเปลี่ยน อาจารย์</option>
                                     <option value="8">ตามความร่วมมือ/แลกเปลี่ยน นักวิจัย</option>
@@ -47,7 +45,7 @@
 
                             <div class="col-md-4" id="related_0_content">
                                 <!-- <input type="text" class="form-control" id="txtSearch" name="txtSearch" value="" placeholder="ค้นหาจากชื่อมหาวิทยาลัย"> -->
-                                <select class="chosen-select form-control mb-15" name="selectUniversity" id="selectUniversity">
+                                <select class="selectpicker chosen-select form-control mb-15" name="selectUniversity" id="selectUniversity" data-live-search="true">
                                     <option value="" selected="selected">เลือกมหาวิทยาลัย</option>
                                     <?php
 
@@ -61,7 +59,7 @@
                             </div>
 
                             
-                            <div class="col-md-4" id="related_5_content" style="display: none;">
+                            <div class="col-md-3" id="related_5_content" style="display: none;">
                                 <select class="selectpicker chosen-select form-control mb-15" name="selectCountry" id="selectCountry" data-live-search="true">
                                     <option value="" selected="selected">เลือกประเทศ</option>
                                     <?php
@@ -75,6 +73,31 @@
                                 </select>
                             </div>
 
+                            <div class="col-md-2" id="related_6_content" style="display: none;">
+                                <select class="selectpicker chosen-select form-control mb-15" name="selectMonTon" id="selectMonTon" data-live-search="true">
+                                    <option value="" selected="selected">ทุกเขตพื้นที่</option>
+                                    <?php
+
+                                    foreach ($area->result_array() as $row) {
+                                        ?>
+                                        <option value="<?php echo $row['area'];?>"><?php echo $row['area'];?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2" id="related_7_content" style="display: none;">
+                                <select class="selectpicker chosen-select form-control mb-15" name="selectStatus" id="selectStatus" data-live-search="true">
+                                    <option value="" selected="selected">ทุกสถานะ</option>
+                                    <option value="0">หมดอายุ</option>
+                                    <option value="1">ยังหมดอายุ</option>
+                                    <option value="9">ไม่ระบุวันหมดอายุ</option>
+                                </select>
+                            </div>
+
+                            
+
                             <div class="col-md-4" id="related_12_content" style="display: none;">
                                 <select class="selectpicker chosen-select form-control mb-15" name="oder_by" id="oder_by" data-live-search="true">
                                     <option value="" selected="selected">เลือกการเรียงข้อมูล</option>
@@ -86,8 +109,8 @@
 
 
 
-                            <div class="col-md-6" id="related_4_content" style="display: none;">
-                                <div class="col-md-4">
+                            <div class="col-md-4" id="related_4_content" style="display: none;">
+                                <div class="col-md-5">
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="date_start"  type="text" name="date_start" value="25/01/2560"  data-provide="datepicker" data-date-language="th-th">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -96,12 +119,26 @@
                                 <div class="col-md-2 text-center">
                                     <a class="btn bg-maroon">ถึง</a>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-5">
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="date_end" type="text" name="date_end" value="25/01/2560"  data-provide="datepicker" data-date-language="th-th">
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="col-md-2" id="related_8_content" style="display: none;">
+                                <select class="selectpicker chosen-select form-control mb-15" name="selectCountry2" id="selectCountry2" data-live-search="true">
+                                    <option value="" selected="selected">ทุกประเทศ</option>
+                                    <?php
+
+                                    foreach ($country->result_array() as $row) {
+                                        ?>
+                                        <option value="<?php echo $row['international'];?>"><?php echo $row['international'];?></option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
                             </div>
 
                             <div class="col-md-2">
@@ -139,7 +176,7 @@
  jQuery(function ($) {
 
 
-
+    $('.selectpicker').selectpicker();
 
     $('#date_start').on('change', function () {
         $('.datepicker').hide();
@@ -148,6 +185,8 @@
     $('#date_end').on('change', function () {
         $('.datepicker').hide();
     });
+
+
 
 
 });
@@ -161,9 +200,20 @@
 
         if(id == 'related_13_content' || id == 'related_14_content'){
             $("#related_12_content").show().siblings('[id^="related"]').hide()
+        }else{
+            $("#" + id).show().siblings('[id^="related"]').hide()
         }
 
-        $("#" + id).show().siblings('[id^="related"]').hide()
+        if(id == 'related_5_content'){
+            $("#" + id).show()
+        }
+
+        if(id == 'related_4_content'){
+            $("#" + id).show()
+            $("#related_8_content").show()
+        }
+
+        
 
     }else{
 
@@ -176,6 +226,16 @@
 });
 
 
+ $("#selectCountry").on("change", function () {
+    if($("#selectCountry").val() == 'จีน'){
+        $("#related_6_content").show()
+        $("#related_7_content").show()
+    }else{
+        $("#related_6_content").hide()
+        $("#related_7_content").hide()
+    }
+});
+
  $("#search_btn").click(function() {
 
 
@@ -183,57 +243,66 @@
         if($("#selectUniversity").val() != ''){
             var sdata = {select: $("#select").val(),university : $("#selectUniversity").val(), country: $("#selectCountry").val(),dateStart: $('#date_start').val(), dateEnd: $('#date_end').val(), oder_by: $('#oder_by').val()};
 
-           
-        $('#show_data_view').load('<?php echo site_url('admin/mou/search_query'); ?>', sdata);
+
+            $('#show_data_view').load('<?php echo site_url('admin/mou/search_query'); ?>', sdata);
         }else{
          //
          bootbox.alert("*กรุณาเลือกชื่อมหาวิทยาลัย ที่ต้องการค้นหา*");
-        }
-    }else if($("#select").val() == '4'){
-        if($("#date_start").val() != '' && $("#date_end").val()){
-           
-            var sdata = {select: $("#select").val(),university : $("#selectUniversity").val(), country: $("#selectCountry").val(),dateStart: $('#date_start').val(), dateEnd: $('#date_end').val(), oder_by: $('#oder_by').val()};
+     }
+ }else if($("#select").val() == '4'){
+    if($("#date_start").val() != '' && $("#date_end").val()){
 
-           
-            $('#show_data_view').load('<?php echo site_url('admin/mou/search_query'); ?>', sdata);
-        }else{
+        var sdata = {select: $("#select").val(),university : $("#selectUniversity").val(), country2: $("#selectCountry2").val(),dateStart: $('#date_start').val(), dateEnd: $('#date_end').val(), oder_by: $('#oder_by').val()};
+
+
+        $('#show_data_view').load('<?php echo site_url('admin/mou/search_query'); ?>', sdata);
+    }else{
          //
          bootbox.alert("*กรุณาเลือกช่วงเวลา ที่ต้องการค้นหา*");
-        }
-    }else if($("#select").val() == '5'){
-        if($("#selectCountry").val() != ''){
-           
-            var sdata = {select: $("#select").val(),university : $("#selectUniversity").val(), country: $("#selectCountry").val(),dateStart: $('#date_start').val(), dateEnd: $('#date_end').val(), oder_by: $('#oder_by').val()};
+     }
+ }else if($("#select").val() == '5'){
+    if($("#selectCountry").val() != ''){
 
-            $('#show_data_view').load('<?php echo site_url('admin/mou/search_query'); ?>', sdata);
+        if($("#selectCountry").val() == 'จีน'){
+            var sdata = {select: $("#select").val(),university : $("#selectUniversity").val(), country: $("#selectCountry").val(),dateStart: $('#date_start').val(), dateEnd: $('#date_end').val(), oder_by: $('#oder_by').val(),monton: $('#selectMonTon').val(),status: $('#selectStatus').val()};
 
+
+            console.log("monton = " + $('#selectMonTon').val() + "status = " + $('#selectStatus').val());
         }else{
+            var sdata = {select: $("#select").val(),university : $("#selectUniversity").val(), country: $("#selectCountry").val(),dateStart: $('#date_start').val(), dateEnd: $('#date_end').val(), oder_by: $('#oder_by').val()};
+        }
+
+        
+
+        $('#show_data_view').load('<?php echo site_url('admin/mou/search_query'); ?>', sdata);
+
+    }else{
          //
          bootbox.alert("*กรุณาเลือกประเทศ ที่ต้องการค้นหา*");
-        }
-    }else if($("#select").val() == '12' || $("#select").val() == '13' || $("#select").val() == '14'){
-        if($("#oder_by").val() != ''){
-           
-            var sdata = {select: $("#select").val(),university : $("#selectUniversity").val(), country: $("#selectCountry").val(),dateStart: $('#date_start').val(), dateEnd: $('#date_end').val(), oder_by: $('#oder_by').val()};
-
-            $('#show_data_view').load('<?php echo site_url('admin/mou/search_query'); ?>', sdata);
-            
-        }else{
-         //
-         bootbox.alert("*กรุณาเลือการเรียงข้อมูล ที่ต้องการค้นหา*");
-        }
-    }else{
+     }
+ }else if($("#select").val() == '12' || $("#select").val() == '13' || $("#select").val() == '14'){
+    if($("#oder_by").val() != ''){
 
         var sdata = {select: $("#select").val(),university : $("#selectUniversity").val(), country: $("#selectCountry").val(),dateStart: $('#date_start').val(), dateEnd: $('#date_end').val(), oder_by: $('#oder_by').val()};
+
+        $('#show_data_view').load('<?php echo site_url('admin/mou/search_query'); ?>', sdata);
+
+    }else{
+         //
+         bootbox.alert("*กรุณาเลือการเรียงข้อมูล ที่ต้องการค้นหา*");
+     }
+ }else{
+
+    var sdata = {select: $("#select").val(),university : $("#selectUniversity").val(), country: $("#selectCountry").val(),dateStart: $('#date_start').val(), dateEnd: $('#date_end').val(), oder_by: $('#oder_by').val()};
 
       //$('#show_data_view').load('mou/search_view');
       $('#show_data_view').load('<?php echo site_url('admin/mou/search_query'); ?>', sdata);
 
-    }
+  }
 
-     
 
-  });
+
+});
 
 </script>
 

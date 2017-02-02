@@ -48,8 +48,8 @@
                             <th>LastName</th>
                             <th>Major</th>
                             <th>Major_en</th>
-                            <th>View</th>
-                            <th>Edit</th>
+                            <th>View/查看</th>
+                            <th>Edit/编辑</th>
 
 
                         </tr>
@@ -73,8 +73,8 @@
                                 <td><?php echo $row['sub_name_th']; ?></td>
                                 <td><?php echo $row['sub_name_en']; ?></td>
 
-                                <td><i class="btn btn-info " data-toggle="modal" data-target="#myModal" onclick ="showModal('<?php echo $row['sid']; ?>')">View</i></td>
-                                <td><i class="btn btn-warning " data-toggle="modal" data-target="#myModal" onclick ="showModal2('<?php echo $row['sid']; ?>')">edit</i></td>
+                                <td><i class="btn btn-info " data-toggle="modal" data-target="#myModal" onclick ="showModal('<?php echo $row['sid']; ?>')">View / 查看</i></td>
+                                <td><i class="btn btn-warning " data-toggle="modal" data-target="#myModal" onclick ="showModal2('<?php echo $row['sid']; ?>')">edit / 编辑</i></td>
 
                             </tr>
                             <?php

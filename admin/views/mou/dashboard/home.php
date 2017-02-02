@@ -1,4 +1,4 @@
-<?php $this->load->view('student/includes/header'); ?>
+<?php $this->load->view('mou/includes/header'); ?>
 <?php
 /////////////////////////////////////////////////////////////
 //*** Select วันที่ในตาราง Counter ว่าปัจจุบันเก็บของวันที่เท่าไหร่  ***//

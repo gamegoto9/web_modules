@@ -116,7 +116,13 @@ function get_mou_expired($status){
     return $query;
 }
 
-function get_mou_sort_date($dateStart,$dateEnd){
+function get_mou_sort_date($dateStart,$dateEnd,$country){
+
+    if($country == ''){
+        $country_query ='';
+    }else{
+        $country_query = "AND international_support.international = "."'".$country."'";
+     }
     $query = $this->db->query("SELECT international_support.`name`,
         international_support.international,
         international_support.link,
@@ -139,8 +145,9 @@ function get_mou_sort_date($dateStart,$dateEnd){
                         WHERE
                         international_support.mou_expired NOT IN('000-00-00','') AND
                         international_support.mou_expired BETWEEN '$dateStart' AND '$dateEnd'
+                        $country_query
                         ORDER BY
-                        international_support.international");
+                        expired ASC");
 
     return $query;
 }

@@ -51,7 +51,27 @@
   .bgmodal {
     background-color: #9cec40;
   }
+  <?php
 
+  function compareDate($date1, $date2, $check) {
+    $arrDate1 = explode("-", $date1);
+    $arrDate2 = explode("-", $date2);
+    $timStmp1 = mktime(0, 0, 0, $arrDate1[1], $arrDate1[2], $arrDate1[0]);
+    $timStmp2 = mktime(0, 0, 0, $arrDate2[1], $arrDate2[2], $arrDate2[0]);
+
+    if ($timStmp1 == $timStmp2) {
+      $check = "2";
+    } else if ($timStmp1 > $timStmp2) {
+      $check = "1";
+    } else if ($timStmp1 < $timStmp2) {
+      $check = "2";
+    }
+    return $check;
+  }
+
+  $date_now = date('Y-m-d');
+
+  ?>
 </style>
 
 <div class="col-md-12 col-md-offset-0" style="padding: 10px">
@@ -77,8 +97,8 @@
     <th rowspan="2" class="text-center">ประเทศ</th>
     <th colspan="5" class="text-center">ความร่วมือ/แลกเปลี่ยน</th>
 
-    <th rowspan="2" class="text-center">วันที่ลงนาม ครั้งแรก</th>
-    <th rowspan="2" class="text-center">วันที่ลงนาม ล่าสุด</th>
+    <th rowspan="2" class="text-center" width="80">วันที่ลงนาม ครั้งแรก</th>
+    <th rowspan="2" class="text-center" width="80">วันที่ลงนาม ล่าสุด</th>
     <th rowspan="2" class="text-center"  width="80">วันหมดอายุ</th>
     <th rowspan="2" class="text-center" width="100">หมายเหตุ</th>
     <th rowspan="2" class="text-center" width="50">#</th>
@@ -97,8 +117,19 @@
 </thead>
 <tbody>
   <?php
+  $area_name = "";
   $i=1;
   foreach ($mou->result_array() as $row) {
+    if($area == '1'){
+      if($area_name != $row['area']){
+        $area_name = $row['area'];
+        ?>
+        <tr bgcolor="#ffffe6">
+        <td colspan="14" class="text-center"><?php echo "<font size='3' color='green'>&nbsp;&nbsp;&nbsp;&nbsp;".$row['area']."</font>"; ?></td>
+        </tr>
+        <?php
+      }
+    }
     ?>
     <tr>
       <td class="text-center"><?php echo $i; ?></td>
@@ -130,20 +161,26 @@
 
       </td>
       <td class="text-center">
-      <button type="button" class="btn btn-warning btn-sm" onclick="showModal_main('<?php echo $row['id']; ?>');"><i class="fa fa-info" aria-hidden="true"></i></button>
+        <?php 
+        if($row['mou_dis'] != ''){
+          ?>
+          <button type="button" class="btn btn-warning btn-sm" onclick="showModal_main('<?php echo $row['id']; ?>');"><i class="fa fa-info" aria-hidden="true"></i></button>
+          <?php
+        }
+        ?>
       </td>
 
       <td class="text-center">
-      <?php 
+        <?php 
         if($row['file'] != ''){
           ?>
-            <button type="button" class="btn btn-info btn-sm" onclick="showModal_main2('<?php echo $row['file']; ?>');"><i class="fa fa-file" aria-hidden="true"></i></button>
+          <button type="button" class="btn btn-info btn-sm" onclick="showModal_main2('<?php echo $row['file']; ?>');"><i class="fa fa-file" aria-hidden="true"></i></button>
           <?php
         }else{
           echo "<font color='red'>ไม่มีไฟล์</font>";
         }
-      ?>
-      
+        ?>
+
       </td>
 
     </tr>
@@ -171,7 +208,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">-- รายละเอียดโครงการ/สาขาวิชาตามความร่วมมือ --</h4>
+        <h4 class="modal-title" id="myModalLabel">-- โครงการความร่วมมือ --</h4>
       </div>
       <div class="modal-body">
 

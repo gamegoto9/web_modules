@@ -42,8 +42,8 @@ if ($view == 1 || $view == 2) {
                             <div class="col-sm-2">
                                 <select class="form-control" id="title_name" name="title_name">
 
-                                    <option value="Mr.">Mr./女士</option>
-                                    <option value="Miss.">Miss./先生</option>
+                                    <option value="Mr.">Mr./先生</option>
+                                    <option value="Miss.">Miss./女士</option>
 
                                 </select>
                             </div>
@@ -204,8 +204,8 @@ if ($view == 1 || $view == 2) {
                             <div class="col-sm-2">
                                 <select class="form-control" id="title_name" name="title_name">
 
-                                    <option value="Mr.">Mr. / 女士</option>
-                                    <option value="Miss.">Miss. / 先生</option>
+                                    <option value="Mr.">Mr./先生</option>
+                                    <option value="Miss.">Miss./女士</option>
 
                                 </select>
                             </div>
