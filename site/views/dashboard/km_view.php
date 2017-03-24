@@ -1,3 +1,12 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+$user_language = $this->
+session->userdata('language');
+$this->lang->load('contact_form_' . $user_language, $user_language);
+
+$this->session->set_userdata('LASTURL', $this->uri->uri_string());
+?>
 <!DOCTYPE html>
 <!--
  * A Design by GraphBerry
@@ -16,7 +25,7 @@
         <title>Knoledge Management CRRU International Affairs.</title>
 
         <?php $this->load->view('includes3/header'); ?>
-        <?php echo base_url('assets/themes/pluton/css/jquery.cslider.css'); ?>
+        
         <link href="<?php echo base_url('assets/themes/pluton/css/style2.css'); ?>" rel="stylesheet">
         <script src="<?php echo base_url('assets/themes/pluton/js/jquery.cslider.js');?>"></script>
         <!--<script type="text/javascript" src="<?php echo base_url('assets/js/angular.min.js'); ?>"></script>-->
@@ -40,7 +49,7 @@
             <div class="triangle"></div>
             <div class="container">
                 <div class=" title">
-                    <h1>Knoledge Management CRRU International Affairs.</h1>
+                    <h1>Knowledge Management CRRU International Affairs.</h1>
                     <!--<p>Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.</p>-->
                 </div>
                 <!--                <ul class="nav nav-pills">

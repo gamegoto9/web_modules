@@ -53,6 +53,54 @@ class Student extends CI_Controller {
         $this->load->view('admin/dashboard/list_data_view', $data);
     }
 
+     public function data_users($id){
+
+
+        $sql = "SELECT
+        admission.title,
+        admission.passport_id,
+        admission.date_birth,
+        admission.`name`,
+        admission.nation,
+        admission.country,
+        admission.religion,
+        admission.blood,
+        admission.educational,
+        admission.tel,
+        admission.address,
+        admission.educational_file,
+        if(admission.sex = '0','Female','Male') as sex,
+            admission.email,
+        admission.levId,
+        admission.subjectId,
+        admission.majorId,
+        if(admission.type_std_id = '0','MOU','Walk In') as type_std_id,
+            admission.universityId,
+        admission.file,
+        subject_student.sub_name_en,
+        Level_of_Study.lev_of_name,
+        major_student.maj_name_en
+        FROM
+        admission
+        INNER JOIN Level_of_Study ON admission.levId = Level_of_Study.lev_of_id
+        INNER JOIN subject_student ON admission.subjectId = subject_student.sub_id
+        INNER JOIN major_student ON admission.majorId = major_student.maj_id
+        WHERE admission.passport_id = '$id'
+        ";
+        $data['data'] = $this->db->query($sql)->row_array();
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0)
+        {
+            $data['row'] = 1;
+        }else{
+            $data['row'] = 0;
+        }
+
+
+        $this->load->view('admin/student/dashboard/data_std_admission',$data);
+        //echo $id;
+    }
+
     public function show_student() {
 
         $this->load->model('dashboard_model');
@@ -62,7 +110,7 @@ class Student extends CI_Controller {
         $this->load->view('admin/dashboard/test', $data);
     }
 
-   
+
 
     public function show_drurbleGoods($type) {
 
@@ -108,33 +156,77 @@ class Student extends CI_Controller {
         $this->load->view('admin/student/dashboard/show_student_year', $data);
     }
 
+    public function show_data_student_admission() {
+
+        $sql = "SELECT
+        admission.title,
+        admission.passport_id,
+        admission.date_birth,
+        admission.`name`,
+        admission.nation,
+        admission.country,
+        admission.religion,
+        admission.blood,
+        admission.educational,
+        admission.tel,
+        admission.address,
+        admission.educational_file,
+        if(admission.sex = '0','F','M') AS sex,
+            admission.email,
+        admission.levId,
+        admission.subjectId,
+        admission.majorId,
+        if(admission.type_std_id = '0','MOU','Walk In') AS type_std_id,
+            admission.universityId,
+        admission.file,
+        subject_student.sub_name_en,
+        Level_of_Study.lev_of_name,
+        major_student.maj_name_en,
+        admission.status_reg_conf,
+        admission.fname,
+        international_support.`name` as university_MOU
+        FROM
+        admission
+        INNER JOIN Level_of_Study ON admission.levId = Level_of_Study.lev_of_id
+        INNER JOIN subject_student ON admission.subjectId = subject_student.sub_id
+        INNER JOIN major_student ON admission.majorId = major_student.maj_id
+        LEFT JOIN international_support ON admission.universityId = international_support.id
+        GROUP BY admission.passport_id
+        ORDER BY international_support.`name` ASC";
+
+        $data['data'] = $this->db->query($sql)->result_array();
+        
+        $this->load->view('admin/student/dashboard/show_data_student_admission',$data);
+        
+    }
+
     public function show_data_student_year($year) {
 
         $db2 = $this->load->database('orasis', TRUE);
 
         if ($year == "02") {
             $sql = "SELECT DISTINCT *
-                    FROM view_inter_student
-                    where lev_name_en != 'Certificate'
-                    ORDER BY year_in desc";
+            FROM view_inter_student
+            where lev_name_en != 'Certificate'
+            ORDER BY year_in desc";
 
             $data['student'] = $db2->query($sql)->result_array();
             $data['send'] = "02";
         } else if ($year == "03") {
             $sql = "SELECT student_language.std_id,passport_id,std_fname_en,std_lname_en,sub_name_th,maj_name_th,lev_name_st,inter_type_name_th,nation_name_th
-                    from  student_language LEFT JOIN detial_subject USING(detial_id),subject_student,major_student,level_student
-                    where  
-			
-			detial_subject.sub_id = subject_student.sub_id AND
-			subject_student.maj_id = major_student.maj_id AND
-			detial_subject.lev_id = level_student.lev_id";
+            from  student_language LEFT JOIN detial_subject USING(detial_id),subject_student,major_student,level_student
+            where  
+
+            detial_subject.sub_id = subject_student.sub_id AND
+            subject_student.maj_id = major_student.maj_id AND
+            detial_subject.lev_id = level_student.lev_id";
 
             $data['student'] = $this->db->query($sql)->result_array();
 
             $sql = "SELECT DISTINCT *
-                    FROM view_inter_student
-                    where lev_name_en = 'Certificate'
-                    ORDER BY year_in desc";
+            FROM view_inter_student
+            where lev_name_en = 'Certificate'
+            ORDER BY year_in desc";
 
             $data['student2'] = $db2->query($sql)->result_array();
 
@@ -148,8 +240,8 @@ class Student extends CI_Controller {
 
         $db2 = $this->load->database('orasis', TRUE);
         $sql = "SELECT DISTINCT *
-            FROM view_inter_student
-            WHERE year_in = '$year' and lev_name_en != 'Certificate' ";
+        FROM view_inter_student
+        WHERE year_in = '$year' and lev_name_en != 'Certificate' ";
 
         $data['student'] = $db2->query($sql)->result_array();
         $data['send'] = "02";
@@ -160,21 +252,21 @@ class Student extends CI_Controller {
 
 
         $sql = "SELECT student_language.std_id,birthday,nation_id,year_in,date_in,std_status_name_th,pname_en,passport_id,std_fname_en,std_lname_en,sub_name_th,maj_name_th,lev_name_st,inter_type_name_th,nation_name_th
-                from  student_language LEFT JOIN detial_subject USING(detial_id),subject_student,major_student,level_student
-                where  
-			
-			detial_subject.sub_id = subject_student.sub_id AND
-			subject_student.maj_id = major_student.maj_id AND
-			detial_subject.lev_id = level_student.lev_id AND
-			year_in = '$year'";
+        from  student_language LEFT JOIN detial_subject USING(detial_id),subject_student,major_student,level_student
+        where  
+
+        detial_subject.sub_id = subject_student.sub_id AND
+        subject_student.maj_id = major_student.maj_id AND
+        detial_subject.lev_id = level_student.lev_id AND
+        year_in = '$year'";
         $data['student'] = $this->db->query($sql)->result_array();
 
 
 
         $db2 = $this->load->database('orasis', TRUE);
         $sql = "SELECT DISTINCT *
-            FROM view_inter_student
-            WHERE year_in = '$year' and lev_name_en = 'Certificate' ";
+        FROM view_inter_student
+        WHERE year_in = '$year' and lev_name_en = 'Certificate' ";
 
         $data['student2'] = $db2->query($sql)->result_array();
 
@@ -192,7 +284,7 @@ class Student extends CI_Controller {
                 'id_img' => '',
                 'Nid' => '36',
                 'parth_img' => 'http://crruinter.crru.ac.th/bootstrap/-/upload/2015-03-06-' . $i . '.jpg'
-            );
+                );
 
 
 
@@ -204,24 +296,31 @@ class Student extends CI_Controller {
         $db2 = $this->load->database('orasis', TRUE);
 
         if ($count == "01" || $count == "0") {
-            $sql = "SELECT fac_name_th,lev_name_en,nation_id,nation_name_th,count(DISTINCT std_id) as count
-                FROM view_inter_student
-                WHERE std_status_id = 'MA' and fac_name_th !='' and fac_name_th != 'คณะที่รับผิดชอบโปรแกรม'
-                GROUP BY fac_name_th,lev_name_en,nation_id,nation_name_th
-                ORDER BY fac_name_th ASC";
+            $sql = "SELECT fac_name_th,lev_name_en,nation_id,nation_name_th,count(DISTINCT std_id)
+            FROM view_inter_student
+            WHERE std_status_id = 'MA' 
+            and fac_name_th !=''
+            and fac_name_th != 'คณะที่รับผิดชอบโปรแกรม'
+            and maj_name_en not in('CRU International Internship Program in TCFL') 
+            and maj_name_th not in ('ร่วมเรียน') 
+            
+            and std_id not in('581753601','581753602','581753603','581753604','581753605','581753606','581753607','581753608','581753609','581753610',
+            '581753611','581753612','581753613','581753614','581753615')
+            GROUP BY fac_name_th,lev_name_en,nation_id,nation_name_th
+            ORDER BY fac_name_th ASC";
 
             $data['student'] = $db2->query($sql)->result_array();
             $data['send'] = "0";
         } else if ($count == "03" || $count == "5") {
             $sql = "select maj_name_th,lev_name_en,nation_id,nation_name_th,count(DISTINCT std_id) AS count
-                    from student_language,detial_subject,subject_student,major_student,level_student
-                    where student_language.detial_id = detial_subject.detial_id and
-			detial_subject.sub_id = subject_student.sub_id and
-			subject_student.maj_id = major_student.maj_id and
-			detial_subject.lev_id = level_student.lev_id and
-                        std_status_id = 'MA'
-                    group by maj_name_th,lev_name_en,nation_id,nation_name_th
-                    order by maj_name_th asc";
+            from student_language,detial_subject,subject_student,major_student,level_student
+            where student_language.detial_id = detial_subject.detial_id and
+            detial_subject.sub_id = subject_student.sub_id and
+            subject_student.maj_id = major_student.maj_id and
+            detial_subject.lev_id = level_student.lev_id and
+            std_status_id = 'MA'
+            group by maj_name_th,lev_name_en,nation_id,nation_name_th
+            order by maj_name_th asc";
 
             $data['student'] = $this->db->query($sql)->result_array();
             $data['send'] = "5";
@@ -245,7 +344,7 @@ class Student extends CI_Controller {
         echo json_encode(array(
             'is_successful' => TRUE,
             'msg' => 'บันทึกเรียบร้อย'
-        ));
+            ));
     }
 
     public function delete_data_durable() {
@@ -264,12 +363,12 @@ class Student extends CI_Controller {
             echo json_encode(array(
                 'is_successful' => TRUE,
                 'msg' => 'บันทึกเรียบร้อย'
-            ));
+                ));
         } else {
             echo json_encode(array(
                 'is_successful' => FALSE,
                 'msg' => 'ผิดพลาด'
-            ));
+                ));
         }
     }
 
@@ -284,11 +383,11 @@ class Student extends CI_Controller {
             $sql = "SELECT student_language.std_id,birthday,nation_id,year_in,date_in,std_status_name_th,pname_en,passport_id,std_fname_en,std_lname_en,sub_name_th,maj_name_th,lev_name_st,inter_type_name_th,nation_name_th
             from  student_language LEFT JOIN detial_subject USING(detial_id),subject_student,major_student,level_student
             where  
-			
-			detial_subject.sub_id = subject_student.sub_id AND
-			subject_student.maj_id = major_student.maj_id AND
-			detial_subject.lev_id = level_student.lev_id and
-                        std_id = '$std_id'";
+
+            detial_subject.sub_id = subject_student.sub_id AND
+            subject_student.maj_id = major_student.maj_id AND
+            detial_subject.lev_id = level_student.lev_id and
+            std_id = '$std_id'";
             $data['student'] = $this->db->query($sql)->result_array();
             $data['send'] = "02";
         }
@@ -311,12 +410,12 @@ class Student extends CI_Controller {
 
         $sql = "SELECT student_language.std_id,passport_id,std_fname_en,std_lname_en,sub_name_th,maj_name_th,lev_name_st,inter_type_name_th,nation_name_th,std_status_name_th,std_status_id
         from  student_language LEFT JOIN detial_subject USING(detial_id),subject_student,major_student,level_student
-                    where  
-			
-			detial_subject.sub_id = subject_student.sub_id AND
-			subject_student.maj_id = major_student.maj_id AND
-			detial_subject.lev_id = level_student.lev_id AND
-                        student_language.$id = '$type'";
+        where  
+
+        detial_subject.sub_id = subject_student.sub_id AND
+        subject_student.maj_id = major_student.maj_id AND
+        detial_subject.lev_id = level_student.lev_id AND
+        student_language.$id = '$type'";
 
 
 
@@ -326,7 +425,7 @@ class Student extends CI_Controller {
         $newdataType = array(
             'sc_type1' => $id,
             'sc_type2' => $type
-        );
+            );
 
         $this->session->set_userdata($newdataType);
 
@@ -361,7 +460,7 @@ class Student extends CI_Controller {
         echo json_encode(array(
             'is_successful' => TRUE,
             'data' => $data
-        ));
+            ));
     }
 
     public function conf_studentAll() {
@@ -382,9 +481,9 @@ class Student extends CI_Controller {
 //            $this->db->update('student_language', $data);
 
             $sql = "update student_language"
-                    . " set std_status_name_th = 'อนุมัติผล',"
-                    . "std_status_id = '0E'"
-                    . "where std_id in ($id)";
+            . " set std_status_name_th = 'อนุมัติผล',"
+            . "std_status_id = '0E'"
+            . "where std_id in ($id)";
 
             $this->db->query($sql);
 //            $data_insert = array('conf_id' => 0,
@@ -397,12 +496,12 @@ class Student extends CI_Controller {
             echo json_encode(array(
                 'is_successful' => TRUE,
                 'msg' => 'บันทึกเรียบร้อย' . $sql
-            ));
+                ));
         } else {
             echo json_encode(array(
                 'is_successful' => FALSE,
                 'msg' => 'ผิดพลาด'
-            ));
+                ));
         }
     }
 
@@ -434,12 +533,12 @@ class Student extends CI_Controller {
             echo json_encode(array(
                 'is_successful' => TRUE,
                 'msg' => 'บันทึกเรียบร้อย (' . $name . $date . ')'
-            ));
+                ));
         } else {
             echo json_encode(array(
                 'is_successful' => FALSE,
                 'msg' => 'ผิดพลาด'
-            ));
+                ));
         }
     }
 

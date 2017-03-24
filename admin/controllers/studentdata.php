@@ -22,7 +22,7 @@ class Studentdata extends CI_Controller {
 
     public function add_DataStudent() {
         $sql = "select *"
-                . "from subject_student";
+        . "from subject_student";
         $data['subjects'] = $this->db->query($sql)->result_array();
 
         $this->load->view('admin/student/dashboard/add_student_form', $data);
@@ -62,7 +62,7 @@ class Studentdata extends CI_Controller {
             echo json_encode(array(
                 'is_successful' => FALSE,
                 'msg' => $msg
-            ));
+                ));
         } else {
 
 
@@ -92,35 +92,35 @@ class Studentdata extends CI_Controller {
                 echo json_encode(array(
                     'is_successful' => FALSE,
                     'msg' => 'มีข้อมูลอยู่แล้ว'
-                ));
+                    ));
             } else {
 
                 $this->db->insert('student_2016', $data1);
                 echo json_encode(array(
                     'is_successful' => TRUE,
                     'msg' => 'บันทึกเรียบร้อย : Save data success'
-                ));
+                    ));
             }
         }
     }
 
     public function liststudent() {
         $sql = "SELECT
-student_2016.passport_number,
-student_2016.pname_st,
-student_2016.std_fname_th,
-student_2016.std_lname_th,
-subject_student.sub_name_th,
-subject_student.sub_name_en,
-student_2016.stdId,
-student_2016.sid
-FROM
-student_2016
-INNER JOIN subject_student ON student_2016.sub_id = subject_student.sub_id
-GROUP BY
-student_2016.passport_number
-ORDER BY
-student_2016.stdId ASC";
+        student_2016.passport_number,
+        student_2016.pname_st,
+        student_2016.std_fname_th,
+        student_2016.std_lname_th,
+        subject_student.sub_name_th,
+        subject_student.sub_name_en,
+        student_2016.stdId,
+        student_2016.sid
+        FROM
+        student_2016
+        INNER JOIN subject_student ON student_2016.sub_id = subject_student.sub_id
+        GROUP BY
+        student_2016.passport_number
+        ORDER BY
+        student_2016.stdId ASC";
         $data['student'] = $this->db->query($sql)->result_array();
 
         $this->load->view('admin/student/dashboard/list_data_student_table', $data);
@@ -133,7 +133,7 @@ student_2016.stdId ASC";
         $data['view'] = $view;
 
         $sql = "select *"
-                . "from subject_student";
+        . "from subject_student";
         $data['subjects'] = $this->db->query($sql)->result_array();
 
         $this->load->view('admin/student/dashboard/add_student_form', $data);
@@ -173,7 +173,7 @@ student_2016.stdId ASC";
             echo json_encode(array(
                 'is_successful' => FALSE,
                 'msg' => $msg
-            ));
+                ));
         } else {
 
             $sid = $this->input->post('stdId');
@@ -201,7 +201,7 @@ student_2016.stdId ASC";
             echo json_encode(array(
                 'is_successful' => TRUE,
                 'msg' => 'แก้ไขเรียบร้อย : Edit data success'
-            ));
+                ));
         }
     }
 
@@ -240,49 +240,49 @@ student_2016.stdId ASC";
         $this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, 3, 'passport_end');
         $this->excel->getActiveSheet()->setCellValueByColumnAndRow(10, 3, 'passport_status');
         
-            
-        $sql = "SELECT
-student_2016.stdId,
-student_2016.passport_number,
-student_2016.pname_st,
-student_2016.std_fname_th,
-student_2016.std_lname_th,
-subject_student.sub_name_th,
-subject_student.sub_name_en,
-student_2016.passport_statdate,
-student_2016.passport_enddate,
-student_2016.passport_status
-FROM
-student_2016
-INNER JOIN subject_student ON student_2016.sub_id = subject_student.sub_id
-ORDER BY stdId";
         
-            $rs = $this->db->query($sql);
-                
-         $exceldata = "";
-                $r = 4;
-                $i = 1;
-                foreach ($rs->result_array() as $row) {
-                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, $r, $i);
-                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, $r, $row['stdId']);
-                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, $r, $row['passport_number']);
-                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, $r, $row['pname_st']);
-                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, $r, $row['std_fname_th']);
-                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, $r, $row['std_lname_th']);
-                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, $r, $row['sub_name_th']);
-                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, $r, $row['sub_name_en']);
-                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, $r, $row['passport_statdate']);
-                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, $r, $row['passport_enddate']);
-                    $this->excel->getActiveSheet()->setCellValueByColumnAndRow(10, $r, $row['passport_status']);
-                    $r++;
-                    $i++;
+        $sql = "SELECT
+        student_2016.stdId,
+        student_2016.passport_number,
+        student_2016.pname_st,
+        student_2016.std_fname_th,
+        student_2016.std_lname_th,
+        subject_student.sub_name_th,
+        subject_student.sub_name_en,
+        student_2016.passport_statdate,
+        student_2016.passport_enddate,
+        student_2016.passport_status
+        FROM
+        student_2016
+        INNER JOIN subject_student ON student_2016.sub_id = subject_student.sub_id
+        ORDER BY stdId";
+        
+        $rs = $this->db->query($sql);
+        
+        $exceldata = "";
+        $r = 4;
+        $i = 1;
+        foreach ($rs->result_array() as $row) {
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, $r, $i);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, $r, $row['stdId']);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, $r, $row['passport_number']);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, $r, $row['pname_st']);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, $r, $row['std_fname_th']);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, $r, $row['std_lname_th']);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, $r, $row['sub_name_th']);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, $r, $row['sub_name_en']);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, $r, $row['passport_statdate']);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, $r, $row['passport_enddate']);
+            $this->excel->getActiveSheet()->setCellValueByColumnAndRow(10, $r, $row['passport_status']);
+            $r++;
+            $i++;
                     //$exceldata[] = $row;
-                }
+        }
 
-                for ($col = ord('A'); $col <= ord('K'); $col++) {
+        for ($col = ord('A'); $col <= ord('K'); $col++) {
                     //set column dimension
-                    $this->excel->getActiveSheet()->getColumnDimension(chr($col))->setAutoSize(true);
-                }
+            $this->excel->getActiveSheet()->getColumnDimension(chr($col))->setAutoSize(true);
+        }
 
         //Fill data 
         //->excel->getActiveSheet()->fromArray($exceldata, null, 'A5');

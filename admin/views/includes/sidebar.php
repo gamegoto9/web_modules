@@ -183,6 +183,13 @@
                     </a>
 
                     <ul class="treeview-menu">
+
+                        <li>
+                            <a href="#" onclick="material_balance();">
+                                <i class="fa fa-newspaper-o"></i> <span>พัสดุคงเหลือ</span> 
+                            </a>
+                        </li>
+
                         <li>
                             <a href="#" onclick="loadDetialReturn();">
                                 <i class="fa fa-newspaper-o"></i> <span>ข้อมูลครุภัณฑ์ที่ส่งคืน</span>
@@ -387,5 +394,10 @@
         function loadDetialLendMaterial() {
 
             $('#main_view').load('dashboard/DetialLendMaterial/');
+        }
+
+        function material_balance() {
+            $('#main_view').load('dashboard/detial_material_balance_view/');
+
         }
     </script>

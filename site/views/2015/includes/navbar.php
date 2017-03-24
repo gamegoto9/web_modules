@@ -54,7 +54,7 @@ echo $user_language;
                         </li>
 <!--                        <li><a href="#portfolio"><i class="fa fa-briefcase"></i><?PHP echo $this->lang->line('nav_por'); ?></a></li>-->
                         <li><a href="http://crruinter.crru.ac.th/inter_2014/site/dashboard/gms"><i class="fa fa-globe"></i><?PHP echo $this->lang->line('nav_blog'); ?></a></li>
-                        <li id="flip"><a href="#contact"><i class="fa fa-group"></i><?PHP echo $this->lang->line('nav_contact'); ?></a></li>
+                        <li><a href="<?php echo base_url('/site/inter2015/login_view'); ?>"><i class="fa fa-group"></i><?PHP echo $this->lang->line('nav_contact'); ?></a></li>
 
                     </ul>
 
@@ -69,7 +69,7 @@ echo $user_language;
         <div class="row">
             <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
                 <h3 class="animated bounceInDown">Login</h3>
-                <div class="login-box clearfix animated flipInY">
+                <!-- <div class="login-box clearfix animated flipInY">
                     <div class="login-logo">
 <!--                        <img src="<?php echo base_url('assets/themes/agency/img/logo.png"'); ?>">-->
                     </div> 
@@ -87,7 +87,7 @@ echo $user_language;
                             <div class="form-group has-warning">                               
                                 <input type="password" id="sex" name="sex" class="form-control" placeholder="Password">
                             </div>
-                            <button type="submit" class="btn btn-red" id="btn_save">Login</button> 
+                            <button type="bouutn" class="btn btn-red" id="btn_save">Login</button> 
                         </form>	
                         <div class="login-links"> 
                             <a href="#">
@@ -99,7 +99,7 @@ echo $user_language;
                             </a>
                         </div>      		
                     </div> 			        	
-                </div>
+                </div> -->
 
 
             </div>
@@ -130,14 +130,50 @@ echo $user_language;
 
         $("#btn_save").click(function() {
 
-     
+          
 
             var faction = "<?php echo site_url('site/inter2015/check_login'); ?>";
             var fdata = $("#form_data").serialize();
-            $.post(faction, fdata, function(jdata) {
+
+            // $.post(faction, fdata, function(jdata) {
+
+            //      alert(jdata.is_successful);
+            //     if (jdata.is_successful) {
+
+            //         $.pnotify({
+            //             title: 'แจ้งให้ทราบ!',
+            //             text: jdata.msg,
+            //             type: 'success',
+            //             opacity: 1,
+            //             history: false
+
+            //         });
+
+            //         alert("xxxxx");
+
+            //         $(window.location).attr('href', '<?php echo 'http://crruinter.crru.ac.th/bootstrap/check_user.php'; ?>');
+            //     } else {
+
+            //         $.pnotify({
+            //             title: 'เตือน!',
+            //             text: jdata.msg,
+            //             type: 'error',
+            //             opacity: 1,
+            //             history: false
+            //         });
+            //     }
+
+            // });
 
 
-                if (jdata.is_successful) {
+            // return false;
+
+            $.ajax({
+                type: 'POST',
+                url: faction,
+                data: fdata, // or JSON.stringify ({name: 'jonas'}),
+                success: function(jdata) {
+                   if (jdata.is_successful) {
 
                     $.pnotify({
                         title: 'แจ้งให้ทราบ!',
@@ -147,6 +183,8 @@ echo $user_language;
                         history: false
 
                     });
+
+                    alert("xxxxx");
 
                     $(window.location).attr('href', '<?php echo 'http://crruinter.crru.ac.th/bootstrap/check_user.php'; ?>');
                 } else {
@@ -160,8 +198,10 @@ echo $user_language;
                     });
                 }
 
-            }, 'json');
-
+                 },
+                
+                dataType: 'json'
+            });
 
             return false;
             

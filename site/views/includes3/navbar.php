@@ -14,10 +14,11 @@
                     <!-- Main navigation -->
                     <div class="nav-collapse collapse pull-right color5">
                         <ul class="nav" id="top-navigation">
-                            <li><a href="<?php echo site_url().'/site/dashboard/'; ?>"><i class="fa fa-home"></i><br>หน้าแรก</a></li>
-                            <li><a href="<?php echo site_url().'/site/dashboard/about'; ?>"><i class="fa fa-user"></i><br>เกี่ยวกับเรา</a></li>
-                            <li><a href="<?php echo site_url().'/site/dashboard/personal'; ?>"><i class="fa fa-group"></i><br>บุคลากร</a></li>
-                            <li><a href="#about"><i class="fa fa-phone"></i><br>การติดต่อ</a></li>
+                            <li><a href="<?php echo site_url().'/site/inter2017_2/'; ?>"><i class="fa fa-home"></i><?PHP echo $this->lang->line('nav_home'); ?></a></li>
+                            <li><a href="<?php echo site_url().'/site/inter2017_2/about'; ?>"><i class="fa fa-user"></i><?PHP echo $this->lang->line('nav_about'); ?></a></li>
+                            <li><a href="<?php echo site_url().'/site/inter2017_2/personal'; ?>"><i class="fa fa-group"></i><?PHP echo $this->lang->line('nav_abount_personal'); ?></a></li>
+                            <li><a href="#about"><i class="fa fa-phone"></i><?PHP echo $this->lang->line('nav_abount_contact'); ?></a></li>
+                            <li><a href="<?php echo site_url('site/inter2017_2/login_view'); ?>" class="external">LOGIN</a></li>
                            
                         </ul>
                     </div>

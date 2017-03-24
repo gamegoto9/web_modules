@@ -631,9 +631,9 @@ class Dashboard extends CI_Controller {
         if ($count > $data['qty']) {
 
             echo json_encode(array(
-             'is_successful' => FALSE,
-             'msg' => 'วัสดุมีจำนวนไม่เพียงพอ มีอยู่ '.$data['qty']
-             ));
+               'is_successful' => FALSE,
+               'msg' => 'วัสดุมีจำนวนไม่เพียงพอ มีอยู่ '.$data['qty']
+               ));
         }else{
             echo json_encode(array(
                 'is_successful' => TRUE
@@ -951,10 +951,10 @@ class Dashboard extends CI_Controller {
             $tvalue = $tvalues[$i];
 
             if($tvalue == ""){
-             $sql = "select max(MatId) as maxid from material_2016";
-             $result1 = $this->db->query($sql)->result_array();
+               $sql = "select max(MatId) as maxid from material_2016";
+               $result1 = $this->db->query($sql)->result_array();
 
-             foreach ($result1 as $row) {
+               foreach ($result1 as $row) {
                 $maxid = $row['maxid'];
 
             }
@@ -965,7 +965,14 @@ class Dashboard extends CI_Controller {
             $data4['MatName'] = $tname;
 
             $data4['status_buy'] = '1';
-            $data4['year'] = date("Y");
+
+            if(date("m") > 10){
+                $year_year = date("Y")+544;
+            }else{
+                $year_year = date("Y")+543;
+            }
+
+            $data4['year'] = $year_year;
 
             $this->db->insert('material_2016', $data4);
 
@@ -1285,7 +1292,7 @@ public function insert_return_goods() {
 
     $rows = $this->input->post('rows');
 
-    $data2['return_id'] = '1';
+    $data2['return_id'] = '0';
     $this->db->insert('return_goods_seq', $data2);
 
     for($i=0;$i<$rows;$i++){
@@ -1315,7 +1322,7 @@ public function insert_return_goods() {
 
     echo json_encode(array(
         'is_successful' => TRUE,
-        'msg' => 'บันทึกเรียบร้อย'.$rows
+        'msg' => 'บันทึกเรียบร้อย'
         ));
 }
 
@@ -1534,17 +1541,17 @@ public function show_material() {
     $this->load->view('admin/dashboard/show_material', $data);
 }
 public function buy_material() {
- $this->load->model('dashboard_model');
- $data['record'] = $this->dashboard_model->getData_material();
+   $this->load->model('dashboard_model');
+   $data['record'] = $this->dashboard_model->getData_material();
 
- $this->load->view('admin/dashboard/buy_material',$data);
+   $this->load->view('admin/dashboard/buy_material',$data);
 }
 
 public function table_buy_material() {
- $this->load->model('dashboard_model');
- $data['record'] = $this->dashboard_model->getData_material();
+   $this->load->model('dashboard_model');
+   $data['record'] = $this->dashboard_model->getData_material();
 
- $this->load->view('admin/dashboard/table_buy_material',$data);
+   $this->load->view('admin/dashboard/table_buy_material',$data);
 }
 
 public function lend_goode_seq(){
@@ -1883,103 +1890,202 @@ public function data_buy_list_in() {
             $this->load->view('admin/dashboard/detial_lend_material_paple_center',$data);
         }
 
-        public function detial_lend_paple_goods_center($id){
+        public function detial_material_balance_view(){
 
-            $sql = "SELECT * FROM durable_goods_2016 WHERE id_goods = '$id'";
-            $data['reTurnGoods'] = $this->db->query($sql);
+            $sql = "select year from material_2016 group by year";
+            $data['year'] = $this->db->query($sql);
+            $this->load->view('admin/dashboard/detial_material_balance_view',$data);
+        }
 
+        public function detial_material_balance($year){
+
+
+            // basic 
+            /*
             $sql = "SELECT
-            durable_goods_repair.id_goods,
-            durable_goods_repair.Ddate,
-            durable_goods_repair.price,
-            durable_goods_repair.note,
-            durable_goods_repair.`subject`,
-            durable_goods_repair.Pid,
-            durable_goods_2016.name_goods,
-            durable_goods_2016.brand_goods,
-            durable_goods_2016.id_goods_crru
+            a.MatName,
+            a.qty,
+            a.price,
+            a.MatId,
+            a.status_buy,
+            a.`year`
             FROM
-            durable_goods_repair
-            INNER JOIN durable_goods_2016 ON durable_goods_repair.id_goods = durable_goods_2016.id_goods
-            WHERE durable_goods_repair.id_goods = '$id'";
-            $data['reTurnGoods_repair'] = $this->db->query($sql);
-
-            $this->load->view('admin/dashboard/detial_lend_goods_paple_center',$data);
-
-
-
-
-        }
-
-
-
-
-        public function sample2(){
-
-            $this->load->view('admin/dashboard/test');
-
-        }
-
-        public function mer(){
-            $sql = "SELECT Pid,Ddate,work1
-            FROM work
-            WHERE Pid IN('008','005')
-            GROUP BY Pid,Ddate";
-
-            $data['aaa'] = $this->db->query($sql);
-
-            $this->load->view('admin/dashboard/mer',$data);
-        }
-
-        public function detial_get_goods_paple($id){
-            $sql = "SELECT
-            get_goods_detial.get_id,
-            get_goods_detial.Pid,
-            get_goods_detial.standard,
-            get_goods_detial.id_goods,
-            get_goods_detial.Ddate_get,
-            get_goods_detial.Ddate_return,
-            get_goods_detial.name_get,
-            get_goods_detial.major_get,
-            get_goods_detial.note,
-            get_goods_detial.tel,
-            durable_goods_2016.name_goods,
-            durable_goods_2016.brand_goods,
-            durable_goods_2016.id_goods_crru
-            FROM
-            get_goods_detial
-            INNER JOIN durable_goods_2016 ON get_goods_detial.id_goods = durable_goods_2016.id_goods
-            WHERE get_id = '$id'
+            material_2016 AS a
+            WHERE a.year = '$year' and status_buy = '0'
             ";
-            $data['reTurnGoods'] = $this->db->query($sql);
+            $data['material'] = $this->db->query($sql);
 
-            $this->load->view('admin/dashboard/detial_get_goods_paple',$data);
 
-        }
-
-        public function detial_get_material_paple($id){
             $sql = "SELECT
-            get_material_detial.get_material_id,
-            get_material_detial.Pid,
-            get_material_detial.MatId,
-            get_material_detial.Ddate_get,
-            get_material_detial.Ddate_return,
-            get_material_detial.name_get,
-            get_material_detial.major_get,
-            get_material_detial.note,
-            get_material_detial.tel,
-            get_material_detial.qty,
-            get_material_detial.position_get,
-            get_material_detial.`status`,
-            material_2016.MatName
+            material_2016.MatId,
+            material_2016.MatName,
+            material_2016.status_buy,
+            material_2016.`year`,
+            buy_material_2016.qty,
+            buy_material_2016.price
+
             FROM
-            get_material_detial
-            INNER JOIN material_2016 ON get_material_detial.MatId = material_2016.MatId
-            WHERE get_material_id = '$id'";
-            $data['reTurnGoods'] = $this->db->query($sql);
+            material_2016 
+            INNER JOIN buy_material_2016 ON material_2016.MatId = buy_material_2016.MatId
+            WHERE material_2016.year = '$year' 
+            AND material_2016.status_buy = '1'
+            GROUP BY material_2016.MatId
+            ";
 
-            $this->load->view('admin/dashboard/detial_get_material_paple',$data);
+            $data['material_buy_in_year'] = $this->db->query($sql);
+            */
 
-        }
+            // สำหรับปี 2560
 
+            
+
+            $year_old = $year - 1;
+
+            $year_old_krit = $year - 544;
+            $year_year_start = $year_old_krit."-10-30";
+
+            $year_end_krit = $year - 543;
+            $year_year_end = $year_end_krit."-10-30";
+
+            $sql = "SELECT
+            a.MatName,
+            a.qty,
+            a.price,
+            a.MatId,
+            a.status_buy,
+            a.`year`
+            FROM
+            material_2016 AS a
+           
+            ";
+            $data['material'] = $this->db->query($sql);
+/*
+            $sql = "SELECT
+            material_2016.MatId,
+            material_2016.MatName,
+            material_2016.status_buy,
+            material_2016.`year`,
+            buy_material_2016.qty,
+            buy_material_2016.price
+
+            FROM
+            material_2016 
+            INNER JOIN buy_material_2016 ON material_2016.MatId = buy_material_2016.MatId
+            WHERE buy_material_2016.Ddate BETWEEN '$year_year_start' AND '$year_year_end'
+            GROUP BY material_2016.MatId
+            ";
+
+            $data['material_buy_in_year'] = $this->db->query($sql);
+*/
+           $data['year_year_start'] = $year_year_start;
+           $data['year_year_end'] = $year_year_end;
+           $data['year_what'] = $year;
+
+            $this->load->view('admin/dashboard/detial_material_balance',$data);
+        
     }
+
+                public function detial_lend_paple_goods_center($id){
+
+                    $sql = "SELECT * FROM durable_goods_2016 WHERE id_goods = '$id'";
+                    $data['reTurnGoods'] = $this->db->query($sql);
+
+                    $year = date("Y") + 543;
+
+                    $sql = "SELECT
+                    durable_goods_repair.id_goods,
+                    durable_goods_repair.Ddate,
+                    durable_goods_repair.price,
+                    durable_goods_repair.note,
+                    durable_goods_repair.`subject`,
+                    durable_goods_repair.Pid,
+                    durable_goods_2016.name_goods,
+                    durable_goods_2016.brand_goods,
+                    durable_goods_2016.id_goods_crru
+                    FROM
+                    durable_goods_repair
+                    INNER JOIN durable_goods_2016 ON durable_goods_repair.id_goods = durable_goods_2016.id_goods
+                    WHERE durable_goods_repair.id_goods = '$id'";
+                    $data['reTurnGoods_repair'] = $this->db->query($sql);
+
+                    $data['year'] = $year;
+
+                    $this->load->view('admin/dashboard/detial_lend_goods_paple_center',$data);
+
+
+
+
+                }
+
+
+
+
+                public function sample2(){
+
+                    $this->load->view('admin/dashboard/test');
+
+                }
+
+                public function mer(){
+                    $sql = "SELECT Pid,Ddate,work1
+                    FROM work
+                    WHERE Pid IN('008','005')
+                    GROUP BY Pid,Ddate";
+
+                    $data['aaa'] = $this->db->query($sql);
+
+                    $this->load->view('admin/dashboard/mer',$data);
+                }
+
+                public function detial_get_goods_paple($id){
+                    $sql = "SELECT
+                    get_goods_detial.get_id,
+                    get_goods_detial.Pid,
+                    get_goods_detial.standard,
+                    get_goods_detial.id_goods,
+                    get_goods_detial.Ddate_get,
+                    get_goods_detial.Ddate_return,
+                    get_goods_detial.name_get,
+                    get_goods_detial.major_get,
+                    get_goods_detial.note,
+                    get_goods_detial.tel,
+                    durable_goods_2016.name_goods,
+                    durable_goods_2016.brand_goods,
+                    durable_goods_2016.id_goods_crru
+                    FROM
+                    get_goods_detial
+                    INNER JOIN durable_goods_2016 ON get_goods_detial.id_goods = durable_goods_2016.id_goods
+                    WHERE get_id = '$id'
+                    ";
+                    $data['reTurnGoods'] = $this->db->query($sql);
+
+                    $this->load->view('admin/dashboard/detial_get_goods_paple',$data);
+
+                }
+
+                public function detial_get_material_paple($id){
+                    $sql = "SELECT
+                    get_material_detial.get_material_id,
+                    get_material_detial.Pid,
+                    get_material_detial.MatId,
+                    get_material_detial.Ddate_get,
+                    get_material_detial.Ddate_return,
+                    get_material_detial.name_get,
+                    get_material_detial.major_get,
+                    get_material_detial.note,
+                    get_material_detial.tel,
+                    get_material_detial.qty,
+                    get_material_detial.position_get,
+                    get_material_detial.`status`,
+                    material_2016.MatName
+                    FROM
+                    get_material_detial
+                    INNER JOIN material_2016 ON get_material_detial.MatId = material_2016.MatId
+                    WHERE get_material_id = '$id'";
+                    $data['reTurnGoods'] = $this->db->query($sql);
+
+                    $this->load->view('admin/dashboard/detial_get_material_paple',$data);
+
+                }
+
+            }

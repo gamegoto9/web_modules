@@ -64,7 +64,7 @@
                 
                 <li class="treeview">
                     <a href="#">
-                        <small class="badge pull-right bg-green">2</small>
+                        <small class="badge pull-right bg-green">3</small>
                         <i class="fa fa-bar-chart-o"></i>
                         <span>รายงาน</span>
                         <i class="fa fa-angle-left pull-right"></i>
@@ -72,6 +72,22 @@
                     <ul class="treeview-menu">
                         <li><a href="#" onclick="loadpage6();"><i class="fa fa-angle-double-right"></i>จำนวนนักศึกษาต่างชาติ (แบบฟอร์มกองแผน)</a></li>
                     </ul>
+                </li>
+
+
+                <li class="active">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>Admission</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="#" onclick="loadpage9();">
+                        <small class="badge pull-right bg-green">4</small>
+                        <i class="fa fa-bar-chart-o"></i>
+                        <span>รายชื่อนักศึกษา ที่ลงทะเบียน</span>
+                        
+                    </a>
+                    
                 </li>
              
 
@@ -122,6 +138,11 @@
     function loadpage8(){
        $('#main_view').load('student/confrim_student');      
         
+    }
+
+    function loadpage9(){
+        
+        $('#main_view').load('student/show_data_student_admission/');
     }
             
             

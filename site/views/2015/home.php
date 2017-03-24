@@ -212,12 +212,13 @@ mysql_close();
                                         <div class="row center">
                                             <div class="col col-md-11 col-sm-12 templatemo_ceo" >
                                                 <div class="bg1" style="border: 1px solid #D2D2D2;">
-                                                    <img src="<?PHP echo base_url('assets/themes/templatemo_403_karma/images/ผอ.png'); ?>" width="150px"alt="Linda" class="center-block img-circle img-responsive">
+                                                <br><br>
+                                                    <img src="<?PHP echo base_url('assets/themes/templatemo_403_karma/images/lon.jpg'); ?>" width="150px"alt="Linda" class="center-block img-circle img-responsive">
                                                     <p><font size="3" color="#FFF"><?PHP echo $this->lang->line('director_title'); ?>
                                                         <br><?PHP echo $this->lang->line('director_name'); ?>
                                                         <br><?PHP echo $this->lang->line('director_full'); ?>
                                                         </font></p>
-
+                                                 <br><br>
                                                 </div>
 
                                             </div>
@@ -323,7 +324,7 @@ mysql_close();
                                                                 <tr>
                                                                     <td class="hidden-xs"><span class="label label-primary"><?PHP echo $i; ?></span></td>
                                                                     <td>
-                                                                        <a href="http://reg2.crru.ac.th/reg_web/website/web_news/read/21">
+                                                                        <a href="<?php echo $row['file'] ?>">
                                                                             <?PHP echo $row[$lang]; ?>
                                                                         </a>
                                                                         <br/>
@@ -350,7 +351,7 @@ mysql_close();
                                                                 <tr>
                                                                     <td class="hidden-xs"><span class="label label-primary"><?PHP echo $i; ?></span></td>
                                                                     <td>
-                                                                        <a href="http://reg2.crru.ac.th/reg_web/website/web_news/read/21">
+                                                                        <a href="<?php echo $row['file'] ?>">
                                                                             <?PHP echo $row[$lang]; ?>
                                                                         </a>
                                                                         <br/>

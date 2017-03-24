@@ -30,6 +30,20 @@ student.student_id,name,lname,sub_name,major_name,level,type,year
         return $query->result_array();
     }
 
+    function get_university() {
+     $query = $this->db->query('
+        SELECT
+        international_support.name,
+        international_support.id
+        FROM
+        international_support
+        GROUP BY 
+        international_support.name
+        ');
+
+     return $query;
+ }
+
     
     
     public function ListKm() {
